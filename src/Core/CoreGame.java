@@ -1,8 +1,15 @@
+package Core;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import Core.Card;
+import Core.Color;
+import Core.Player;
+import views.Window;
 
 public class CoreGame {
     static final int twoPlayerCardCount = 24; // Nb carte de départ pour deux joueurs
@@ -17,37 +24,20 @@ public class CoreGame {
         this.players = new ArrayList<Player>();
         this.cardsList = new ArrayList<>();
         this.colorAvalaible = new Color[]{Color.pink, Color.yellow, Color.green, Color.blue};
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("dominos.csv"));
-            String line = null;
-            Scanner scanner = null;
-            reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                scanner = new Scanner(line);
-                scanner.useDelimiter(",");
-                Card card = new Card(Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()));
-                cardsList.add(card);
-            }
-            reader.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        ;
-
     }
 
-    public void initGame() {
+    public void initGame(int numberPlayers) {
 
 
-        System.out.print(Plateau.numberPlayers);
+        System.out.print(numberPlayers);
 
 
-        if (Plateau.numberPlayers == 2) {
-            this.numberTotalKings = 2 * Plateau.numberPlayers;
-            initPlayers(Plateau.numberPlayers, 2);
+        if (numberPlayers == 2) {
+            this.numberTotalKings = 2 * numberPlayers;
+            initPlayers(numberPlayers, 2);
         } else {
-            this.numberTotalKings = Plateau.numberPlayers;
-            initPlayers(Plateau.numberPlayers, 1);
+            this.numberTotalKings = numberPlayers;
+            initPlayers(numberPlayers, 1);
         }
     }
 
@@ -68,8 +58,26 @@ public class CoreGame {
             players.add(player);
         }
     }
-
-    public void drawCards() {
-
-    }
+	public void initCard()
+	{
+		try {
+		BufferedReader reader = new BufferedReader(new FileReader("dominos.csv"));
+		String line = null;
+		Scanner scanner = null;
+		reader.readLine();
+		while ((line = reader.readLine()) != null) {
+			scanner = new Scanner(line);
+			scanner.useDelimiter(",");
+			Card card = new Card(Integer.parseInt(scanner.next()),scanner.next(),Integer.parseInt(scanner.next()),scanner.next(),Integer.parseInt(scanner.next()));
+			cardsList.add(card);
+		}
+		reader.close();
+		}
+		catch(Exception e) {System.out.println(e);};	
+	}
+	public void drawCards()
+	{
+		
+	}
 }
+

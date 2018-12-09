@@ -1,3 +1,4 @@
+package views;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -5,8 +6,8 @@ import java.awt.Color;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-public class Plateau extends JFrame implements ActionListener {
+import Core.*;
+public class Window extends JFrame implements ActionListener {
 
     /**
      *
@@ -20,12 +21,15 @@ public class Plateau extends JFrame implements ActionListener {
     private JLabel txt1;
     private JRadioButton br1, br2, br3;
     private Border lineBorder = new LineBorder(Color.BLACK, 2);
-    static int numberPlayers = 0;
-
-    public Plateau() {
+    JPanel panelCont = new JPanel();
+    private CoreGame game;
+    public Window(CoreGame game) {
         super("KingDomino");
+    	this.game = game;
         setSize(1000, 1000);
-        Container cp = getContentPane();
+        CardLayout cl = new CardLayout();
+        panelCont.setLayout(cl);
+        Container cp = new JPanel(); // à supprimer 
         cp.setBackground(Color.black);
         JPanel panneau1 = new JPanel();
         JPanel panneau2 = new JPanel();
@@ -74,47 +78,52 @@ public class Plateau extends JFrame implements ActionListener {
         panneau22.add(b1);
         b1.addActionListener(this);
         panneau2.setBorder(lineBorder);
-
+        
+        panelCont.add(cp,"1");
+        cl.show(panelCont, "1");
+        add(panelCont);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
 
     }
-
+    public void renderMenu()
+    {
+    	// Affiche la fenetre menu
+    }
+    public void renderGeneralBoard()
+    {	
+    	// Affiche la fenetre avec tous les territoires actualisé ( appellée à chaque début de tour de jeu) 
+    }
+    public void renderSelectionCard()
+    {
+    	// Affiche la fenetre de sélection des cartes à l'aide des rois ( appellée à chaque début de tour de jeu)
+    }
+    public void renderPlayerBoard()
+    {
+    	// Affiche la fenetre avec seulement le territoire du joueur dont c'est le tour
+    }
+    public void renderLeaderboard()
+    {
+    	// Affiche la fenetre des scores de fin de partie
+    }
     public void actionPerformed(ActionEvent e) {
 
 
         if (br1.isSelected()) {
 
             System.out.println("nbres des joueurs est 2");
-            numberPlayers = 2;
-
-
+            game.initGame(2);
         } else if (br2.isSelected()) {
 
             System.out.println("nbres des joueurs est 3");
-            numberPlayers = 3;
+            game.initGame(3);
 
         } else if (br3.isSelected()) {
-            numberPlayers = 4;
-
             System.out.println("nbres des joueurs est 4");
-
+            game.initGame(4);
         }
 
 
     }
-
-    public int numberPlayers(int numberPlayers) {
-
-        return numberPlayers;
-    }
-
-    public static void main(String[] args) {
-
-        Plateau p = new Plateau();
-        //p.pack();
-        p.setVisible(true);
-        //
-
-    }
-
 }
