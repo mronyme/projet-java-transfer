@@ -1,27 +1,10 @@
-
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Plateau extends JFrame implements ActionListener{
 
@@ -43,7 +26,7 @@ public class Plateau extends JFrame implements ActionListener{
 		 super("KingDomino");
 		  setSize(1000,1000);
 		  Container cp = getContentPane();
-		 cp.setBackground(Color.cyan); 
+		 cp.setBackground(Color.black);
 		JPanel panneau1 = new JPanel();
 		JPanel panneau2 = new JPanel();
 		JPanel panneau21 = new JPanel();
@@ -98,11 +81,15 @@ public class Plateau extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		int nbr_joueurs=0; 
-			if(br1.isSelected()){
+
+
+
+
+
+		/* if(br1.isSelected()){
 				
 				System.out.println("nbres des joueurs est 2");
-				nbr_joueurs=2; 
+				nbr_player=2;
 				
 				
 			}
@@ -110,15 +97,15 @@ public class Plateau extends JFrame implements ActionListener{
 			else if(br2.isSelected()){
 				
 				System.out.println("nbres des joueurs est 3");
-				
+				nbr_player = 3;
 			}
     else if(br3 .isSelected()){
 				
-				System.out.println("nbres des joueurs est 3");
+				System.out.println("nbres des joueurs est ");
 				
 			}
 			
-			
+			*/
 	
 	
 	
