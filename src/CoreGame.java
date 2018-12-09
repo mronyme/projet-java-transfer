@@ -37,13 +37,17 @@ public class CoreGame {
     }
 
     public void initGame() {
-        int numberPlayers = 0;
-        if (numberPlayers == 2) {
-            this.numberTotalKings = 2 * numberPlayers;
-            initPlayers(numberPlayers, 2);
+
+
+        System.out.print(Plateau.numberPlayers);
+
+
+        if (Plateau.numberPlayers == 2) {
+            this.numberTotalKings = 2 * Plateau.numberPlayers;
+            initPlayers(Plateau.numberPlayers, 2);
         } else {
-            this.numberTotalKings = 1 * numberPlayers;
-            initPlayers(numberPlayers, 1);
+            this.numberTotalKings = Plateau.numberPlayers;
+            initPlayers(Plateau.numberPlayers, 1);
         }
     }
 
