@@ -3,8 +3,13 @@ package Core;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import Core.Card;
 import Core.Color;
@@ -17,21 +22,16 @@ public class CoreGame {
     static final int fourPlayerCardCount = 48; // Nb carte de départ pour quatre joueurs
     List<Player> players;
     List<Card> cardsList;
-    Color[] colorAvalaible;
+    List<Color> colorsAvailable;
+    Map<Color, Integer> kingsList = new HashMap<Color, Integer>();
     int numberTotalKings;
-
     public CoreGame() {
         this.players = new ArrayList<Player>();
         this.cardsList = new ArrayList<>();
-        this.colorAvalaible = new Color[]{Color.pink, Color.yellow, Color.green, Color.blue};
+        this.colorsAvailable = new ArrayList<>(Arrays.asList(Color.pink,Color.yellow,Color.green,Color.blue));
     }
 
     public void initGame(int numberPlayers) {
-
-
-        System.out.print(numberPlayers);
-
-
         if (numberPlayers == 2) {
             this.numberTotalKings = 2 * numberPlayers;
             initPlayers(numberPlayers, 2);
@@ -39,24 +39,52 @@ public class CoreGame {
             this.numberTotalKings = numberPlayers;
             initPlayers(numberPlayers, 1);
         }
+        pickKings();
     }
 
     public void firstRound() {
+    	List<List<Card>> cardsLine = new ArrayList<List<Card>>();
+    	cardsLine.add(createLine());
+    	cardsLine.add(createLine());
     }
 
-    public void prepareRound() {
-
+    public List<Card> createLine() {
+    	List<Card> cards = drawCards();
+    	return cards;
     }
 
     public void playRound() {
-
+    	List<List<Card>> cardsLine = new ArrayList<List<Card>>();
+    	cardsLine.add(createLine());
     }
-
+    public List<Color> pickKings()
+    {
+		Random rand = new Random();
+		List<Color> kingsPicked = new ArrayList<Color>();
+    	for(int i = 0;i < numberTotalKings;i++)
+    	{
+    		
+    		Color[] kingsRemaining = (Color[])(kingsList.keySet().toArray(new Color[kingsList.size()]));
+    		Color kingColor = kingsRemaining[rand.nextInt(kingsRemaining.length)];
+    		kingsList.put(kingColor,kingsList.get(kingColor) -1);
+    		if(kingsList.get(kingColor) == 0)
+    		{
+    			kingsList.remove(kingColor);
+    		}
+    		kingsPicked.add(kingColor);
+    	}
+    	return kingsPicked;
+    }
     public void initPlayers(int numberPlayers, int numberKings) {
-        for (int i = 0; i < numberPlayers; i++) {
-            Player player = new Player(Color.green, numberKings);
-            players.add(player);
-        }
+		for(int i = 0;i < numberPlayers;i++)
+		{
+			Random rand = new Random();
+			Color color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
+			Player player = new Player(color,numberKings);
+			this.kingsList.put(color, numberKings);
+			colorsAvailable.remove(color);
+			players.add(player);
+		}
     }
 	public void initCard()
 	{
@@ -75,9 +103,31 @@ public class CoreGame {
 		}
 		catch(Exception e) {System.out.println(e);};	
 	}
-	public void drawCards()
+	public void removeCard(int cardId)
 	{
-		
+		cardsList.remove(cardId);
+	}
+	public void discardCards()
+	{
+		Random rand = new Random();
+		for(int i = 0;i < 48-players.size()*12;i++)
+		{
+			int n = (int )(Math.random() * cardsList.size());
+			cardsList.remove(n);
+		}
+	}
+	public List<Card> drawCards()
+	{
+		List<Card> cardDrawn = new ArrayList<Card>();
+	    Random random = new Random();
+		int[] indexList = random.ints(0, cardsList.size()).distinct().limit(numberTotalKings).sorted().toArray();
+		for(int index : indexList)
+		{
+			System.out.println(index);
+			cardDrawn.add(cardsList.get(index));
+		}
+		cardsList.remove(indexList);
+		return cardDrawn;
 	}
 }
 
