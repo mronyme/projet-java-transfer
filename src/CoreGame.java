@@ -3,7 +3,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class CoreGame {
 	static final int twoPlayerCardCount = 24;
@@ -11,13 +13,53 @@ public class CoreGame {
 	static final int fourPlayerCardCount = 48;
 	List<Player> players;
 	List<Card> cardsList;
-	Color[] colorAvalaible;
+	List<Color> colorsAvailable;
 	int numberTotalKings;
 	public CoreGame()
 	{
 		this.players = new ArrayList<Player>();
 		this.cardsList = new ArrayList<>();
-		this.colorAvalaible = new Color[]{Color.pink,Color.yellow,Color.green,Color.blue};
+		this.colorsAvailable = new ArrayList<>(Arrays.asList(Color.pink,Color.yellow,Color.green,Color.blue));
+	}
+	public void initGame() {
+		initCardsList();
+		initPlayers(4);
+		drawCards();
+	}
+	public void firstRound()
+	{
+	}
+	public void prepareRound()
+	{
+		
+	}
+	public void playRound()
+	{
+		
+	}
+	public void initPlayers(int numberPlayers)
+	{
+		int numberKings = 1;
+		if(numberPlayers == 2)
+		{
+			numberKings = 2;
+			this.numberTotalKings = 2*numberPlayers;
+		}
+		else
+		{
+			this.numberTotalKings = 1*numberPlayers;
+		}
+		for(int i = 0;i < numberPlayers;i++)
+		{
+			Random rand = new Random();
+			Color color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
+			Player player = new Player(color,numberKings);
+			colorsAvailable.remove(color);
+			players.add(player);
+		}
+	}
+	public void initCardsList()
+	{
 		try {
 		BufferedReader reader = new BufferedReader(new FileReader("dominos.csv"));
 		String line = null;
@@ -31,43 +73,32 @@ public class CoreGame {
 		}
 		reader.close();
 		}
-		catch(Exception e) {System.out.println(e);};
-		
+		catch(Exception e) {System.out.println(e);};	
 	}
-	public void initGame() {
-		int numberPlayers = 0;
-		if(numberPlayers == 2)
+	public void removeCard(int cardId)
+	{
+		cardsList.remove(cardId);
+	}
+	public void discardCards()
+	{
+		Random rand = new Random();
+		for(int i = 0;i < 48-players.size()*12;i++)
 		{
-			this.numberTotalKings = 2*numberPlayers;
-			initPlayers(numberPlayers,2);
-		}
-		else
-		{
-			this.numberTotalKings = 1*numberPlayers;
-			initPlayers(numberPlayers,1);
-		}
-	}
-	public void firstRound()
-	{
-	}
-	public void prepareRound()
-	{
-		
-	}
-	public void playRound()
-	{
-		
-	}
-	public void initPlayers(int numberPlayers,int numberKings)
-	{
-		for(int i = 0;i < numberPlayers;i++)
-		{
-			Player player = new Player(Color.green,numberKings);
-			players.add(player);
+			int n = (int )(Math.random() * cardsList.size());
+			cardsList.remove(n);
 		}
 	}
-	public void drawCards()
+	public List<Card> drawCards()
 	{
-		
+		List<Card> cardDrawn = new ArrayList<Card>();
+	    Random random = new Random();
+		int[] indexList = random.ints(0, cardsList.size()).distinct().limit(numberTotalKings).sorted().toArray();
+		for(int index : indexList)
+		{
+			System.out.println(index);
+			cardDrawn.add(cardsList.get(index));
+		}
+		cardsList.remove(indexList);
+		return cardDrawn;
 	}
 }

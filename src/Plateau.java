@@ -124,13 +124,13 @@ public class Plateau extends JFrame implements ActionListener{
 	
 
 }
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		
-       Plateau p=new Plateau();
+       //Plateau p=new Plateau();
 		//p.pack();
-		p.setVisible(true);
+		//p.setVisible(true);
 	//	
 
-	}
+	//}
 
 }
