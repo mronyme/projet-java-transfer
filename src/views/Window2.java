@@ -1,5 +1,7 @@
 package views;
 
+import core.CoreGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,8 +19,10 @@ public class Window2 {
     CardLayout cl = new CardLayout();
     private JLabel txt1;
     private JRadioButton br1, br2, br3;
+    private CoreGame game;
 
-    public Window2() {
+    public Window2(CoreGame game) {
+        this.game = game;
         panelCont.setLayout(cl);
 
         panelFirst.add(buttonOne);
@@ -51,7 +55,20 @@ public class Window2 {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 cl.show(panelCont, "2");
+                if (br1.isSelected()) {
 
+                    System.out.println("nbres des joueurs est 2");
+                    game.initGame(2);
+                    panelSecond.setBackground(Color.YELLOW);
+
+                } else if (br2.isSelected()) {
+                    System.out.println("nbres des joueurs est 3");
+                    game.initGame(3);
+
+                } else if (br3.isSelected()) {
+                    System.out.println("nbres des joueurs est 4");
+                    game.initGame(4);
+                }
 
             }
         });
@@ -60,7 +77,6 @@ public class Window2 {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 cl.show(panelCont, "1");
-
 
             }
         });
@@ -72,12 +88,5 @@ public class Window2 {
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Window2();
-            }
-        });
-    }
+
 }
