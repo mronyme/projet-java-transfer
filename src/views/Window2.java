@@ -1,22 +1,22 @@
 package views;
-import java.awt.CardLayout;
-import java.awt.Color;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 public class Window2 {
+    JButton buttonOne = new JButton(" Play !");
     JFrame frame = new JFrame("CardLayout demo");
     JPanel panelCont = new JPanel();
     JPanel panelFirst = new JPanel();
     JPanel panelSecond = new JPanel();
-    JButton buttonOne = new JButton("Switch to second panel/workspace");
-    JButton buttonSecond = new JButton("Switch to first panel/workspace");
+    JButton buttonSecond = new JButton(" Revenir au menu");
+    private Font f = new Font("Verdana", Font.PLAIN, 50);
+    private ButtonGroup bg;
     CardLayout cl = new CardLayout();
+    private JLabel txt1;
+    private JRadioButton br1, br2, br3;
 
     public Window2() {
         panelCont.setLayout(cl);
@@ -24,6 +24,19 @@ public class Window2 {
         panelFirst.add(buttonOne);
         panelSecond.add(buttonSecond);
         panelFirst.setBackground(Color.WHITE);
+        txt1 = new JLabel("Bienvenue dans KingDomino ");
+        txt1.setFont(f);
+        panelFirst.add(txt1);
+        panelFirst.add(br1);
+        panelFirst.add(br2);
+        panelFirst.add(br3);
+        bg = new ButtonGroup();
+        bg.add(br1);
+        bg.add(br2);
+        bg.add(br3);
+
+
+
         panelSecond.setBackground(Color.BLACK);
 
         panelCont.add(panelFirst, "1");
@@ -34,6 +47,8 @@ public class Window2 {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 cl.show(panelCont, "2");
+
+
             }
         });
 
@@ -41,6 +56,8 @@ public class Window2 {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 cl.show(panelCont, "1");
+
+
             }
         });
 
