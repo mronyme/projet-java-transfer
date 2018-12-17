@@ -26,6 +26,10 @@ public class Window2 {
         panelFirst.setBackground(Color.WHITE);
         txt1 = new JLabel("Bienvenue dans KingDomino ");
         txt1.setFont(f);
+
+        br1 = new JRadioButton("2 joueurs");
+        br2 = new JRadioButton("3 joueurs");
+        br3 = new JRadioButton("4 joueurs");
         panelFirst.add(txt1);
         panelFirst.add(br1);
         panelFirst.add(br2);
