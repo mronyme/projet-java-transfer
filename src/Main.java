@@ -1,4 +1,7 @@
-import Core.CoreGame;
+import core.Board;
+import core.CoreGame;
+import entities.Card;
+import entities.Castle;
 import views.Window;
 
 public class Main {
