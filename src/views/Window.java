@@ -28,7 +28,7 @@ public class Window extends JFrame implements ActionListener {
 	    
     public Window(CoreGame game) {
 
-        super("KingDomino");
+        super("KingDominooo");
     	this.game = game;
     
       
@@ -80,10 +80,6 @@ public class Window extends JFrame implements ActionListener {
         
       
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-      
-
-
     }
     public void renderMenu()
     {
