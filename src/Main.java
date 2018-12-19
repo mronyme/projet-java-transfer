@@ -1,11 +1,15 @@
+import core.Board;
+import core.CoreGame;
+import entities.Card;
+import entities.Castle;
+import views.Window;
 
 public class Main {
 
 	public static void main(String[] args) {
 		CoreGame game = new CoreGame();
-		game.initGame();
-      
-
+		//Window window = new Window(game);
+		
 	}
 
 }
