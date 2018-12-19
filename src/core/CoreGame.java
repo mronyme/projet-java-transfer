@@ -21,16 +21,19 @@ import enums.ColorEnum;
 import enums.FaceEnum;
 import views.Window;
 
+import enums.ColorEnum;
+import views.Window;
+
 public class CoreGame {
-    static final int twoPlayerCardCount = 24; // Nb carte de dï¿½part pour deux joueurs
-    static final int threePlayerCardCount = 36; // Nb carte de dï¿½part pour trois joueurs
-    static final int fourPlayerCardCount = 48; // Nb carte de dï¿½part pour quatre joueurs
+    static final int twoPlayerCardCount = 24; // Nb carte de départ pour deux joueurs
+    static final int threePlayerCardCount = 36; // Nb carte de départ pour trois joueurs
+    static final int fourPlayerCardCount = 48; // Nb carte de départ pour quatre joueurs
     
     List<Player> players;       //Liste des joueurs
-    List<Card> cardsList;     // Liste des Cartes totales prï¿½sentent dans le jeux ï¿½ tout instant
-    List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la rï¿½partition des couleurs pour chaque joueur
-    Map<ColorEnum, Integer> kingsList = new HashMap<ColorEnum, Integer>();     // Liste des rois restant pour chaque couleur ï¿½ piocher lors du premier tour
-    int numberTotalKings; // Nombre de rois totaux prï¿½sent dans la partie
+    List<Card> cardsList;     // Liste des Cartes totales présentent dans le jeux à tout instant
+    List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
+    Map<ColorEnum, Integer> kingsList = new HashMap<ColorEnum, Integer>();     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
+    int numberTotalKings; // Nombre de rois totaux présent dans la partie
     public CoreGame() {
         this.players = new ArrayList<Player>();
         this.cardsList = new ArrayList<>();
@@ -44,8 +47,8 @@ public class CoreGame {
         calculateScore();
     }
     // -------> Utile Pour vous <-------
-    // Cette fonction gï¿½re le commencement de la partie
-    // Valeur en entrï¿½e : nombre de joueurs
+    // Cette fonction gère le commencement de la partie
+    // Valeur en entrée : nombre de joueurs
     public void initGame(int numberPlayers) {
         if (numberPlayers == 2) {
             this.numberTotalKings = 2 * numberPlayers;
@@ -58,16 +61,16 @@ public class CoreGame {
         // Dï¿½marrer le jeux ( lancer l'affichage des terrains)
     }
     // -------> Utile Pour vous <-------
-    // Cette fonction est appellï¿½e avant pickKings et correspond au dï¿½but du premier tour de jeux
-    // Valeur Retournï¿½e : Liste de 2 ï¿½lements -> 1 : Premiï¿½re colone de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant) , 2 : Deuxiï¿½me colones de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant)
+    // Cette fonction est appellée avant pickKings et correspond au début du premier tour de jeux
+    // Valeur Retournée : Liste de 2 élements -> 1 : Première colone de n cartes ( Liste de cartes rangée par numéro croissant) , 2 : Deuxième colones de n cartes ( Liste de cartes rangée par numéro croissant)
     // n -> Nombres de rois totaux dans la partie
     public void firstRound() {
     	List<List<Card>> cardsColumn = new ArrayList<List<Card>>();	
-    	cardsColumn.add(createLine());     	// Ajoute la premiere rangï¿½e de cartes
-    	cardsColumn.add(createLine());   // Ajoue la deuxiï¿½me rangï¿½e de cartes
+    	cardsColumn.add(createLine());     	// Ajoute la premiere rangée de cartes
+    	cardsColumn.add(createLine());   // Ajoue la deuxième rangée de cartes
     }
     // -------> Inutile Pour vous <-------
-    // Cette fonction crï¿½er une rangï¿½e de cartes
+    // Cette fonction créer une rangée de cartes
     public List<Card> createLine() {
     	List<Card> cards = drawCards();
     	return cards;
@@ -75,6 +78,8 @@ public class CoreGame {
     // -------> Utile Pour vous <-------
     // Cette fonction gï¿½re le dï¿½but de tout les tours de jeux ï¿½ l'exception du premier (firstRound)
     // Valeur Retournï¿½e : Liste de 1 ï¿½lement -> une colone de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant)
+    // Cette fonction gère le début de tout les tours de jeux à l'exception du premier (firstRound)
+    // Valeur Retournée : Liste de 1 élement -> une colone de n cartes ( Liste de cartes rangée par numéro croissant)
     // n -> Nombres de rois totaux dans la partie
     public void CasualRound() {
     	List<List<Card>> cardsColumn = new ArrayList<List<Card>>();
@@ -84,6 +89,8 @@ public class CoreGame {
     // -------> Utile Pour vous <-------
     // Cette fonction gï¿½re l'ordre de jeu du premier tour en respectant l'ordre de pioche alï¿½atoire des n rois
     // Valeur Retournï¿½e : Liste ordonnï¿½es de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier ï¿½lement de la liste est le premier roi piochï¿½ et donc le joueur de cette couleur commencera etc.
+    // Cette fonction gère l'ordre de jeu du premier tour en respectant l'ordre de pioche aléatoire des n rois
+    // Valeur Retournée : Liste ordonnées de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier élement de la liste est le premier roi pioché et donc le joueur de cette couleur commencera etc.
     // n -> Nombres de rois totaux dans la partie
     public List<ColorEnum> pickKings()
     {
@@ -106,6 +113,7 @@ public class CoreGame {
     
     // -------> Inutile pour vous <-------
     // Cette fonction instantie les diffï¿½rents joueurs
+    // Cette fonction instantie les différents joueurs
     public void initPlayers(int numberPlayers, int numberKings) {
 		for(int i = 0;i < numberPlayers;i++)
 		{
@@ -119,6 +127,7 @@ public class CoreGame {
     }
     // -------> Inutile pour vous <-------
     // Cette fonction rï¿½cupï¿½re toutes les cartes du csv et les mets dans une liste
+    // Cette fonction récupère toutes les cartes du csv et les mets dans une liste
 	public void initCard()
 	{
 		try {
@@ -143,6 +152,7 @@ public class CoreGame {
 	}
     // -------> Inutile pour vous <-------
 	// Cette fonction retirer au dï¿½but de la partie un nombre de carte dï¿½pendant du nombre de joueur
+	// Cette fonction retirer au début de la partie un nombre de carte dépendant du nombre de joueur
 	public void discardCards()
 	{
 		Random rand = new Random();
@@ -154,6 +164,7 @@ public class CoreGame {
 	}
     // -------> Inutile pour vous <-------
 	// Cette fonction pioche n cartes et les regroupent dans une liste de faï¿½on ordonnï¿½e
+	// Cette fonction pioche n cartes et les regroupent dans une liste de façon ordonnée
     // n -> Nombres de rois totaux dans la partie
 	public List<Card> drawCards()
 	{
@@ -162,6 +173,7 @@ public class CoreGame {
 		int[] indexList = random.ints(0, cardsList.size()).distinct().limit(numberTotalKings).sorted().toArray();
 		for(int index : indexList)
 		{
+			System.out.println(index);
 			cardDrawn.add(cardsList.get(index));
 		}
 		cardsList.remove(indexList);

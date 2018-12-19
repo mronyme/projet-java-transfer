@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 import entities.Card;
 import entities.Castle;
@@ -12,6 +13,7 @@ import entities.Empty;
 import entities.Entity;
 import entities.Face;
 import enums.FaceEnum;
+
 
 public class Board {
 	Entity[][] coords;
@@ -48,7 +50,12 @@ public class Board {
 		Castle castle = new Castle();
 		this.coords[coordsX][coordsY] = castle;
 	}
-	// Rï¿½cupï¿½re tout le plateaux du joueur
+	// Place le châteaux sur ces coordonnées
+	public void setCastle(int coordsX,int coordsY,Castle castle)
+	{
+		this.coords[coordsX][coordsY] = castle;
+	}
+	// Récupère tout le plateaux du joueur
 	public Entity[][] getBoard()
 	{
 		return this.coords;

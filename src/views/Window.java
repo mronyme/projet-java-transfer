@@ -6,6 +6,11 @@ import javax.swing.border.LineBorder;
 import core.*;
 
 import java.awt.Color;
+import core.CoreGame;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -87,7 +92,6 @@ public class Window extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
-
     }
     public void renderMenu()
     {
@@ -99,7 +103,7 @@ public class Window extends JFrame implements ActionListener {
     }
     public void renderSelectionCard()
     {
-    	// Affiche la fenetre de sélection des cartes à l'aide des rois ( appellée à chaque début de tour de jeu)
+    	// Affiche la fenetre de sï¿½lection des cartes ï¿½ l'aide des rois ( appellï¿½e ï¿½ chaque dï¿½but de tour de jeu)
     }
     public void renderPlayerBoard()
     {
