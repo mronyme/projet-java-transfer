@@ -59,15 +59,17 @@ public class Window2 {
 
                     System.out.println("nbres des joueurs est 2");
                     game.initGame(2);
-                    panelSecond.setBackground(Color.YELLOW);
+
 
                 } else if (br2.isSelected()) {
                     System.out.println("nbres des joueurs est 3");
                     game.initGame(3);
 
+
                 } else if (br3.isSelected()) {
                     System.out.println("nbres des joueurs est 4");
                     game.initGame(4);
+
                 }
 
             }

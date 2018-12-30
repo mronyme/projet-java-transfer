@@ -1,11 +1,5 @@
 package views;
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
-import core.*;
-
-import java.awt.Color;
 import core.CoreGame;
 
 import javax.swing.*;
@@ -113,6 +107,7 @@ public class Window extends JFrame implements ActionListener {
     {
     	// Affiche la fenetre des scores de fin de partie
     }
+
     public void actionPerformed(ActionEvent e) {
 
 
