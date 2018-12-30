@@ -26,6 +26,7 @@ public class crashtest extends JFrame {
         //Et enfin, la rendre visible
         this.setVisible(true);
 
+
     }
 
 }

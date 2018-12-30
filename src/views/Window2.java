@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class Window2 {
     JButton buttonOne = new JButton(" Play !");
-    JFrame frame = new JFrame("CardLayout demo");
+    JFrame frame = new JFrame("Domi'Nations");
     JPanel panelCont = new JPanel();
     JPanel panelFirst = new JPanel();
     JPanel panelSecond = new JPanel();
@@ -28,7 +28,7 @@ public class Window2 {
         panelFirst.add(buttonOne);
         panelSecond.add(buttonSecond);
         panelFirst.setBackground(Color.WHITE);
-        txt1 = new JLabel("Bienvenue dans KingDomino ");
+        txt1 = new JLabel("Bienvenue dans Domi'Nations ");
         txt1.setFont(f);
 
         br1 = new JRadioButton("2 joueurs");
