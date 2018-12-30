@@ -34,7 +34,7 @@ public class crashtest extends JFrame {
         //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
         //On prévient notre JFrame que notre JPanel sera son content pane
-        this.setContentPane(pan);
+        this.setContentPane(new Panneau());
         this.setVisible(true);
 
 
