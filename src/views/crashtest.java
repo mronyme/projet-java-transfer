@@ -14,8 +14,10 @@ public class crashtest extends JFrame {
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
 
         //Définit sa taille : 400 pixels de large et 100 pixels de haut
-
-        this.setSize(400, 100);
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int height = (int) dimension.getHeight();
+        int width = (int) dimension.getWidth();
+        this.setSize(width / 2, height / 2);
 
         //Nous demandons maintenant à notre objet de se positionner au centre
 
