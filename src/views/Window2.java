@@ -20,10 +20,10 @@ public class Window2 {
     private JLabel txt1;
     private JRadioButton br1, br2, br3;
     private CoreGame game;
-
     public Window2(CoreGame game) {
         this.game = game;
         panelCont.setLayout(cl);
+
 
         panelFirst.add(buttonOne);
         panelSecond.add(buttonSecond);

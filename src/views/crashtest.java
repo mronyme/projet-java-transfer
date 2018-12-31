@@ -30,13 +30,22 @@ public class crashtest extends JFrame {
         this.setVisible(true);
 
         // Le Content Pane :
-        //Instanciation d'un objet JPanel
+
+        //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
         //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
         this.setVisible(true);
+
+        // La Barre de menu
+        /*
+        JPanel menu = new JPanel();
+        menu.setBackground(Color.RED);
+        this.setJMenuBar(new Menu());
+        //setJMenuBar();
+*/
 
 
     }
