@@ -10,8 +10,6 @@ public class ScreenSize {
 
     // Constructeur
     public ScreenSize() {
-        width = this.getwidth();
-        height = this.getheight();
 
 
     }

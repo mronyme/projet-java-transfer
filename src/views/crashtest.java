@@ -10,9 +10,11 @@ public class crashtest extends JFrame {
         //Définit un titre pour notre fenêtre
 
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
-        // On récupère la taille de l'écran utile
-        int width = getWidth();
-        int height = getHeight();
+        // On récupère la taille de l'écran utile, pour cela on utilise l'objet ScreenSize
+        ScreenSize ScreenSize = new ScreenSize();
+
+        int width = ScreenSize.getwidth(); // Récupération de la largeur
+        int height = ScreenSize.getheight(); // Récupération de la hauteur
 
         this.setSize(width / 2, height / 2);
 
