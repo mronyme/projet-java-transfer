@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class crashtest extends JFrame {
-    private int width;
-    private int height;
 
     public crashtest() { // Constructeur de la classe crashtest
         JFrame fenetre = new JFrame();
@@ -13,8 +11,8 @@ public class crashtest extends JFrame {
 
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
         // On récupère la taille de l'écran utile
-        int width = getwidth();
-        int height = getheight();
+        int width = getWidth();
+        int height = getHeight();
 
         this.setSize(width / 2, height / 2);
 
@@ -39,23 +37,6 @@ public class crashtest extends JFrame {
         this.setVisible(true);
 
 
-    }
-
-    // Accesseurs
-    public int getheight() {
-
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        int height;
-        height = (int) dimension.getHeight();
-        return height;
-    }
-
-    public int getwidth() {
-
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        int width;
-        width = (int) dimension.getWidth();
-        return width;
     }
 
 }
