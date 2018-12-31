@@ -1,7 +1,10 @@
 package views;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Panneau extends JPanel {
@@ -20,5 +23,14 @@ public class Panneau extends JPanel {
         g.setColor(Color.BLACK);
         g.drawString("Bienvenue sur Domi'Nations", this.getWidth() / 3, this.getHeight() / 10);
         g.fillRect(x1, y1, this.getWidth() / 2, this.getHeight() / 2);
+        try {
+            Image img = ImageIO.read(new File("fond.jpg"));
+
+            //Image de fond
+            g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 }
