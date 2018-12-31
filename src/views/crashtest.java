@@ -39,7 +39,11 @@ public class crashtest extends JFrame {
         this.setContentPane(new Panneau());
         this.setVisible(true);
         // Barre de menu
-        JMenuBar menu = new JMenuBar();
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Accueil");
+        pan.add(menu);
+
 
 
 
