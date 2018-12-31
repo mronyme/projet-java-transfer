@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class crashtest extends JFrame {
+    int width = width();
+    int height = height();
     public crashtest(CoreGame game) {
         JFrame fenetre = new JFrame();
         //Définit un titre pour notre fenêtre
