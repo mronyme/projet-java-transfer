@@ -38,14 +38,9 @@ public class crashtest extends JFrame {
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
         this.setVisible(true);
+        // Barre de menu
+        JMenuBar menu = new JMenuBar();
 
-        // La Barre de menu
-        /*
-        JPanel menu = new JPanel();
-        menu.setBackground(Color.RED);
-        this.setJMenuBar(new Menu());
-        //setJMenuBar();
-*/
 
 
     }
