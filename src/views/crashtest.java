@@ -12,10 +12,10 @@ public class crashtest extends JFrame {
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
         // On récupère la taille de l'écran utile, pour cela on utilise l'objet ScreenSize
         ScreenSize ScreenSize = new ScreenSize();
-
         int width = ScreenSize.getwidth(); // Récupération de la largeur
         int height = ScreenSize.getheight(); // Récupération de la hauteur
 
+        // Puis on redimensionne la JFrame en fonction
         this.setSize(width / 2, height / 2);
 
         //Nous demandons maintenant à notre objet de se positionner au centre
