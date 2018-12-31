@@ -1,20 +1,20 @@
 package views;
 
-import core.CoreGame;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class crashtest extends JFrame {
-    int width = width();
-    int height = height();
-    public crashtest(CoreGame game) {
+    private int width;
+    private int height;
+
+    public crashtest() { // Constructeur de la classe crashtest
         JFrame fenetre = new JFrame();
         //Définit un titre pour notre fenêtre
 
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
-        int width = width();
-        int height = height();
+        // On récupère la taille de l'écran utile
+        int width = getwidth();
+        int height = getheight();
 
         this.setSize(width / 2, height / 2);
 
@@ -41,7 +41,8 @@ public class crashtest extends JFrame {
 
     }
 
-    public int height() {
+    // Accesseurs
+    public int getheight() {
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int height;
@@ -49,7 +50,7 @@ public class crashtest extends JFrame {
         return height;
     }
 
-    public int width() {
+    public int getwidth() {
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int width;
