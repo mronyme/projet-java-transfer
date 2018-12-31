@@ -6,17 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class crashtest extends JFrame {
-
     public crashtest(CoreGame game) {
         JFrame fenetre = new JFrame();
         //Définit un titre pour notre fenêtre
 
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
+        int width = width();
+        int height = height();
 
-        //Définit sa taille : 400 pixels de large et 100 pixels de haut
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        int height = (int) dimension.getHeight();
-        int width = (int) dimension.getWidth();
         this.setSize(width / 2, height / 2);
 
         //Nous demandons maintenant à notre objet de se positionner au centre
@@ -40,6 +37,22 @@ public class crashtest extends JFrame {
         this.setVisible(true);
 
 
+    }
+
+    public int height() {
+
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int height;
+        height = (int) dimension.getHeight();
+        return height;
+    }
+
+    public int width() {
+
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int width;
+        width = (int) dimension.getWidth();
+        return width;
     }
 
 }
