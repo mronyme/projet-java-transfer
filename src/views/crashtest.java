@@ -36,23 +36,24 @@ public class crashtest extends JFrame {
         this.setContentPane(new Panneau());
 
         // Menu Bar
-        JMenuBar greenMenuBar = new JMenuBar();
-        greenMenuBar.setOpaque(true);
-        greenMenuBar.setBackground(new Color(154, 165, 127));
-        greenMenuBar.setPreferredSize(new Dimension(200, 20));
+        JMenuBar MenuBar = new JMenuBar();
+        MenuBar.setOpaque(true);
+        MenuBar.setBackground(new Color(255, 255, 255, 2));
+        MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
+
         // Label
-        JLabel yellowLabel = new JLabel();
-        yellowLabel.setOpaque(true);
-        yellowLabel.setBackground(new Color(248, 213, 131));
-        yellowLabel.setPreferredSize(new Dimension(200, 180));
+        JLabel Box1 = new JLabel();
+        Box1.setOpaque(true);
+        Box1.setBackground(new Color(255, 255, 255));
+        Box1.setPreferredSize(new Dimension(200, 180));
 //Set the menu bar and add the label to the content pane.
-        this.setJMenuBar(greenMenuBar);
-        this.getContentPane().add(yellowLabel, BorderLayout.CENTER);
+        this.setJMenuBar(MenuBar);
+        this.getContentPane().add(Box1, BorderLayout.CENTER);
 
         //Display the window.
+
+
         this.pack();
-
-
         this.setVisible(true);
 
 

@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Panneau extends JPanel {
+    public Panneau() {
+
+    }
 
     public void paintComponent(Graphics g) {
 
