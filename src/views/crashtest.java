@@ -28,21 +28,32 @@ public class crashtest extends JFrame {
 
         //Et enfin, la rendre visible
         this.setVisible(true);
-
-        // Le Content Pane :
-
-        //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
+//Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
         //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
-        this.setVisible(true);
-        // Barre de menu
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Accueil");
-        pan.add(menu);
+        // Menu Bar
+        JMenuBar greenMenuBar = new JMenuBar();
+        greenMenuBar.setOpaque(true);
+        greenMenuBar.setBackground(new Color(154, 165, 127));
+        greenMenuBar.setPreferredSize(new Dimension(200, 20));
+        // Label
+        JLabel yellowLabel = new JLabel();
+        yellowLabel.setOpaque(true);
+        yellowLabel.setBackground(new Color(248, 213, 131));
+        yellowLabel.setPreferredSize(new Dimension(200, 180));
+//Set the menu bar and add the label to the content pane.
+        this.setJMenuBar(greenMenuBar);
+        this.getContentPane().add(yellowLabel, BorderLayout.CENTER);
+
+        //Display the window.
+        this.pack();
+
+
+        this.setVisible(true);
 
 
 
