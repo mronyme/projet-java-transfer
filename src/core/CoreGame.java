@@ -179,6 +179,54 @@ public class CoreGame {
 		cardsList.remove(indexList);
 		return cardDrawn;
 	}
+	// Cette fonction retourne la liste des joueurs classé par leurs scores finaux
+	public List<Player> getLeaderBoard()
+	{
+		List<Player> playersRanked = new ArrayList<Player>();
+		for(Player player : players) {
+			if(playersRanked.size() == 0)
+			{
+				playersRanked.add(player);
+			}
+			else
+			{
+				for(int i = 0;i < playersRanked.size();i++) {
+					// Si true : le score de player est > à celui du joueur à la position i
+					if(betterScore(player,playersRanked.get(i)))
+					{
+						playersRanked.add(i,player);
+					}
+					if(i == playersRanked.size()-1)
+					{
+						playersRanked.add(player);
+					}
+				}
+			}
+		}
+		return playersRanked; 
+	}
+	public Boolean betterScore(Player player1,Player player2)
+	{
+		if(player1.getFinalScore().get(0) > player2.getFinalScore().get(0))
+		{
+			return true;
+		}
+		else if(player1.getFinalScore().get(0) == player2.getFinalScore().get(0))
+		{
+			if(player1.getFinalScore().get(1) > player2.getFinalScore().get(1))
+			{
+				return true;
+			}
+			else if(player1.getFinalScore().get(1) == player2.getFinalScore().get(1))
+			{
+				if(player1.getFinalScore().get(2) > player2.getFinalScore().get(2))
+				{
+					return true;
+				}
+			}	
+		}
+		return false;
+	}
 	public void calculateScore()
 	{
 		for(Player player : players) {
