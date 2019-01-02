@@ -73,7 +73,8 @@ public class Window2 {
                 }
 
             }
-        });
+                                    }
+        );
 
         buttonSecond.addActionListener(new ActionListener() {
             @Override

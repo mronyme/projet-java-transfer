@@ -20,6 +20,7 @@ public class Panneau extends JPanel {
 
         // Création d'un rectangle redimensionable
         g.fillRect(x1, y1, this.getWidth() / 2, this.getHeight() / 2);
+
         // Insertion du background
         try {
             Image img = ImageIO.read(new File("fond.jpg"));

@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class crashtest extends JFrame {
 
+
     public crashtest() { // Constructeur de la classe crashtest
         JFrame fenetre = new JFrame();
         //Définit un titre pour notre fenêtre
@@ -28,27 +29,37 @@ public class crashtest extends JFrame {
 
         //Et enfin, la rendre visible
         this.setVisible(true);
-//Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
+
+        // Composantes de la JFrame
+        //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
         //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
-
         // Menu Bar
         JMenuBar MenuBar = new JMenuBar();
         MenuBar.setOpaque(true);
-        MenuBar.setBackground(new Color(255, 255, 255, 2));
+        MenuBar.setBackground(new Color(255, 255, 255, 176));
         MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
+
+        // Bouton Play
+        JButton buttonOne = new JButton(" Play !");
+
 
         // Label
         JLabel Box1 = new JLabel();
         Box1.setOpaque(true);
-        Box1.setBackground(new Color(255, 255, 255));
-        Box1.setPreferredSize(new Dimension(200, 180));
-//Set the menu bar and add the label to the content pane.
+        Box1.setBackground(new Color(254, 255, 243, 121));
+        Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
+        Box1.setText("Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :");
+
+
+        //Ajout des objets précédements créé dans la fenêtre.
         this.setJMenuBar(MenuBar);
         this.getContentPane().add(Box1, BorderLayout.CENTER);
+        this.getContentPane().add(buttonOne, BorderLayout.CENTER);
+
 
         //Display the window.
 
