@@ -11,14 +11,15 @@ public class Panneau extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-
-        //Phrase apparaissant chaque fois que la mÃ©thode sera invoquÃ©e
-        System.out.println("Je suis exÃ©cutÃ©e !");
+        setOpaque(false);
+        //Phrase apparaissant chaque fois que la méthode sera invoquée
+        String str2 = "exécutée";
+        System.out.println("Je suis " + str2 + "!");
 /*
         int x1 = this.getWidth() / 4;
         int y1 = this.getHeight() / 4;
 
-        // CrÃ©ation d'un rectangle redimensionable
+         Création d'un rectangle redimensionable
         g.fillRect(x1, y1, this.getWidth() / 2, this.getHeight() / 2);
 */
         // Insertion du background
@@ -31,5 +32,6 @@ public class Panneau extends JPanel {
             e.printStackTrace();
 
         }
+
     }
 }

@@ -7,19 +7,20 @@ public class crashtest extends JFrame {
 
 
     public crashtest() { // Constructeur de la classe crashtest
+
         JFrame fenetre = new JFrame();
-        //DÃ©finit un titre pour notre fenÃªtre
+        //Définit un titre pour notre fenêtre
 
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
-        // On rÃ©cupÃ¨re la taille de l'Ã©cran utile, pour cela on utilise l'objet ScreenSize
+        // On récupère la taille de l'écran utile, pour cela on utilise l'objet ScreenSize
         ScreenSize ScreenSize = new ScreenSize();
-        int width = ScreenSize.getwidth(); // RÃ©cupÃ©ration de la largeur
-        int height = ScreenSize.getheight(); // RÃ©cupÃ©ration de la hauteur
+        int width = ScreenSize.getwidth(); // Récupération de la largeur
+        int height = ScreenSize.getheight(); // Récupération de la hauteur
 
         // Puis on redimensionne la JFrame en fonction
         this.setSize(width / 2, height / 2);
 
-        //Nous demandons maintenant Ã  notre objet de se positionner au centre
+        //Nous demandons maintenant à notre objet de se positionner au centre
 
         this.setLocationRelativeTo(null);
 
@@ -33,15 +34,28 @@ public class crashtest extends JFrame {
         // Composantes de la JFrame
         //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
-        //DÃ©finition de sa couleur de fond
+        //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
-        //On prÃ©vient notre JFrame que notre JPanel sera son content pane
+        //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
         // Menu Bar
         JMenuBar MenuBar = new JMenuBar();
         MenuBar.setOpaque(true);
-        MenuBar.setBackground(new Color(255, 255, 255, 176));
+        MenuBar.setBackground(new Color(255, 255, 255));
         MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
+        JMenu Accueil = new JMenu("Accueil");
+        String str1 = "Paramètres";
+
+        JMenu Parametres = new JMenu(str1);
+        JMenu Aide = new JMenu("Aide");
+
+        MenuBar.add(Accueil);
+        MenuBar.add(Parametres);
+        MenuBar.add(Aide);
+
+        JMenuItem restart = new JMenuItem("Recommencer la partie");
+        Parametres.add(restart);
+
 
         // Bouton Play
         JButton buttonOne = new JButton(" Play !");
@@ -54,8 +68,16 @@ public class crashtest extends JFrame {
         Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
         Box1.setText("Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :");
 
+        JCheckBox player2 = new JCheckBox("player2");
+        JCheckBox player3 = new JCheckBox("player3");
+        JCheckBox player4 = new JCheckBox("player4");
 
-        //Ajout des objets prÃ©cÃ©dements crÃ©Ã© dans la fenÃªtre.
+        this.add(player2);
+        this.add(player3);
+        this.add(player4);
+
+
+        //Ajout des objets précédements créé dans la fenêtre.
         this.setJMenuBar(MenuBar);
         this.getContentPane().add(Box1, BorderLayout.CENTER);
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
