@@ -69,9 +69,9 @@ public class IHM extends JFrame {
         Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
         Box1.setText("Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :");
 
-        JRadioButton player2 = new JRadioButton("player2");
-        JRadioButton player3 = new JRadioButton("player3");
-        JRadioButton player4 = new JRadioButton("player4");
+        JRadioButton player2 = new JRadioButton("2 joueurs");
+        JRadioButton player3 = new JRadioButton("3 joueurs");
+        JRadioButton player4 = new JRadioButton("4 joueurs");
         ButtonGroup  bg = new ButtonGroup();
         bg.add(player2);
         bg.add(player3);
