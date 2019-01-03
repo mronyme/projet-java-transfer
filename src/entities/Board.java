@@ -1,4 +1,4 @@
-package core;
+package entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
 
-import entities.Card;
-import entities.Castle;
-import entities.Empty;
-import entities.Entity;
-import entities.Face;
 import enums.FaceEnum;
 
 

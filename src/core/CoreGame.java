@@ -12,14 +12,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-import core.Player;
-import entities.Card;
-import entities.Castle;
-import entities.Entity;
-import entities.Face;
-import enums.ColorEnum;
-import enums.FaceEnum;
-import views.Window;
+import entities.*;
+import enums.*;
+import views.*;
 
 import enums.ColorEnum;
 import views.Window;
@@ -34,16 +29,19 @@ public class CoreGame {
     List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
     Map<ColorEnum, Integer> kingsList = new HashMap<ColorEnum, Integer>();     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
     int numberTotalKings; // Nombre de rois totaux présent dans la partie
+    
+    List<List<HashMap<String,Object>>> cardsColumn = new ArrayList<List<HashMap<String,Object>>>();	
+    
     public CoreGame() {
         this.players = new ArrayList<Player>();
         this.cardsList = new ArrayList<>();
         this.colorsAvailable = new ArrayList<>(Arrays.asList(ColorEnum.pink,ColorEnum.yellow,ColorEnum.green,ColorEnum.blue));
         initCard();
         initGame(2);
-        players.get(0).board.setCard(0, 0, 0, 1, cardsList.get(8));
-        players.get(0).board.setCard(1, 0, 1, 1, cardsList.get(13));
-        players.get(0).board.setCard(2, 2, 3, 2, cardsList.get(10));
-        players.get(0).board.setCastle(0,2);
+        players.get(0).getBoard().setCard(0, 0, 0, 1, cardsList.get(8));
+        players.get(0).getBoard().setCard(1, 0, 1, 1, cardsList.get(13));
+        players.get(0).getBoard().setCard(2, 2, 3, 2, cardsList.get(10));
+        players.get(0).getBoard().setCastle(0,2);
         calculateScore();
     }
     // -------> Utile Pour vous <-------
@@ -60,20 +58,68 @@ public class CoreGame {
         discardCards();
         // Dï¿½marrer le jeux ( lancer l'affichage des terrains)
     }
+    public void manageRound(int nbRound) {
+    	if(cardsList.size() != 0)
+    	{
+    		if(nbRound == 1)
+    		{
+    			firstRound();
+    		}
+    		else
+    		{
+    			casualRound();
+    		}
+    		cardsColumn.remove(0);
+    		manageRound(nbRound+1);
+    	}
+    	else
+    	{
+    		endGame();
+    	}
+    }
+    public void firstRound() {
+    	List<ColorEnum> order = pickKings();
+    	drawFirstRound();
+    	for(ColorEnum color : order)
+    	{
+    		Player player = Player.findPlayerByColor(players, color);
+    		player.startTurn();
+    	}
+    }
+    public void casualRound() {
+    	drawCasualRound();
+    	for(HashMap<String,Object> map : cardsColumn.get(0))
+    	{
+    		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
+    		player.startTurn();
+    	}
+    }
+    public void endGame()
+    {
+    	// fin de partie
+    }
     // -------> Utile Pour vous <-------
     // Cette fonction est appellée avant pickKings et correspond au début du premier tour de jeux
     // Valeur Retournée : Liste de 2 élements -> 1 : Première colone de n cartes ( Liste de cartes rangée par numéro croissant) , 2 : Deuxième colones de n cartes ( Liste de cartes rangée par numéro croissant)
     // n -> Nombres de rois totaux dans la partie
-    public void firstRound() {
-    	List<List<Card>> cardsColumn = new ArrayList<List<Card>>();	
-    	cardsColumn.add(createLine());     	// Ajoute la premiere rangée de cartes
-    	cardsColumn.add(createLine());   // Ajoue la deuxième rangée de cartes
+    public void drawFirstRound() {
+    	cardsColumn.add(createCardColumn());     	// Ajoute la premiere rangée de cartes
+    	cardsColumn.add(createCardColumn());   // Ajoue la deuxième rangée de cartes
     }
     // -------> Inutile Pour vous <-------
     // Cette fonction créer une rangée de cartes
-    public List<Card> createLine() {
-    	List<Card> cards = drawCards();
-    	return cards;
+    public List<HashMap<String,Object>> createCardColumn() {
+       	List<Card> cards = drawCards();
+       	List<HashMap<String,Object>> column = new ArrayList<HashMap<String,Object>>();
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	for(Card card : cards)
+    	{
+    		map = new HashMap<String, Object>();
+        	map.put("color",null);
+        	map.put("card",card);
+        	column.add(map);
+    	}
+    	return column;
     }
     // -------> Utile Pour vous <-------
     // Cette fonction gï¿½re le dï¿½but de tout les tours de jeux ï¿½ l'exception du premier (firstRound)
@@ -81,9 +127,8 @@ public class CoreGame {
     // Cette fonction gère le début de tout les tours de jeux à l'exception du premier (firstRound)
     // Valeur Retournée : Liste de 1 élement -> une colone de n cartes ( Liste de cartes rangée par numéro croissant)
     // n -> Nombres de rois totaux dans la partie
-    public void CasualRound() {
-    	List<List<Card>> cardsColumn = new ArrayList<List<Card>>();
-    	cardsColumn.add(createLine()); // Ajoute 
+    public void drawCasualRound() {
+    	cardsColumn.add(createCardColumn()); // Ajoute 
     }
     
     // -------> Utile Pour vous <-------
@@ -119,7 +164,7 @@ public class CoreGame {
 		{
 			Random rand = new Random();
 			ColorEnum color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
-			Player player = new Player(color,numberKings);
+			Player player = new Human(color,numberKings);
 			this.kingsList.put(color, numberKings);
 			colorsAvailable.remove(color);
 			players.add(player);
@@ -173,7 +218,6 @@ public class CoreGame {
 		int[] indexList = random.ints(0, cardsList.size()).distinct().limit(numberTotalKings).sorted().toArray();
 		for(int index : indexList)
 		{
-			System.out.println(index);
 			cardDrawn.add(cardsList.get(index));
 		}
 		cardsList.remove(indexList);
@@ -248,7 +292,7 @@ public class CoreGame {
 	}
 	public List<Integer> calculateRegion(Player player,FaceEnum faceType)
 	{
-		List<Map<String,Integer>> sameType = player.board.getSameType(faceType);
+		List<Map<String,Integer>> sameType = player.getBoard().getSameType(faceType);
 		//System.out.println(faceType+" "+sameType);
 		Iterator<Map<String, Integer>> itr = sameType.iterator();
 		List<Entity> faceCounted = new ArrayList<Entity>();
@@ -277,7 +321,7 @@ public class CoreGame {
 	public List<Object> checkAdjacent(Player player,FaceEnum faceRef,int x,int y,List<Entity> faceCounted,Entity previous)
 	{
 		List<Object> temp;
-		Entity entity = player.board.getEntity(x, y);
+		Entity entity = player.getBoard().getEntity(x, y);
 		List<Object> count = new ArrayList<Object>();
 		count.add(0);
 		count.add(0);
@@ -285,10 +329,10 @@ public class CoreGame {
 		//System.out.println("Entity "+entity+" / Previous "+previous);
 		if(entity instanceof Face && !faceCounted.contains(entity))
 		{
-			Entity entityUp = player.board.getEntity(x, y+1);
-			Entity entityDown = player.board.getEntity(x, y-1);
-			Entity entityLeft = player.board.getEntity(x-1, y);
-			Entity entityRight = player.board.getEntity(x+1, y);
+			Entity entityUp = player.getBoard().getEntity(x, y+1);
+			Entity entityDown = player.getBoard().getEntity(x, y-1);
+			Entity entityLeft = player.getBoard().getEntity(x-1, y);
+			Entity entityRight = player.getBoard().getEntity(x+1, y);
 			if(entityUp != null && entityUp instanceof Face && ((Face) entityUp).getFaceType() == faceRef && entityUp != previous)
 			{
 				temp = checkAdjacent(player,faceRef,x,y+1,faceCounted,entity);
@@ -318,7 +362,7 @@ public class CoreGame {
 				count.set(2,temp.get(2));
 			}
 			count.set(0,1+(int)count.get(0));
-			count.set(1,((Face)player.board.getEntity(x, y)).getCrown() + (int)count.get(1));
+			count.set(1,((Face)player.getBoard().getEntity(x, y)).getCrown() + (int)count.get(1));
 			((List<Entity>)count.get(2)).add(entity);
 		}
 		return count;
