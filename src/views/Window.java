@@ -1,3 +1,7 @@
+
+
+// Ancienne version N1
+
 package views;
 
 import core.CoreGame;
@@ -24,9 +28,10 @@ public class Window extends JFrame implements ActionListener {
     private Border lineBorder = new LineBorder(Color.BLACK, 2);
     JPanel panelCont = new JPanel();
     private CoreGame game;
+
     public Window(CoreGame game) {
         super("KingDomino");
-    	this.game = game;
+        this.game = game;
         setSize(1000, 1000);
         CardLayout cl = new CardLayout();
         panelCont.setLayout(cl);
@@ -79,7 +84,7 @@ public class Window extends JFrame implements ActionListener {
         panneau22.add(b1);
         b1.addActionListener(this);
         panneau2.setBorder(lineBorder);
-        
+
         panelCont.add(cp,"1");
         cl.show(panelCont, "1");
         add(panelCont);
@@ -87,25 +92,25 @@ public class Window extends JFrame implements ActionListener {
         pack();
         setVisible(true);
     }
-    public void renderMenu()
-    {
-    	// Affiche la fenetre menu
+
+    public void renderMenu() {
+        // Affiche la fenetre menu
     }
-    public void renderGeneralBoard()
-    {	
-    	// Affiche la fenetre avec tous les territoires actualisé ( appellée à chaque début de tour de jeu) 
+
+    public void renderGeneralBoard() {
+        // Affiche la fenetre avec tous les territoires actualisé ( appellée à chaque début de tour de jeu)
     }
-    public void renderSelectionCard()
-    {
-    	// Affiche la fenetre de sï¿½lection des cartes ï¿½ l'aide des rois ( appellï¿½e ï¿½ chaque dï¿½but de tour de jeu)
+
+    public void renderSelectionCard() {
+        // Affiche la fenetre de sï¿½lection des cartes ï¿½ l'aide des rois ( appellï¿½e ï¿½ chaque dï¿½but de tour de jeu)
     }
-    public void renderPlayerBoard()
-    {
-    	// Affiche la fenetre avec seulement le territoire du joueur dont c'est le tour
+
+    public void renderPlayerBoard() {
+        // Affiche la fenetre avec seulement le territoire du joueur dont c'est le tour
     }
-    public void renderLeaderboard()
-    {
-    	// Affiche la fenetre des scores de fin de partie
+
+    public void renderLeaderboard() {
+        // Affiche la fenetre des scores de fin de partie
     }
 
     public void actionPerformed(ActionEvent e) {

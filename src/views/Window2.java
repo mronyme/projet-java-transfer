@@ -1,3 +1,7 @@
+
+
+// Ancienne version N2
+
 package views;
 
 import core.CoreGame;
@@ -20,6 +24,7 @@ public class Window2 {
     private JLabel txt1;
     private JRadioButton br1, br2, br3;
     private CoreGame game;
+
     public Window2(CoreGame game) {
         this.game = game;
         panelCont.setLayout(cl);
@@ -44,7 +49,6 @@ public class Window2 {
         bg.add(br3);
 
 
-
         panelSecond.setBackground(Color.BLACK);
 
         panelCont.add(panelFirst, "1");
@@ -52,27 +56,27 @@ public class Window2 {
         cl.show(panelCont, "1");
 
         buttonOne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                cl.show(panelCont, "2");
-                if (br1.isSelected()) {
+                                        @Override
+                                        public void actionPerformed(ActionEvent arg0) {
+                                            cl.show(panelCont, "2");
+                                            if (br1.isSelected()) {
 
-                    System.out.println("nbres des joueurs est 2");
-                    game.initGame(2);
-
-
-                } else if (br2.isSelected()) {
-                    System.out.println("nbres des joueurs est 3");
-                    game.initGame(3);
+                                                System.out.println("nbres des joueurs est 2");
+                                                game.initGame(2);
 
 
-                } else if (br3.isSelected()) {
-                    System.out.println("nbres des joueurs est 4");
-                    game.initGame(4);
+                                            } else if (br2.isSelected()) {
+                                                System.out.println("nbres des joueurs est 3");
+                                                game.initGame(3);
 
-                }
 
-            }
+                                            } else if (br3.isSelected()) {
+                                                System.out.println("nbres des joueurs est 4");
+                                                game.initGame(4);
+
+                                            }
+
+                                        }
                                     }
         );
 
