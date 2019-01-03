@@ -38,21 +38,22 @@ public class IHM extends JFrame {
         pan.setBackground(Color.ORANGE);
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
+
         // Menu Bar
         JMenuBar MenuBar = new JMenuBar();
         MenuBar.setOpaque(true);
         MenuBar.setBackground(new Color(255, 255, 255));
         MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
+        // Onglets du menu :
         JMenu Accueil = new JMenu("Accueil");
         String str1 = "Paramètres";
-
         JMenu Parametres = new JMenu(str1);
         JMenu Aide = new JMenu("Aide");
 
         MenuBar.add(Accueil);
         MenuBar.add(Parametres);
         MenuBar.add(Aide);
-
+        // Option du menu paramètres :
         JMenuItem restart = new JMenuItem("Recommencer la partie");
         Parametres.add(restart);
 
