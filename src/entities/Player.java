@@ -15,10 +15,11 @@ public abstract class Player {
 		super();
 		this.color = color;
 		this.numberKings = numberKings;
-		this.board = new Board();
+		this.board = new Board(this);
 		this.finalScore = new ArrayList<Integer>();
 	}
 	public void startTurn() {}
+	
 	public Board getBoard() {
 		return this.board;
 	}
