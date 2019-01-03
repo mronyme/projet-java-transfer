@@ -1,5 +1,5 @@
 import core.CoreGame;
-import views.crashtest;
+import views.IHM;
 
 public class Main {
 
@@ -8,7 +8,7 @@ public class Main {
 		CoreGame game = new CoreGame();
 		//Window window = new Window(game);
         //Window2 window = new Window2(game);
-		crashtest window2 = new crashtest();
+		IHM window2 = new IHM();
 		// Syntaxe : nom_classe nom_objet = new nom_constructeur(paramètres) ;
 	}
 

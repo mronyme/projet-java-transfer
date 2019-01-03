@@ -3,10 +3,10 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
-public class crashtest extends JFrame {
+public class IHM extends JFrame {
 
 
-    public crashtest() { // Constructeur de la classe crashtest
+    public IHM() { // Constructeur de la classe IHM
 
         JFrame fenetre = new JFrame();
         //Définit un titre pour notre fenêtre
