@@ -5,32 +5,38 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import core.CoreGame;
+
 import java.util.Arrays;
 
 import enums.FaceEnum;
 
 
 public class Board {
+	CoreGame game;
 	Entity[][] coords;
 	Player owner;
-	public Board(Player player) {
+	public Board(CoreGame game,Player player) {
 		// Cr�er un tableau 9*9 remplis d'object "Empty" (case vide)
-		this.coords = new Entity[8][8];
+		this.coords = new Entity[5][5];
 		this.owner = player;
+		this.game = game;
 		Empty emptyCase = new Empty();
 		for (Entity[] row : this.coords)
 		    Arrays.fill(row, emptyCase);
 	}
 	public Board(Board board) {
-		this.coords = board.getCoords();
+		this.coords = Arrays.stream(board.getCoords()).map(Entity[]::clone).toArray(Entity[][]::new);
 		this.owner = board.owner;
+		this.game = board.game;
 	}
 	// Retourne l'entit� pr�sente sur ces coordonne�s : Soit une Carte, soit un ch�teaux
 	// Pour savoir si on est fa�e un l'un ou l'autre , on compare l'entit�e au �numeration : Exemple -> if(Entity.getType() == EntityEnum.Card)
 	// Ne pas oublier d'importer la classe Entity et la classe EntityEnum
 	public Entity getEntity(int coordsX,int coordsY)
 	{
-		if(coordsX >= 0 && coordsX < 8 && coordsY >= 0 && coordsY < 8)
+		if(coordsX >= 0 && coordsX < 4 && coordsY >= 0 && coordsY < 4)
 		{
 			return this.coords[coordsX][coordsY];
 		}
@@ -38,6 +44,24 @@ public class Board {
 		{
 			return null;
 		}
+	}
+	public FaceEnum[][] getFaceEnum(){
+		FaceEnum[][] faceEnum = new FaceEnum[this.coords.length][this.coords[0].length];
+		for(int x = 0;x < this.coords.length;x++)
+		{
+			for(int y = 0;y < this.coords[x].length;y++)
+			{
+				if(this.coords[x][y] instanceof Face)
+				{
+					faceEnum[x][y] = ((Face)this.coords[x][y]).type;
+				}
+				if(this.coords[x][y] instanceof Castle)
+				{
+					faceEnum[x][y] = FaceEnum.Castle;
+				}
+			}
+		}
+		return faceEnum;
 	}
 	// Place la carte sur ces coordonn�es
 	public Boolean setCard(int coordsXFC1,int coordsYFC1,int coordsXFC2,int coordsYFC2,Card card)
@@ -89,34 +113,66 @@ public class Board {
 		return sameTypeList;		
 	}
 	public static Boolean moveIsValid(Player player,int coordsXFC1,int coordsYFC1,int coordsXFC2,int coordsYFC2,Card card) {
+		Boolean valid = true;
+		if(!(coordsXFC1 >= 0 && coordsXFC1 < player.getBoard().getCoords().length-1 && coordsYFC1 >= 0 && coordsYFC1 < player.getBoard().getCoords()[0].length-1 && coordsXFC2 >= 0 && coordsXFC2 < player.getBoard().getCoords().length-1 && coordsYFC2 >= 0 && coordsYFC2 < player.getBoard().getCoords()[0].length-1))
+		{
+			return false;
+		}
 		if(!(player.getBoard().getCoords()[coordsXFC1][coordsYFC1] instanceof Empty && player.getBoard().getCoords()[coordsXFC2][coordsYFC2] instanceof Empty))
 		{
+			//System.out.println("Erreur : "+coordsXFC1+" "+coordsYFC1+" "+coordsXFC2+" "+coordsYFC2);
+			//System.out.println(player.getBoard().getCoords()[coordsXFC1][coordsYFC1]);
 			return false;
 		}
-		if(!checkAdjacentType(player,coordsXFC1,coordsYFC1,card.face1,card.face2))
+		if(!checkAdjacentType(player,coordsXFC1,coordsYFC1,card.face1,card.face2,false))
 		{
-			return false;
+			valid =  false;
 		}
-		if(!checkAdjacentType(player,coordsXFC2,coordsYFC2,card.face2,card.face1))
+		if(!checkAdjacentType(player,coordsXFC2,coordsYFC2,card.face2,card.face1,valid))
 		{
-			return false;
+			valid =  false;
 		}
-		return true;
+		return valid;
 	}
-	public static Boolean checkAdjacentType(Player player,int x,int y,Face face,Face faceLinked) {
-		if((x+1) >= player.getBoard().getCoords().length || player.getBoard().getCoords()[x+1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x+1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x+1][y]))
+	public static Boolean checkAdjacentType(Player player,int x,int y,Face face,Face faceLinked,Boolean firstFaceValid) {
+		int adjacentEmpty = 0;
+		// Check Right Square
+		if((x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x+1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x+1][y]))
 		{
 			return false;
 		}
-		if((x-1) < 0 || player.getBoard().getCoords()[x-1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x-1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x-1][y]))
+		else if((x+1) >= player.getBoard().getCoords().length || (x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Empty)
+		{
+			adjacentEmpty+=1;
+		}
+		// Check Left Square
+		if((x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x-1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x-1][y]))
 		{
 			return false;
 		}
-		if((y+1) >= player.getBoard().getCoords()[0].length || player.getBoard().getCoords()[x][y+1] instanceof Face  && face.type != ((Face)player.getBoard().getCoords()[x][y+1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y+1]))
+		else if((x-1) < 0 || (x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Empty)
+		{
+			adjacentEmpty+=1;		
+		}
+		// Check Upper Square
+		if((y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Face  && face.type != ((Face)player.getBoard().getCoords()[x][y+1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y+1]))
 		{
 			return false;
 		}
-		if((y+1) < 0 || player.getBoard().getCoords()[x][y-1] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x][y-1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y-1]))
+		else if((y+1) >= player.getBoard().getCoords()[0].length || (y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Empty)
+		{
+			adjacentEmpty+=1;	
+		}
+		// Check Down Square
+		if((y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x][y-1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y-1]))
+		{
+			return false;
+		}
+		else if((y-1) < 0 || (y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Empty)
+		{
+			adjacentEmpty+=1;	
+		}
+		if(adjacentEmpty == 4 && firstFaceValid == false)
 		{
 			return false;
 		}

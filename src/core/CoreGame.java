@@ -38,11 +38,6 @@ public class CoreGame {
         this.colorsAvailable = new ArrayList<>(Arrays.asList(ColorEnum.pink,ColorEnum.yellow,ColorEnum.green,ColorEnum.blue));
         initCard();
         initGame(2);
-        players.get(0).getBoard().setCard(0, 0, 0, 1, cardsList.get(8));
-        players.get(0).getBoard().setCard(1, 0, 1, 1, cardsList.get(13));
-        players.get(0).getBoard().setCard(2, 2, 3, 2, cardsList.get(10));
-        players.get(0).getBoard().setCastle(0,2);
-        calculateScore();
     }
     // -------> Utile Pour vous <-------
     // Cette fonction gère le commencement de la partie
@@ -56,20 +51,35 @@ public class CoreGame {
             initPlayers(numberPlayers, 1);
         }
         discardCards();
+        manageRound(0);
         // Dï¿½marrer le jeux ( lancer l'affichage des terrains)
     }
     public void manageRound(int nbRound) {
+    	//System.out.println("Carte restante :"+cardsList.size());
+    	//System.out.println("Carte restante :"+cardsList);
     	if(cardsList.size() != 0)
     	{
-    		if(nbRound == 1)
+    		if(nbRound == 0)
     		{
-    			firstRound();
+    			initRound();
+    			//manageRound(1);
     		}
     		else
     		{
-    			casualRound();
+	    		if(nbRound == 1)
+	    		{
+	    			firstRound();
+	    		}
+	    		else if(cardsList.size() == 4)
+	    		{
+	    			lastRound();
+	    		}
+	    		else
+	    		{
+	    			casualRound(nbRound);
+	    		}
+	    		clearCardColumn(0);
     		}
-    		cardsColumn.remove(0);
     		manageRound(nbRound+1);
     	}
     	else
@@ -77,26 +87,94 @@ public class CoreGame {
     		endGame();
     	}
     }
+    public void initRound() {
+    	for(Player player : players) {
+    		player.initTurn();
+    	}
+    }
     public void firstRound() {
-    	List<ColorEnum> order = pickKings();
+    	List<ColorEnum> order = drawKings();
     	drawFirstRound();
     	for(ColorEnum color : order)
     	{
     		Player player = Player.findPlayerByColor(players, color);
-    		player.startTurn();
+    		Card card = null;
+        	for(HashMap<String,Object> map : cardsColumn.get(0))
+        	{
+        		if(map.get("color") == player.getColor())
+        		{
+        			card = (Card)map.get("card");
+        		}
+        	}
+    		Card nextCard = player.startTurn(1,card);
+    		pickCard(player,1,nextCard);
     	}
     }
-    public void casualRound() {
+    public void lastRound() {
+    	drawCasualRound();
+    	int nbRound = 7;
+    	for(HashMap<String,Object> map : cardsColumn.get(0))
+    	{
+    		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
+    		Card nextCard = player.startTurn(nbRound,(Card)map.get("card"));
+    		pickCard(player,1,nextCard);
+    	}
+    }
+    public void casualRound(int nbRound) {
     	drawCasualRound();
     	for(HashMap<String,Object> map : cardsColumn.get(0))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
-    		player.startTurn();
+    		Card nextCard = player.startTurn(nbRound,(Card)map.get("card"));
+    		pickCard(player,1,nextCard);
     	}
     }
     public void endGame()
     {
+    	System.out.println("Fin du jeux");
     	// fin de partie
+    }
+    public List<Card> getCardsAvailable(int columnId) {
+    	List<Card> cards = new ArrayList<Card>();
+    	for(HashMap<String,Object> map : cardsColumn.get(columnId))
+    	{
+    		if(map.get("color") == null)
+    		{
+    			cards.add((Card)map.get("card"));
+    		}
+    	}
+    	return cards;
+    }
+    public void pickCard(Player player,int columnId,Card card) {
+    	for(HashMap<String,Object> map : cardsColumn.get(columnId))
+    	{
+    		if(map.get("card") == card)
+    		{
+    			map.put("color", player.getColor());
+    		}
+    	}    	
+    }
+    public void removeCardFromColumn(int columnId,Card card)
+    {
+    	HashMap<String,Object> mapToDelete = null;
+    	for(HashMap<String,Object> map : cardsColumn.get(columnId))
+    	{
+    		if(map.get("card") == card)
+    		{
+    			mapToDelete = map;
+    		}
+    	}  
+    	cardsColumn.get(columnId).remove(mapToDelete);
+    }
+    public void clearCardColumn(int columnId) {
+    	for(HashMap<String,Object> map : cardsColumn.get(columnId))
+    	{
+    		cardsList.remove(map.get("card"));
+    	}
+    	cardsColumn.remove(columnId);
+    }
+    public int cardsListSize() {
+    	return cardsList.size();
     }
     // -------> Utile Pour vous <-------
     // Cette fonction est appellée avant pickKings et correspond au début du premier tour de jeux
@@ -137,7 +215,7 @@ public class CoreGame {
     // Cette fonction gère l'ordre de jeu du premier tour en respectant l'ordre de pioche aléatoire des n rois
     // Valeur Retournée : Liste ordonnées de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier élement de la liste est le premier roi pioché et donc le joueur de cette couleur commencera etc.
     // n -> Nombres de rois totaux dans la partie
-    public List<ColorEnum> pickKings()
+    public List<ColorEnum> drawKings()
     {
 		Random rand = new Random();
 		List<ColorEnum> kingsPicked = new ArrayList<ColorEnum>();
@@ -164,7 +242,7 @@ public class CoreGame {
 		{
 			Random rand = new Random();
 			ColorEnum color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
-			Player player = new Human(color,numberKings);
+			Player player = new Ia(this,color,numberKings);
 			this.kingsList.put(color, numberKings);
 			colorsAvailable.remove(color);
 			players.add(player);
@@ -191,11 +269,6 @@ public class CoreGame {
 		catch(Exception e) {System.out.println(e);};	
 	}
     // -------> Inutile pour vous <-------
-	public void removeCard(int cardId)
-	{
-		cardsList.remove(cardId);
-	}
-    // -------> Inutile pour vous <-------
 	// Cette fonction retirer au dï¿½but de la partie un nombre de carte dï¿½pendant du nombre de joueur
 	// Cette fonction retirer au début de la partie un nombre de carte dépendant du nombre de joueur
 	public void discardCards()
@@ -215,12 +288,13 @@ public class CoreGame {
 	{
 		List<Card> cardDrawn = new ArrayList<Card>();
 	    Random random = new Random();
-		int[] indexList = random.ints(0, cardsList.size()).distinct().limit(numberTotalKings).sorted().toArray();
-		for(int index : indexList)
-		{
-			cardDrawn.add(cardsList.get(index));
-		}
-		cardsList.remove(indexList);
+	    for(int i = 0;i < numberTotalKings;i++)
+	    {
+	    	int index = (int )(Math.random() * cardsList.size());
+	    	cardDrawn.add(cardsList.get(index));
+			cardsList.remove(index);
+	    }
+	    cardDrawn.sort((card1,card2) -> Integer.compare(card1.getCardId(),card2.getCardId()));
 		return cardDrawn;
 	}
 	// Cette fonction retourne la liste des joueurs classé par leurs scores finaux
@@ -304,7 +378,7 @@ public class CoreGame {
 		{
 			Map<String,Integer> caseRef = itr.next();
 			List<Object> domainCounted = checkAdjacent(player,faceType,caseRef.get("x"),caseRef.get("y"),faceCounted,null);
-			System.out.println("DOmaine counted" +domainCounted);
+			//System.out.println("DOmaine counted" +domainCounted);
 			//faceCounted = ((List<Entity>)domainCounted.get(2));
 			if((int)domainCounted.get(0) > regionLargestDomain)
 			{

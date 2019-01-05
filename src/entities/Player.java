@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import core.CoreGame;
 import enums.ColorEnum;
 
 public abstract class Player {
 	ColorEnum color;
 	int numberKings;
 	Board board;
+	CoreGame game;
 	List<Integer> finalScore;
-	public Player(ColorEnum color,int numberKings) {
+	public Player(CoreGame game,ColorEnum color,int numberKings) {
 		super();
+		this.game = game;
 		this.color = color;
 		this.numberKings = numberKings;
-		this.board = new Board(this);
+		this.board = new Board(game,this);
 		this.finalScore = new ArrayList<Integer>();
 	}
-	public void startTurn() {}
+	public void initTurn() {}
+	public Card startTurn(int nbRound,Card card) {
+		return null;
+	}
 	
 	public Board getBoard() {
 		return this.board;

@@ -13,9 +13,13 @@ public class Card{
 		face2 = new Face(fC2Crown,fC2Type);
 	}
 	public Face getFace1() {
-		return face1;
+		return this.face1;
 	}
 	public Face getFace2() {
-		return face2;
+		return this.face2;
+	}
+	public int getCardId()
+	{
+		return this.CardId;
 	}
 }

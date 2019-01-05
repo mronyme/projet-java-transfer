@@ -6,5 +6,6 @@ Foret,
 Mer,
 Prairie,
 Mine,
-Montagne
+Montagne,
+Castle
 }
