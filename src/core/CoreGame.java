@@ -29,7 +29,6 @@ public class CoreGame {
     List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
     Map<ColorEnum, Integer> kingsList = new HashMap<ColorEnum, Integer>();     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
     int numberTotalKings; // Nombre de rois totaux présent dans la partie
-    
     List<List<HashMap<String,Object>>> cardsColumn = new ArrayList<List<HashMap<String,Object>>>();	
     
     public CoreGame() {
@@ -70,10 +69,6 @@ public class CoreGame {
 	    		{
 	    			firstRound();
 	    		}
-	    		else if(cardsList.size() == 4)
-	    		{
-	    			lastRound();
-	    		}
 	    		else
 	    		{
 	    			casualRound(nbRound);
@@ -82,8 +77,10 @@ public class CoreGame {
     		}
     		manageRound(nbRound+1);
     	}
-    	else
+    	else if(cardsColumn.size() != 0)
     	{
+    		lastRound(nbRound);
+    		clearCardColumn(0);
     		endGame();
     	}
     }
@@ -98,30 +95,20 @@ public class CoreGame {
     	for(ColorEnum color : order)
     	{
     		Player player = Player.findPlayerByColor(players, color);
-    		Card card = null;
-        	for(HashMap<String,Object> map : cardsColumn.get(0))
-        	{
-        		if(map.get("color") == player.getColor())
-        		{
-        			card = (Card)map.get("card");
-        		}
-        	}
-    		Card nextCard = player.startTurn(1,card);
+    		Card nextCard = player.firstTurn();
     		pickCard(player,1,nextCard);
     	}
     }
-    public void lastRound() {
-    	drawCasualRound();
-    	int nbRound = 7;
+    public void lastRound(int nbRound) {
     	for(HashMap<String,Object> map : cardsColumn.get(0))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
-    		Card nextCard = player.startTurn(nbRound,(Card)map.get("card"));
-    		pickCard(player,1,nextCard);
+    		player.lastTurn(nbRound,(Card)map.get("card"));
     	}
     }
     public void casualRound(int nbRound) {
     	drawCasualRound();
+    	//System.out.println(cardsColumn);
     	for(HashMap<String,Object> map : cardsColumn.get(0))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
@@ -132,6 +119,12 @@ public class CoreGame {
     public void endGame()
     {
     	System.out.println("Fin du jeux");
+		List<Player> playersRanked = ScoreManagement.getLeaderBoard(players);
+		System.out.println(players.get(0)+" "+players.get(0).getFinalScore());
+		Board.printMatrix(players.get(0).getBoard().getFaceEnum());
+		System.out.println(players.get(1)+" "+players.get(1).getFinalScore());
+		Board.printMatrix(players.get(1).getBoard().getFaceEnum());
+		System.out.println(playersRanked.get(0)+" a gagné !");
     	// fin de partie
     }
     public List<Card> getCardsAvailable(int columnId) {
@@ -296,150 +289,6 @@ public class CoreGame {
 	    }
 	    cardDrawn.sort((card1,card2) -> Integer.compare(card1.getCardId(),card2.getCardId()));
 		return cardDrawn;
-	}
-	// Cette fonction retourne la liste des joueurs classé par leurs scores finaux
-	public List<Player> getLeaderBoard()
-	{
-		List<Player> playersRanked = new ArrayList<Player>();
-		for(Player player : players) {
-			if(playersRanked.size() == 0)
-			{
-				playersRanked.add(player);
-			}
-			else
-			{
-				for(int i = 0;i < playersRanked.size();i++) {
-					// Si true : le score de player est > à celui du joueur à la position i
-					if(betterScore(player,playersRanked.get(i)))
-					{
-						playersRanked.add(i,player);
-					}
-					if(i == playersRanked.size()-1)
-					{
-						playersRanked.add(player);
-					}
-				}
-			}
-		}
-		return playersRanked; 
-	}
-	public Boolean betterScore(Player player1,Player player2)
-	{
-		if(player1.getFinalScore().get(0) > player2.getFinalScore().get(0))
-		{
-			return true;
-		}
-		else if(player1.getFinalScore().get(0) == player2.getFinalScore().get(0))
-		{
-			if(player1.getFinalScore().get(1) > player2.getFinalScore().get(1))
-			{
-				return true;
-			}
-			else if(player1.getFinalScore().get(1) == player2.getFinalScore().get(1))
-			{
-				if(player1.getFinalScore().get(2) > player2.getFinalScore().get(2))
-				{
-					return true;
-				}
-			}	
-		}
-		return false;
-	}
-	public void calculateScore()
-	{
-		for(Player player : players) {
-			List<Integer> regionScoreInfo = new ArrayList<Integer>();
-			int playerScore = 0;
-			int playerLargestDomain = 0;
-			int playerNbCouronnes = 0;
-			for (FaceEnum faceType : FaceEnum.values()) {
-				 regionScoreInfo =calculateRegion(player,faceType);
-					if((int)regionScoreInfo.get(0) > playerLargestDomain)
-					{
-						playerLargestDomain= (int)regionScoreInfo.get(0);
-					}
-					playerNbCouronnes+= (int)regionScoreInfo.get(0);
-					playerScore+= (int)regionScoreInfo.get(0) * (int)regionScoreInfo.get(1);			 
-			}
-			player.setFinalScore(playerScore, playerLargestDomain, playerNbCouronnes);
-		}
-	}
-	public List<Integer> calculateRegion(Player player,FaceEnum faceType)
-	{
-		List<Map<String,Integer>> sameType = player.getBoard().getSameType(faceType);
-		//System.out.println(faceType+" "+sameType);
-		Iterator<Map<String, Integer>> itr = sameType.iterator();
-		List<Entity> faceCounted = new ArrayList<Entity>();
-		List<Integer> regionScoreInfo = new ArrayList<Integer>();
-		int regionScore = 0;
-		int regionLargestDomain = 0;
-		int regionNbCouronnes = 0;
-		while(itr.hasNext())
-		{
-			Map<String,Integer> caseRef = itr.next();
-			List<Object> domainCounted = checkAdjacent(player,faceType,caseRef.get("x"),caseRef.get("y"),faceCounted,null);
-			//System.out.println("DOmaine counted" +domainCounted);
-			//faceCounted = ((List<Entity>)domainCounted.get(2));
-			if((int)domainCounted.get(0) > regionLargestDomain)
-			{
-				regionLargestDomain = (int)domainCounted.get(0);
-			}
-			regionNbCouronnes+= (int)domainCounted.get(0);
-			regionScore+= (int)domainCounted.get(0) * (int)domainCounted.get(1);
-		}
-		regionScoreInfo.add(regionScore);
-		regionScoreInfo.add(regionLargestDomain);
-		regionScoreInfo.add(regionNbCouronnes);
-		return regionScoreInfo;
-	}
-	public List<Object> checkAdjacent(Player player,FaceEnum faceRef,int x,int y,List<Entity> faceCounted,Entity previous)
-	{
-		List<Object> temp;
-		Entity entity = player.getBoard().getEntity(x, y);
-		List<Object> count = new ArrayList<Object>();
-		count.add(0);
-		count.add(0);
-		count.add(faceCounted);
-		//System.out.println("Entity "+entity+" / Previous "+previous);
-		if(entity instanceof Face && !faceCounted.contains(entity))
-		{
-			Entity entityUp = player.getBoard().getEntity(x, y+1);
-			Entity entityDown = player.getBoard().getEntity(x, y-1);
-			Entity entityLeft = player.getBoard().getEntity(x-1, y);
-			Entity entityRight = player.getBoard().getEntity(x+1, y);
-			if(entityUp != null && entityUp instanceof Face && ((Face) entityUp).getFaceType() == faceRef && entityUp != previous)
-			{
-				temp = checkAdjacent(player,faceRef,x,y+1,faceCounted,entity);
-				count.set(0,(int)temp.get(0));
-				count.set(1,(int)temp.get(1));
-				count.set(2,temp.get(2));
-			}
-			if(entityDown != null && entityDown instanceof Face && ((Face) entityDown).getFaceType() == faceRef && entityDown != previous)
-			{
-				temp = checkAdjacent(player,faceRef,x,y-1,faceCounted,entity);
-				count.set(0,(int)temp.get(0));
-				count.set(1,(int)temp.get(1));
-				count.set(2,temp.get(2));
-			}
-			if(entityLeft != null && entityLeft instanceof Face && ((Face) entityLeft).getFaceType() == faceRef && entityLeft != previous)
-			{
-				temp = checkAdjacent(player,faceRef,x-1,y,faceCounted,entity);
-				count.set(0,(int)temp.get(0));
-				count.set(1,(int)temp.get(1));
-				count.set(2,temp.get(2));
-			}
-			if(entityRight != null && entityRight instanceof Face && ((Face) entityRight).getFaceType() == faceRef && entityRight != previous)
-			{
-				temp = checkAdjacent(player,faceRef,x+1,y,faceCounted,entity);
-				count.set(0,(int)temp.get(0));
-				count.set(1,(int)temp.get(1));
-				count.set(2,temp.get(2));
-			}
-			count.set(0,1+(int)count.get(0));
-			count.set(1,((Face)player.getBoard().getEntity(x, y)).getCrown() + (int)count.get(1));
-			((List<Entity>)count.get(2)).add(entity);
-		}
-		return count;
 	}
 }
 

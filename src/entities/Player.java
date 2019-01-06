@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,16 +13,20 @@ public abstract class Player {
 	int numberKings;
 	Board board;
 	CoreGame game;
-	List<Integer> finalScore;
+	HashMap<String,Integer> finalScore;
 	public Player(CoreGame game,ColorEnum color,int numberKings) {
 		super();
 		this.game = game;
 		this.color = color;
 		this.numberKings = numberKings;
 		this.board = new Board(game,this);
-		this.finalScore = new ArrayList<Integer>();
+		this.finalScore = new HashMap<String,Integer>();
 	}
 	public void initTurn() {}
+	public Card firstTurn() {
+		return null;
+	}
+	public void lastTurn(int nbRound,Card card) {}
 	public Card startTurn(int nbRound,Card card) {
 		return null;
 	}
@@ -29,13 +34,11 @@ public abstract class Player {
 	public Board getBoard() {
 		return this.board;
 	}
-	public List<Integer> getFinalScore() {
+	public HashMap<String,Integer> getFinalScore() {
 		return this.finalScore;
 	}
-	public void setFinalScore(int totalScore,int largestDomain,int nbCouronnes) {
-		this.finalScore.add(totalScore);
-		this.finalScore.add(largestDomain);
-		this.finalScore.add(nbCouronnes);
+	public void setFinalScore(HashMap<String,Integer> finalScore) {
+		this.finalScore = finalScore;
 	}
 	public ColorEnum getColor() {
 		return this.color;

@@ -36,7 +36,7 @@ public class Board {
 	// Ne pas oublier d'importer la classe Entity et la classe EntityEnum
 	public Entity getEntity(int coordsX,int coordsY)
 	{
-		if(coordsX >= 0 && coordsX < 4 && coordsY >= 0 && coordsY < 4)
+		if(coordsX >= 0 && coordsX < this.coords.length && coordsY >= 0 && coordsY < this.coords[0].length)
 		{
 			return this.coords[coordsX][coordsY];
 		}
@@ -113,8 +113,7 @@ public class Board {
 		return sameTypeList;		
 	}
 	public static Boolean moveIsValid(Player player,int coordsXFC1,int coordsYFC1,int coordsXFC2,int coordsYFC2,Card card) {
-		Boolean valid = true;
-		if(!(coordsXFC1 >= 0 && coordsXFC1 < player.getBoard().getCoords().length-1 && coordsYFC1 >= 0 && coordsYFC1 < player.getBoard().getCoords()[0].length-1 && coordsXFC2 >= 0 && coordsXFC2 < player.getBoard().getCoords().length-1 && coordsYFC2 >= 0 && coordsYFC2 < player.getBoard().getCoords()[0].length-1))
+		if(!(coordsXFC1 >= 0 && coordsXFC1 < player.getBoard().getCoords().length && coordsYFC1 >= 0 && coordsYFC1 < player.getBoard().getCoords()[0].length && coordsXFC2 >= 0 && coordsXFC2 < player.getBoard().getCoords().length && coordsYFC2 >= 0 && coordsYFC2 < player.getBoard().getCoords()[0].length))
 		{
 			return false;
 		}
@@ -124,58 +123,123 @@ public class Board {
 			//System.out.println(player.getBoard().getCoords()[coordsXFC1][coordsYFC1]);
 			return false;
 		}
-		if(!checkAdjacentType(player,coordsXFC1,coordsYFC1,card.face1,card.face2,false))
+		if(checkAdjacentType(player,coordsXFC1,coordsYFC1,card.face1))
 		{
-			valid =  false;
+			return true;
 		}
-		if(!checkAdjacentType(player,coordsXFC2,coordsYFC2,card.face2,card.face1,valid))
+		if(checkAdjacentType(player,coordsXFC2,coordsYFC2,card.face2))
 		{
-			valid =  false;
+			//System.out.println(coordsXFC2+" "+coordsYFC2+" "+card.face2.getFaceType()+" "+card.face1.getFaceType());
+			return true;
 		}
-		return valid;
+		return false;
 	}
-	public static Boolean checkAdjacentType(Player player,int x,int y,Face face,Face faceLinked,Boolean firstFaceValid) {
+	public static Boolean checkAdjacentType(Player player,int x,int y,Face face) {
 		int adjacentEmpty = 0;
-		// Check Right Square
-		if((x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x+1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x+1][y]))
+		// Check if Castle Adjacent
+		Boolean castleAdjacent = false;
+		Boolean valid = true;
+		/*
+		 *  Check Right Square not the same type
+		 */
+		if((x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x+1][y]).type)
 		{
-			return false;
+			valid = false;
 		}
+		// Else Check if Right Square Empty or null
 		else if((x+1) >= player.getBoard().getCoords().length || (x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Empty)
 		{
 			adjacentEmpty+=1;
 		}
-		// Check Left Square
-		if((x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x-1][y]).type && faceLinked != ((Face)player.getBoard().getCoords()[x-1][y]))
+		else if((x+1) < player.getBoard().getCoords().length && player.getBoard().getCoords()[x+1][y] instanceof Castle)
 		{
-			return false;
+			castleAdjacent = true;
 		}
+		/*
+		 * / Check Left Square
+		 */
+		// Not same type
+		if((x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x-1][y]).type)
+		{
+			valid = false;
+		}
+		// Empty || null
 		else if((x-1) < 0 || (x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Empty)
 		{
 			adjacentEmpty+=1;		
 		}
-		// Check Upper Square
-		if((y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Face  && face.type != ((Face)player.getBoard().getCoords()[x][y+1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y+1]))
+		// Castle adjacent
+		else if((x-1) >= 0 && player.getBoard().getCoords()[x-1][y] instanceof Castle)
 		{
-			return false;
+			castleAdjacent = true;
+		}
+		/*
+		 * / Check Down Square
+		 */
+		if((y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Face  && face.type != ((Face)player.getBoard().getCoords()[x][y+1]).type)
+		{
+			valid = false;
 		}
 		else if((y+1) >= player.getBoard().getCoords()[0].length || (y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Empty)
 		{
 			adjacentEmpty+=1;	
 		}
-		// Check Down Square
-		if((y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x][y-1]).type && faceLinked != ((Face)player.getBoard().getCoords()[x][y-1]))
+		else if((y+1) < player.getBoard().getCoords()[0].length && player.getBoard().getCoords()[x][y+1] instanceof Castle)
 		{
-			return false;
+			castleAdjacent = true;
+		}
+		/*
+		 * / Check Upper Square
+		 */
+		if((y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Face && face.type != ((Face)player.getBoard().getCoords()[x][y-1]).type)
+		{
+			valid = false;
 		}
 		else if((y-1) < 0 || (y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Empty)
 		{
 			adjacentEmpty+=1;	
 		}
-		if(adjacentEmpty == 4 && firstFaceValid == false)
+		else if((y-1) >= 0 && player.getBoard().getCoords()[x][y-1] instanceof Castle)
 		{
-			return false;
+			castleAdjacent = true;
 		}
-		return true;
+		if(adjacentEmpty == 4)
+		{
+			valid = false;
+		}
+		if(castleAdjacent)
+		{
+			return castleAdjacent;
+		}
+		return valid;
+	}
+	public static void printMatrix(Object[][] grid) {
+		System.out.println("--------------------");
+	    for(int r=0; r<grid.length; r++) {
+	       for(int c=0; c<grid[r].length; c++)
+	           System.out.print(grid[r][c] + "  |  ");
+	       System.out.println();
+	    }
+		System.out.println("--------------------");
+	}
+	public static void printCrown(Object[][] grid) {
+		System.out.println("--------------------");
+	    for(int r=0; r<grid.length; r++) {
+	       for(int c=0; c<grid[r].length; c++)
+	    	   if(grid[r][c] instanceof Face)
+	    	   {
+	    		   System.out.print(((Face)grid[r][c]).crown + "  |  ");
+	    	   }
+	    	   else if(grid[r][c] instanceof Castle)
+	    	   {
+	    		   System.out.print("Castle  |  ");	    		   
+	    	   }
+	    	   else
+	    	   {
+	    		   System.out.print("null  |  ");	    		   
+	    	   }
+	       System.out.println();
+	    }
+		System.out.println("--------------------");
 	}
 }

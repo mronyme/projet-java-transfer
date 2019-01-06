@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import core.CoreGame;
+import core.ScoreManagement;
 import enums.ColorEnum;
 import enums.FaceEnum;
 
@@ -20,33 +21,34 @@ public class Ia extends Player{
 	{
 		this.getBoard().setCastle(2, 2);
 	}
+	public Card firstTurn()
+	{
+		List<Card> cards;
+		cards = game.getCardsAvailable(0);
+		Card card = pickBestCard(cards);
+		this.game.pickCard(this, 0, card);
+		cards = game.getCardsAvailable(1);
+		Card nextCard = pickBestCard(cards);
+		return nextCard;
+	}
+	public void lastTurn(int nbRound,Card lastCard)
+	{
+		HashMap<String,Integer> bestMove = pickBestMove(lastCard);
+		if(bestMove.size() > 0)
+		{
+			this.getBoard().setCard(bestMove.get("FC1X"), bestMove.get("FC1Y"), bestMove.get("FC2X"), bestMove.get("FC2Y"), lastCard);
+		}
+	}
 	public Card startTurn(int nbRound,Card card)
 	{
-		System.out.println("Round: "+nbRound+" | Player turn :"+ this.color);
 		List<Card> cards;
-		if(card == null)
-		{
-			//System.out.println("Selecting first card :");
-			cards = game.getCardsAvailable(0);
-			card = pickBestCard(cards);
-			//System.out.println("First card picked :"+ card);
-			this.game.pickCard(this, 0, card);
-		}
-		else
-		{
-			//System.out.println("Card used :"+card);
-		}
 		HashMap<String,Integer> bestMove = pickBestMove(card);
 		if(bestMove.size() > 0)
 		{
 			this.getBoard().setCard(bestMove.get("FC1X"), bestMove.get("FC1Y"), bestMove.get("FC2X"), bestMove.get("FC2Y"), card);
 		}
 		cards = game.getCardsAvailable(1);
-		//System.out.println("Selecting next card :");
 		Card nextCard = pickBestCard(cards);
-		//System.out.println("Next card picked :"+ nextCard);
-		System.out.println(Arrays.deepToString(this.board.getFaceEnum()).replaceAll("],", "]," + System.getProperty("line.separator")));
-		// Gestion du tour par ia
 		return nextCard;
 	}
 	public Card pickBestCard(List<Card> cards) {
@@ -59,7 +61,7 @@ public class Ia extends Player{
 		for(Card card : cards) {
 			//System.out.println("Card tested : "+ card);
 			globalScoreInfo = generateAllPossibleMoves(card,false);
-			if(betterScore(globalScoreInfo,finalScoreInfo)) 
+			if(ScoreManagement.betterScore(globalScoreInfo,finalScoreInfo)) 
 			{
 				finalScoreInfo.putAll(globalScoreInfo);
 				bestCard = card;
@@ -131,9 +133,8 @@ public class Ia extends Player{
 						}
 						if(valid)
 						{
-							//System.out.println(Arrays.deepToString(this.board.getCoords()).replaceAll("],", "]," + System.getProperty("line.separator")));
-							localScoreInfo = testMove(tempBoard);
-							if(betterScore(localScoreInfo,globalScoreInfo)) 
+							localScoreInfo = ScoreManagement.testBoard(tempBoard);
+							if(ScoreManagement.betterScore(localScoreInfo,globalScoreInfo)) 
 							{
 								globalScoreInfo.putAll(localScoreInfo);
 								bestMove.put("FC1X", FC1X);
@@ -151,104 +152,5 @@ public class Ia extends Player{
 			return bestMove;			
 		}
 		return globalScoreInfo;
-	}
-	public HashMap<String,Integer> testMove(Board board) {
-		faceAlreadyCounted = new ArrayList<Entity>();
-		HashMap<String,Integer> localScoreInfo = new HashMap<String,Integer>();
-		HashMap<String,Object> regionScoreInfo = new HashMap<String,Object>();
-		int localScore = 0;
-		int localLargestDomain = 0;
-		int localNbCrown = 0;
-		
-		for(int x = 0;x < board.getCoords().length;x++)
-		{
-			for(int y = 0;y < board.getCoords()[0].length;y++) 
-			{
-				if(board.getEntity(x, y) instanceof Face)
-				{
-					regionScoreInfo = checkAdjacent(board,(FaceEnum)((Face)board.getEntity(x, y)).type,x,y,0);
-					if((int)regionScoreInfo.get("domainSize") > localLargestDomain)
-					{
-						localLargestDomain = (int)regionScoreInfo.get("domainSize");
-					}
-					localNbCrown+= (int)regionScoreInfo.get("nbCrown");
-					localScore+= (int)regionScoreInfo.get("domainSize") * (int)regionScoreInfo.get("nbCrown");
-				}
-			}
-		}
-		localScoreInfo.put("totalScore",localScore);
-		localScoreInfo.put("largestDomain",localLargestDomain);
-		localScoreInfo.put("nbCrown",localNbCrown);
-		return localScoreInfo;
-	}
-	public static Boolean betterScore(HashMap<String,Integer> hypotheticalScore,HashMap<String,Integer> bestHypotheticalScore) {
-		if(hypotheticalScore.get("totalScore") > bestHypotheticalScore.get("totalScore"))
-		{
-			return true;
-		}
-		else if(hypotheticalScore.get("totalScore") == bestHypotheticalScore.get("totalScore"))
-		{
-			if(hypotheticalScore.get("largestDomain") > bestHypotheticalScore.get("largestDomain"))
-			{
-				return true;
-			}
-			else if(hypotheticalScore.get("largestDomain") == bestHypotheticalScore.get("largestDomain"))
-			{
-				if(hypotheticalScore.get("nbCrown") > bestHypotheticalScore.get("nbCrown"))
-				{
-					return true;
-				}				
-			}				
-		}	
-		return false;
-	}
-	public HashMap<String,Object> checkAdjacent(Board board,FaceEnum faceRef,int x,int y,int call)
-	{
-		HashMap<String,Object> temp;
-		Entity entity = board.getEntity(x, y);
-		HashMap<String,Object> regionScoreInfo = new HashMap<String,Object>();
-		regionScoreInfo.put("domainSize", 0);
-		regionScoreInfo.put("nbCrown",0);
-		regionScoreInfo.put("faceAlreadyCounted",faceAlreadyCounted);
-		//System.out.println(entity+" "+call);
-		if(entity instanceof Face && !faceAlreadyCounted.contains(entity))
-		{
-			faceAlreadyCounted.add(entity);
-			Entity entityUp = board.getEntity(x, y+1);
-			Entity entityDown = board.getEntity(x, y-1);
-			Entity entityLeft = board.getEntity(x-1, y);
-			Entity entityRight = board.getEntity(x+1, y);
-			if(entityUp != null && entityUp instanceof Face && ((Face) entityUp).getFaceType() == faceRef)
-			{
-				temp = checkAdjacent(board,faceRef,x,y+1,call+1);
-				regionScoreInfo.put("domainSize",(int)temp.get("domainSize"));
-				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown"));
-				regionScoreInfo.put("faceAlreadyCounted",temp.get("faceAlreadyCounted"));
-			}
-			if(entityDown != null && entityDown instanceof Face && ((Face) entityDown).getFaceType() == faceRef)
-			{
-				temp = checkAdjacent(board,faceRef,x,y-1,call+1);
-				regionScoreInfo.put("domainSize",(int)temp.get("domainSize"));
-				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown"));
-				regionScoreInfo.put("faceAlreadyCounted",temp.get("faceAlreadyCounted"));
-			}
-			if(entityLeft != null && entityLeft instanceof Face && ((Face) entityLeft).getFaceType() == faceRef)
-			{
-				temp = checkAdjacent(board,faceRef,x-1,y,call+1);
-				regionScoreInfo.put("domainSize",(int)temp.get("domainSize"));
-				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown"));
-				regionScoreInfo.put("faceAlreadyCounted",temp.get("faceAlreadyCounted"));
-			}
-			if(entityRight != null && entityRight instanceof Face && ((Face) entityRight).getFaceType() == faceRef)
-			{
-				temp = checkAdjacent(board,faceRef,x+1,y,call+1);
-				regionScoreInfo.put("domainSize",(int)temp.get("domainSize"));
-				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown"));
-				regionScoreInfo.put("faceAlreadyCounted",temp.get("faceAlreadyCounted"));
-			}
-			regionScoreInfo.put("domainSize",1+(int)regionScoreInfo.get("domainSize"));
-			regionScoreInfo.put("nbCrown",((Face)board.getEntity(x, y)).getCrown() + (int)regionScoreInfo.get("nbCrown"));
-		}
-		return regionScoreInfo;
 	}
 }

@@ -11,6 +11,13 @@ public class Human extends Player{
 	{
 		// Appel fonction demandant de placer le château sur le terrain
 	}
+	public Card firstTurn() {
+		// Appel fonction pour premier tour
+		return null;
+	}
+	public void lastTurn(int nbRound,Card card) {
+		// Appel fonction pour le dernier tour
+	}
 	public Card startTurn(int nbRound,Card card)
 	{
 		if(card == null)
