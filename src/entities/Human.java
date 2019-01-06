@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.List;
+
 import core.CoreGame;
 import enums.ColorEnum;
 
@@ -7,28 +9,43 @@ public class Human extends Player{
 	public Human(CoreGame game,ColorEnum color,int numberKings) {
 		super(game,color,numberKings);
 	}
-	public void initTurn()
-	{
-		// Appel fonction demandant de placer le château sur le terrain
+	public void initTurn() {
+		// le joueur doit placer son châteaux
+		// La fonction à utiliser est this.getBoard().setCastle(x, y);
+		// la fonction ne renvoit rien
 	}
 	public Card firstTurn() {
-		// Appel fonction pour premier tour
+		// List<Card> cards  = game.getCardsAvailable(0); permet de récuperer la liste des cartes encore disponible pour le premier tour de jeux
+		// tu poses la cartes sur le plateau avec la fonction this.getBoard().setCard(face1X,face1Y, face2X, face2Y, card);
+		// avec face1X la coordonnées x de la face 1 de la carte
+		// avec face1Y la coordonnées y de la face 1 de la carte
+		// avec face2X la coordonnées x de la face 2 de la carte
+		// avec face2Y la coordonnées y de la face 2 de la carte
+		// avec card la carte à posé
+		// List<Card> cards  = game.getCardsAvailable(1); permet de récuperer la liste des cartes du prochain tour de jeux ( deuxième colone)
+		// la fonction renvoie la carte qu'il jouera au prochain tour ( la carte de la deuxième colone où il posera son roi)
 		return null;
 	}
-	public void lastTurn(int nbRound,Card card) {
-		// Appel fonction pour le dernier tour
+	public void lastTurn(int nbRound,Card lastCard) {
+		// tu poses la dernière cartes sur le plateau avec la fonction this.getBoard().setCard(face1X,face1Y, face2X, face2Y, card);
+		// avec face1X la coordonnées x de la face 1 de la carte
+		// avec face1Y la coordonnées y de la face 1 de la carte
+		// avec face2X la coordonnées x de la face 2 de la carte
+		// avec face2Y la coordonnées y de la face 2 de la carte
+		// avec card la carte à posé
+		// la fonction ne renvoit rien
 	}
 	public Card startTurn(int nbRound,Card card)
 	{
-		if(card == null)
-		{
-			
-		}
-		else
-		{
-			
-		}
+		// List<Card> cards  = game.getCardsAvailable(0); permet de récuperer la liste des cartes encore disponible pour le premier tour de jeux
+		// tu poses la cartes sur le plateau avec la fonction this.getBoard().setCard(face1X,face1Y, face2X, face2Y, card);
+		// avec face1X la coordonnées x de la face 1 de la carte
+		// avec face1Y la coordonnées y de la face 1 de la carte
+		// avec face2X la coordonnées x de la face 2 de la carte
+		// avec face2Y la coordonnées y de la face 2 de la carte
+		// avec card la carte à posé
+		// List<Card> cards  = game.getCardsAvailable(1); permet de récuperer la liste des cartes du prochain tour de jeux ( deuxième colone)
+		// la fonction renvoie la carte qu'il jouera au prochain tour ( la carte de la deuxième colone où il posera son roi)
 		return null;
-		// Appel fonction affichage du tour du joueur
 	}
 }

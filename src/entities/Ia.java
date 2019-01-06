@@ -26,6 +26,11 @@ public class Ia extends Player{
 		List<Card> cards;
 		cards = game.getCardsAvailable(0);
 		Card card = pickBestCard(cards);
+		HashMap<String,Integer> bestMove = pickBestMove(card);
+		if(bestMove.size() > 0)
+		{
+			this.getBoard().setCard(bestMove.get("FC1X"), bestMove.get("FC1Y"), bestMove.get("FC2X"), bestMove.get("FC2Y"), card);
+		}
 		this.game.pickCard(this, 0, card);
 		cards = game.getCardsAvailable(1);
 		Card nextCard = pickBestCard(cards);

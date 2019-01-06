@@ -22,8 +22,14 @@ public abstract class Player {
 		this.board = new Board(game,this);
 		this.finalScore = new HashMap<String,Integer>();
 	}
-	public void initTurn() {}
+	public void initTurn() {
+		// le joueur doit placer son châteaux
+		// la fonction ne renvoit rien
+	}
 	public Card firstTurn() {
+		// le joueur doit placer son châteaux
+		
+		// la fonction renvoie la carte qu'il ch
 		return null;
 	}
 	public void lastTurn(int nbRound,Card card) {}
