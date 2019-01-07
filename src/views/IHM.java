@@ -103,8 +103,6 @@ this.game=game;
 
         this.pack();
         this.setVisible(true);
-        game.initGame(2,false,false,false,false);
-
     }
 
 	@Override
