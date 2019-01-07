@@ -18,8 +18,8 @@ public class IHM extends JFrame {
         int height = ScreenSize.getheight(); // Récupération de la hauteur
 
         // Puis on redimensionne la JFrame en fonction
-        this.setSize(width / 2, height / 2);
-
+        this.setSize(width / 2, height);
+        this.setPreferredSize(new Dimension(width / 2, height / 2));
         //Nous demandons maintenant à notre objet de se positionner au centre
 
         this.setLocationRelativeTo(null);
