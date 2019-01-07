@@ -19,7 +19,7 @@ public class IHM extends JFrame {
 
         // Puis on redimensionne la JFrame en fonction
         this.setSize(width / 2, height);
-        this.setPreferredSize(new Dimension(width / 2, height / 2));
+        this.setPreferredSize(new Dimension(width / 2 + 50, height / 2));
         //Nous demandons maintenant à notre objet de se positionner au centre
 
         this.setLocationRelativeTo(null);
