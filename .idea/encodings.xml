@@ -3,6 +3,8 @@
   <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$/src/Main.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/core/CoreGame.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/views/CBListener.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/views/GlassPane.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/views/IHM.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/views/Panneau.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/views/Window.java" charset="windows-1252" />

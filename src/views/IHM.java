@@ -34,11 +34,14 @@ public class IHM extends JFrame {
         // Composantes de la JFrame
         //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
+        JCheckBox changeButton = new JCheckBox("Glass pane \"visible\"");
+        changeButton.setSelected(false);
         //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
+        Panneau Panneau = new Panneau();
         //On prévient notre JFrame que notre JPanel sera son content pane
-        this.setContentPane(new Panneau());
-
+        this.setContentPane(Panneau);
+        Panneau.add(changeButton);
         // Menu Bar
         JMenuBar MenuBar = new JMenuBar();
         MenuBar.setOpaque(true);
@@ -86,7 +89,13 @@ public class IHM extends JFrame {
         this.setJMenuBar(MenuBar);
         this.getContentPane().add(Box1, BorderLayout.CENTER);
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
-
+//Set up the glass pane, which appears over both menu bar
+        //and content pane and is an item listener on the change
+        //button.
+        GlassPane GlassPane = new GlassPane(changeButton, MenuBar,
+                this.getContentPane());
+        changeButton.addItemListener(GlassPane);
+        this.setGlassPane(GlassPane);
 
         //Display the window.
 
