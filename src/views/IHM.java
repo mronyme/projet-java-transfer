@@ -69,7 +69,7 @@ public class IHM extends JFrame {
         JLabel Box1 = new JLabel();
         Box1.setOpaque(true);
         Box1.setBackground(new Color(254, 255, 243, 121));
-        Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
+        Box1.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 4));
         Box1.setText("Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :");
 
         JRadioButton player2 = new JRadioButton("2 joueurs");
@@ -85,6 +85,7 @@ public class IHM extends JFrame {
         this.add(player4);
 
 
+
         //Ajout des objets précédements créé dans la fenêtre.
         this.setJMenuBar(MenuBar);
         this.getContentPane().add(Box1, BorderLayout.CENTER);
@@ -92,9 +93,10 @@ public class IHM extends JFrame {
 //Set up the glass pane, which appears over both menu bar
         //and content pane and is an item listener on the change
         //button.
-        GlassPane GlassPane = new GlassPane(changeButton, MenuBar,
+        GlassPane GlassPane = new GlassPane(changeButton, MenuBar, player2, player3, player4,
                 this.getContentPane());
         changeButton.addItemListener(GlassPane);
+
         this.setGlassPane(GlassPane);
 
         //Display the window.
