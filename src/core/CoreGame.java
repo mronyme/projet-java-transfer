@@ -20,14 +20,14 @@ import enums.ColorEnum;
 import views.Window;
 
 public class CoreGame {
-    static final int twoPlayerCardCount = 24; // Nb carte de départ pour deux joueurs
-    static final int threePlayerCardCount = 36; // Nb carte de départ pour trois joueurs
-    static final int fourPlayerCardCount = 48; // Nb carte de départ pour quatre joueurs
+    static final int twoPlayerCardCount = 24; // Nb carte de dÃ©part pour deux joueurs
+    static final int threePlayerCardCount = 36; // Nb carte de dÃ©part pour trois joueurs
+    static final int fourPlayerCardCount = 48; // Nb carte de dÃ©part pour quatre joueurs
     
     List<Player> players;       //Liste des joueurs
-    List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
-    Map<ColorEnum, Integer> kingsList;     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
-    int numberTotalKings; // Nombre de rois totaux présent dans la partie
+    List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la rÃ©partition des couleurs pour chaque joueur
+    Map<ColorEnum, Integer> kingsList;     // Liste des rois restant pour chaque couleur Ã  piocher lors du premier tour
+    int numberTotalKings; // Nombre de rois totaux prÃ©sent dans la partie
     CardManagement cardManagement;
     public CoreGame() {
         this.players = new ArrayList<Player>();
@@ -35,10 +35,9 @@ public class CoreGame {
         this.cardManagement = new CardManagement(this);
         this.kingsList = new HashMap<ColorEnum, Integer>();
         cardManagement.initCard();
-        initGame(4);
     }
-    // Cette fonction gère le commencement de la partie
-    // Valeur en entrée : nombre de joueurs
+    // Cette fonction gÃ¨re le commencement de la partie
+    // Valeur en entrÃ©e : nombre de joueurs
     public void initGame(int numberPlayers) {
         if (numberPlayers == 2) {
             this.numberTotalKings = 2 * numberPlayers;
@@ -52,39 +51,39 @@ public class CoreGame {
         cardManagement.discardCards(numberPlayers);
         manageRound(0);
     }
-    // Fonction gérant les tours de jeux jusqu'à la fin
+    // Fonction gÃ©rant les tours de jeux jusqu'Ã  la fin
     public void manageRound(int nbRound) {
     	if(cardManagement.getCardsListSize() != 0)
     	{
-    		// Déclenche phase préparation 3.1
+    		// DÃ©clenche phase prÃ©paration 3.1
     		if(nbRound == 0)
     		{
     			initRound();
     		}
     		else
     		{
-    			// Déclenche phase premier tour 3.2
+    			// DÃ©clenche phase premier tour 3.2
 	    		if(nbRound == 1)
 	    		{
 	    			firstRound();
 	    		}
-	    		// Déclenche tour de jeux habituels 3.3
+	    		// DÃ©clenche tour de jeux habituels 3.3
 	    		else
 	    		{
 	    			casualRound(nbRound);
 	    		}
-	    		// Retire la première ligne de domino ( qui a été utilisé pendant le tour)
+	    		// Retire la premiÃ¨re ligne de domino ( qui a Ã©tÃ© utilisÃ© pendant le tour)
 	    		cardManagement.clearCardColumn(0);
     		}
-    		// Déclenche le tour suivant
+    		// DÃ©clenche le tour suivant
     		manageRound(nbRound+1);
     	}
-    	// Si il reste une ligne de domino à posé , on enclenche le dernier tour
+    	// Si il reste une ligne de domino Ã  posÃ© , on enclenche le dernier tour
     	else if(cardManagement.getCardsColumnSize()  != 0)
     	{
     		lastRound(nbRound);
     		cardManagement.clearCardColumn(0);
-    		// fonction gérant la fin du jeux
+    		// fonction gÃ©rant la fin du jeux
     		endGame();
     	}
     }
@@ -129,7 +128,7 @@ public class CoreGame {
     		System.out.println(player+" "+player.getFinalScore());
     		Board.printMatrix(player.getBoard().getFaceEnum());    		
     	}
-		System.out.println(playersRanked.get(0)+" a gagné !");
+		System.out.println(playersRanked.get(0)+" a gagnÃ© !");
     	// fin de partie
     } 
     public List<Card> getCardsAvailable(int columnId) {
@@ -138,10 +137,10 @@ public class CoreGame {
     public void pickCard(Player player,int columnId,Card card) {
     	cardManagement.pickCard(player, columnId, card);
     }
-    // Cette fonction gère l'ordre de jeu du premier tour en respectant l'ordre de pioche aléatoire des n rois
-    // Valeur Retournée : Liste ordonnées de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier ï¿½lement de la liste est le premier roi piochï¿½ et donc le joueur de cette couleur commencera etc.
-    // Cette fonction gère l'ordre de jeu du premier tour en respectant l'ordre de pioche aléatoire des n rois
-    // Valeur Retournée : Liste ordonnées de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier élement de la liste est le premier roi pioché et donc le joueur de cette couleur commencera etc.
+    // Cette fonction gÃ¨re l'ordre de jeu du premier tour en respectant l'ordre de pioche alÃ©atoire des n rois
+    // Valeur RetournÃ©e : Liste ordonnÃ©es de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier Ã¯Â¿Â½lement de la liste est le premier roi piochÃ¯Â¿Â½ et donc le joueur de cette couleur commencera etc.
+    // Cette fonction gÃ¨re l'ordre de jeu du premier tour en respectant l'ordre de pioche alÃ©atoire des n rois
+    // Valeur RetournÃ©e : Liste ordonnÃ©es de n couleur correspondant au rois des joueurs respectifs -> Ainsi le premier Ã©lement de la liste est le premier roi piochÃ© et donc le joueur de cette couleur commencera etc.
     // n -> Nombres de rois totaux dans la partie
     public List<ColorEnum> drawKings()
     {
@@ -162,8 +161,8 @@ public class CoreGame {
     	return kingsPicked;
     }
     
-    // Cette fonction instantie les différents joueurs
-    // Cette fonction instantie les différents joueurs
+    // Cette fonction instantie les diffÃ©rents joueurs
+    // Cette fonction instantie les diffÃ©rents joueurs
     public void initPlayers(int numberPlayers, int numberKings) {
 		for(int i = 0;i < numberPlayers;i++)
 		{
