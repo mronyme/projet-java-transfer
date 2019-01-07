@@ -13,7 +13,7 @@ public class CBListener extends MouseInputAdapter {
     Container contentPane;
 
     public CBListener(Component liveButton, JMenuBar menuBar,
-                      JRadioButton player2, JRadioButton player3, JRadioButton player4, GlassPane glassPane, Container contentPane) {
+                      JRadioButton player2, JRadioButton player3, JRadioButton player4, JButton buttonOne, GlassPane glassPane, Container contentPane) {
         toolkit = Toolkit.getDefaultToolkit();
         this.liveButton = liveButton;
         this.menuBar = menuBar;

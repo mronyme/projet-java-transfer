@@ -93,11 +93,22 @@ public class IHM extends JFrame {
         //Set up the glass pane, which appears over both menu bar
         //and content pane and is an item listener on the change
         //button.
-        GlassPane GlassPane = new GlassPane(changeButton, MenuBar, player2, player3, player4,
+        GlassPane GlassPane = new GlassPane(changeButton, MenuBar, player2, player3, player4, buttonOne,
                 this.getContentPane());
         changeButton.addItemListener(GlassPane);
-        player2.addItemListener(GlassPane);
+        /*player2.addItemListener(GlassPane);
+        player3.addItemListener(GlassPane);
+        player4.addItemListener(GlassPane);
+        */
+
+        Actionlistener Actionlistener = new Actionlistener(buttonOne, player2, player3, player4);
+        buttonOne.addActionListener(Actionlistener);
+        player2.addActionListener(Actionlistener);
+        player3.addActionListener(Actionlistener);
+        player4.addActionListener(Actionlistener);
         this.setGlassPane(GlassPane);
+        buttonOne.setEnabled(false);
+
 
         //Display the window.
 

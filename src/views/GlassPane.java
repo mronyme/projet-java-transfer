@@ -9,8 +9,8 @@ class GlassPane extends JComponent implements ItemListener {
     Point point;
 
     public GlassPane(AbstractButton aButton,
-                     JMenuBar menuBar, JRadioButton player2, JRadioButton player3, JRadioButton player4, Container contentPane) {
-        CBListener listener = new CBListener(aButton, menuBar, player2, player3, player4,
+                     JMenuBar menuBar, JRadioButton player2, JRadioButton player3, JRadioButton player4, JButton buttonOne, Container contentPane) {
+        CBListener listener = new CBListener(aButton, menuBar, player2, player3, player4, buttonOne,
                 this, contentPane);
         addMouseListener(listener);
         addMouseMotionListener(listener);
@@ -19,6 +19,7 @@ class GlassPane extends JComponent implements ItemListener {
     //React to change button clicks.
     public void itemStateChanged(ItemEvent e) {
         setVisible(e.getStateChange() == ItemEvent.SELECTED);
+
     }
     // React to player2 button clicks.
 
