@@ -20,26 +20,51 @@ import enums.ColorEnum;
 import views.Window;
 
 public class CoreGame {
-    static final int twoPlayerCardCount = 24; // Nb carte de départ pour deux joueurs
-    static final int threePlayerCardCount = 36; // Nb carte de départ pour trois joueurs
-    static final int fourPlayerCardCount = 48; // Nb carte de départ pour quatre joueurs
-    
+    static final int twoPlayerCardCount = 24; // Nb carte de d�part pour deux joueurs
+    static final int threePlayerCardCount = 36; // Nb carte de d�part pour trois joueurs
+    static final int fourPlayerCardCount = 48; // Nb carte de d�part pour quatre joueurs
+    HashMap<String,Boolean> gameOptions;
     List<Player> players;       //Liste des joueurs
     List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
     Map<ColorEnum, Integer> kingsList;     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
     int numberTotalKings; // Nombre de rois totaux présent dans la partie
     CardManagement cardManagement;
     public CoreGame() {
+    	this.gameOptions = new HashMap<String,Boolean>();
+    	gameOptions.put("dynastyOption", false);
+    	gameOptions.put("middleKingdomOption", false);
+    	gameOptions.put("harmonyOption", false);
+    	gameOptions.put("bigDuelOption", false);
         this.players = new ArrayList<Player>();
         this.colorsAvailable = new ArrayList<>(Arrays.asList(ColorEnum.pink,ColorEnum.yellow,ColorEnum.green,ColorEnum.blue));
         this.cardManagement = new CardManagement(this);
         this.kingsList = new HashMap<ColorEnum, Integer>();
         cardManagement.initCard();
     }
-    // Cette fonction gère le commencement de la partie
-    // Valeur en entrée : nombre de joueurs
-    public void initGame(int numberPlayers) {
-        if (numberPlayers == 2) {
+    // Cette fonction g�re le commencement de la partie
+    // Valeur en entr�e : nombre de joueurs
+    public void initGame(int numberPlayers,Boolean dynastyOption,Boolean middleKingdomOption,Boolean harmonyOption,Boolean bigDuelOption) {
+        if(dynastyOption)
+        {
+        	gameOptions.put("dynastyOption", true);
+        }
+    	if(middleKingdomOption)
+        {
+        	gameOptions.put("middleKingdomOption", true);
+        }
+        if(harmonyOption)
+        {
+        	gameOptions.put("harmonyOption", true);
+        }
+        if(bigDuelOption && numberPlayers == 2)
+        {
+        	gameOptions.put("bigDuelOption", true);
+        }
+        else
+        {
+            cardManagement.discardCards(numberPlayers);
+        }
+    	if (numberPlayers == 2) {
             this.numberTotalKings = 2 * numberPlayers;
             cardManagement.setNumberTotalKings(this.numberTotalKings);
             initPlayers(numberPlayers, 2);
@@ -48,7 +73,6 @@ public class CoreGame {
             cardManagement.setNumberTotalKings(this.numberTotalKings);
             initPlayers(numberPlayers, 1);
         }
-        cardManagement.discardCards(numberPlayers);
         manageRound(0);
     }
     // Fonction gérant les tours de jeux jusqu'à la fin
@@ -111,7 +135,6 @@ public class CoreGame {
     }
     public void casualRound(int nbRound) {
     	cardManagement.drawCasualRound();
-    	//System.out.println(cardsColumn);
     	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(0))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
@@ -122,7 +145,7 @@ public class CoreGame {
     public void endGame()
     {
     	System.out.println("Fin du jeux");
-		List<Player> playersRanked = ScoreManagement.getLeaderBoard(players);
+		List<Player> playersRanked = ScoreManagement.getLeaderBoard(players,gameOptions);
     	for(Player player : players)
     	{
     		System.out.println(player+" "+player.getFinalScore());
@@ -168,11 +191,15 @@ public class CoreGame {
 		{
 			Random rand = new Random();
 			ColorEnum color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
-			Player player = new Ia(this,color,numberKings);
+			Player player;
+			player = new Ia(this,color,numberKings);	
 			this.kingsList.put(color, numberKings);
 			colorsAvailable.remove(color);
 			players.add(player);
 		}
+    }
+    public HashMap<String,Boolean> getGameOptions(){
+    	return this.gameOptions;
     }
 }
 

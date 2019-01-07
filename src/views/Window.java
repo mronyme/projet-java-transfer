@@ -119,15 +119,15 @@ public class Window extends JFrame implements ActionListener {
         if (br1.isSelected()) {
 
             System.out.println("nbres des joueurs est 2");
-            game.initGame(2);
+            //game.initGame(2);
         } else if (br2.isSelected()) {
 
             System.out.println("nbres des joueurs est 3");
-            game.initGame(3);
+            //game.initGame(3);
 
         } else if (br3.isSelected()) {
             System.out.println("nbres des joueurs est 4");
-            game.initGame(4);
+            //game.initGame(4);
         }
 
 

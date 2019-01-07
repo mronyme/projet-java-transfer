@@ -19,7 +19,7 @@ public class Ia extends Player{
 	}
 	public void initTurn()
 	{
-		this.getBoard().setCastle(2, 2);
+		this.getBoard().setCastle((int)(this.getBoard().getCoords().length/2),(int)(this.getBoard().getCoords()[0].length/2));
 	}
 	public Card firstTurn()
 	{
@@ -138,7 +138,7 @@ public class Ia extends Player{
 						}
 						if(valid)
 						{
-							localScoreInfo = ScoreManagement.testBoard(tempBoard);
+							localScoreInfo = ScoreManagement.testBoard(tempBoard,game.getGameOptions());
 							if(ScoreManagement.betterScore(localScoreInfo,globalScoreInfo)) 
 							{
 								globalScoreInfo.putAll(localScoreInfo);

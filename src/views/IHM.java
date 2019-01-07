@@ -103,7 +103,7 @@ this.game=game;
 
         this.pack();
         this.setVisible(true);
-
+        game.initGame(2,false,false,false,false);
 
     }
 
@@ -111,7 +111,7 @@ this.game=game;
 	public void actionPerformed(ActionEvent e) {
 		if (player2.isSelected()) {	
         System.out.println("nbres des joueurs est 2");
-    	game.initGame(2);    	
+    	game.initGame(2,false,false,false,false);    	
     	//nouvelle fenetre pour commencer le jeu
     	final JFrame frame = new JFrame("Test");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,12 +120,12 @@ this.game=game;
     	
     } else if (player3.isSelected()) {
         System.out.println("nbres des joueurs est 3");
-        game.initGame(3);
+        game.initGame(3,false,false,false,false);
        
         
     } else if (player4.isSelected()) {
         System .out.println("nbres des joueurs est 4");
-        game.initGame(4);
+        game.initGame(4,false,false,false,false);
     }
 	}
 

@@ -19,7 +19,14 @@ public class Board {
 	Player owner;
 	public Board(CoreGame game,Player player) {
 		// Cr�er un tableau 9*9 remplis d'object "Empty" (case vide)
-		this.coords = new Entity[5][5];
+		if(game.getGameOptions().get("bigDuelOption"))
+		{
+			this.coords = new Entity[7][7];
+		}
+		else
+		{
+			this.coords = new Entity[5][5];			
+		}
 		this.owner = player;
 		this.game = game;
 		Empty emptyCase = new Empty();

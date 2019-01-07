@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import entities.Board;
+import entities.Castle;
+import entities.Empty;
 import entities.Entity;
 import entities.Face;
 import entities.Player;
@@ -13,7 +15,7 @@ import enums.FaceEnum;
 
 public class ScoreManagement {
     static List<Entity> faceAlreadyCounted;
-	public static HashMap<String,Integer> testBoard(Board board) {
+	public static HashMap<String,Integer> testBoard(Board board,HashMap<String,Boolean> gameOptions) {
 		faceAlreadyCounted = new ArrayList<Entity>();
 		HashMap<String,Integer> localScoreInfo = new HashMap<String,Integer>();
 		HashMap<String,Object> regionScoreInfo = new HashMap<String,Object>();
@@ -34,6 +36,29 @@ public class ScoreManagement {
 					localNbCrown+= (int)regionScoreInfo.get("nbCrown");
 					localScore+= (int)regionScoreInfo.get("domainSize") * (int)regionScoreInfo.get("nbCrown");
 				}
+			}
+		}
+		if(gameOptions.get("middleKingdomOption") && board.getEntity((int)(board.getCoords().length/2),(int)(board.getCoords()[0].length/2)) instanceof Castle)
+		{
+			System.out.println("option activated");
+			localScore+=10;
+		}
+		if(gameOptions.get("harmonyOption"))
+		{
+			int empty = 0;
+			for(int x = 0; x < board.getCoords().length;x++)
+			{
+				for(int y = 0;y < board.getCoords()[0].length;y++)
+				{
+					if(board.getEntity(x, y) instanceof Empty)
+					{
+						empty++;
+					}
+				}
+			}
+			if(empty == 0)
+			{
+				localScore+=5;			
 			}
 		}
 		localScoreInfo.put("totalScore",localScore);
@@ -111,15 +136,15 @@ public class ScoreManagement {
 		return false;
 	}
 	// Cette fonction retourne la liste des joueurs classé par leurs scores finaux
-    public static void calculateScore(List<Player> players)
+    public static void calculateScore(List<Player> players,HashMap<String,Boolean> gameOptions)
     {
     	for(Player player : players) {
-    		player.setFinalScore(ScoreManagement.testBoard(player.getBoard()));
+    		player.setFinalScore(ScoreManagement.testBoard(player.getBoard(),gameOptions));
     	}
     }
-	public static List<Player> getLeaderBoard(List<Player> players)
+	public static List<Player> getLeaderBoard(List<Player> players,HashMap<String,Boolean> gameOptions)
 	{
-		calculateScore(players);
+		calculateScore(players,gameOptions);
 		List<Player> playersRanked = new ArrayList<Player>();
 		for(Player player : players) {
 			if(playersRanked.size() == 0)
