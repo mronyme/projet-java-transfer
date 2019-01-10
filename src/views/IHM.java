@@ -107,11 +107,38 @@ public class IHM extends JFrame implements ActionListener {
 		if (player2.isSelected()) {	
         System.out.println("nbres des joueurs est 2");
             //nouvelle fenetre pour commencer le jeu
-            final JFrame frame = new JFrame("Domi'Nations pour 2 joueurs");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            this.setTitle("Domi'Nations pour 2 joueurs");
+            this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+            this.setLocationRelativeTo(null);
+
+            //On définit le layout à utiliser sur le content pane
+
+            this.setLayout(new BorderLayout());
+
+            //On ajoute le bouton au content pane de la JFrame
+
+            //Au centre
+
+            this.getContentPane().add(new JButton("CENTER"), BorderLayout.CENTER);
+
+            //Au nord
+
+            this.getContentPane().add(new JButton("NORTH"), BorderLayout.NORTH);
+
+            //Au sud
+
+            this.getContentPane().add(new JButton("SOUTH"), BorderLayout.SOUTH);
+
+            //À l'ouest
+
+            this.getContentPane().add(new JButton("WEST"), BorderLayout.WEST);
+
+            //À l'est
+
+            this.getContentPane().add(new JButton("EAST"), BorderLayout.EAST);
+
+
+            this.setVisible(true);
     	game.initGame(2,false,false,false,false);    	
 
     	
