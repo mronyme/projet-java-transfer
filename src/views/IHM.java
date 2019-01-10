@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IHM extends JFrame implements ActionListener {
-
+    ScreenSize ScreenSize = new ScreenSize();
 	  JRadioButton player3 ,player2 , player4;
 	private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
@@ -18,14 +18,14 @@ public class IHM extends JFrame implements ActionListener {
         this.game = game;
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
         // On r?cup?re la taille de l'?cran utile, pour cela on utilise l'objet ScreenSize
-        ScreenSize ScreenSize = new ScreenSize();
+
         int width = ScreenSize.getwidth(); // R?cup?ration de la largeur
         int height = ScreenSize.getheight(); // R?cup?ration de la hauteur
 
         // Puis on redimensionne la JFrame en fonction
+        setPreferredSize(new Dimension(width, height));
         this.setSize(width / 2, height / 2);
-
-        //Nous demandons maintenant ? notre objet de se positionner au centre
+        //Nous demandons maintenant à notre objet de se positionner au centre
 
         this.setLocationRelativeTo(null);
 
@@ -51,7 +51,7 @@ public class IHM extends JFrame implements ActionListener {
         MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
         // Onglets du menu :
         JMenu Accueil = new JMenu("Accueil");
-        String str1 = "Param?tres";
+        String str1 = "Paramètres";
         JMenu Parametres = new JMenu(str1);
         JMenu Aide = new JMenu("Aide");
 
@@ -98,7 +98,7 @@ public class IHM extends JFrame implements ActionListener {
         //Display the window.
 
 
-        this.pack();
+
         this.setVisible(true);
     }
 
@@ -109,7 +109,8 @@ public class IHM extends JFrame implements ActionListener {
             //nouvelle fenetre pour commencer le jeu
             final JFrame frame = new JFrame("Domi'Nations pour 2 joueurs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 300);
+            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
     	game.initGame(2,false,false,false,false);    	
 
@@ -118,7 +119,8 @@ public class IHM extends JFrame implements ActionListener {
         System.out.println("nbres des joueurs est 3");
             final JFrame frame = new JFrame("Domi'Nations pour 3 joueurs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 300);
+            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
 
             game.initGame(3, false, false, false, false);
@@ -127,7 +129,8 @@ public class IHM extends JFrame implements ActionListener {
         System .out.println("nbres des joueurs est 4");
             final JFrame frame = new JFrame("Domi'Nations pour 4 joueurs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 300);
+            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
 
             game.initGame(4, false, false, false, false);
