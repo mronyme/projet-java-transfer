@@ -16,16 +16,18 @@ import enums.FaceEnum;
 public class Board {
 	CoreGame game;
 	Entity[][] coords;
+	int maxSize;
 	Player owner;
 	public Board(CoreGame game,Player player) {
 		// Cr�er un tableau 9*9 remplis d'object "Empty" (case vide)
+		this.coords = new Entity[9][9];
 		if(game.getGameOptions().get("bigDuelOption"))
 		{
-			this.coords = new Entity[7][7];
+			this.maxSize = 7;
 		}
 		else
 		{
-			this.coords = new Entity[5][5];			
+			this.maxSize = 5;
 		}
 		this.owner = player;
 		this.game = game;
@@ -97,6 +99,10 @@ public class Board {
 	{
 		return this.coords;
 	}
+	public int getBoardMaxSize()
+	{
+		return this.maxSize;
+	}
 	public List<Map<String, Integer>> getSameType(FaceEnum faceType)
 	{
 		List<Map<String, Integer>> sameTypeList = new ArrayList<>();
@@ -121,6 +127,10 @@ public class Board {
 	}
 	public static Boolean moveIsValid(Player player,int coordsXFC1,int coordsYFC1,int coordsXFC2,int coordsYFC2,Card card) {
 		if(!(coordsXFC1 >= 0 && coordsXFC1 < player.getBoard().getCoords().length && coordsYFC1 >= 0 && coordsYFC1 < player.getBoard().getCoords()[0].length && coordsXFC2 >= 0 && coordsXFC2 < player.getBoard().getCoords().length && coordsYFC2 >= 0 && coordsYFC2 < player.getBoard().getCoords()[0].length))
+		{
+			return false;
+		}
+		if(!isInRange(player,coordsXFC1,coordsYFC1,coordsXFC2,coordsYFC2))
 		{
 			return false;
 		}
@@ -229,24 +239,38 @@ public class Board {
 	    }
 		System.out.println("--------------------");
 	}
-	public static void printCrown(Object[][] grid) {
-		System.out.println("--------------------");
-	    for(int r=0; r<grid.length; r++) {
-	       for(int c=0; c<grid[r].length; c++)
-	    	   if(grid[r][c] instanceof Face)
-	    	   {
-	    		   System.out.print(((Face)grid[r][c]).crown + "  |  ");
-	    	   }
-	    	   else if(grid[r][c] instanceof Castle)
-	    	   {
-	    		   System.out.print("Castle  |  ");	    		   
-	    	   }
-	    	   else
-	    	   {
-	    		   System.out.print("null  |  ");	    		   
-	    	   }
-	       System.out.println();
-	    }
-		System.out.println("--------------------");
+	public static Boolean isInRange(Player player,int FC1X,int FC1Y,int FC2X,int FC2Y)
+	{
+		int[] limit = getPlayerBoardLimit(player.getBoard());
+		if(!(limit[1] - player.getBoard().getBoardMaxSize() < FC1X && limit[0] + player.getBoard().getBoardMaxSize() > FC1X && limit[3] - player.getBoard().getBoardMaxSize() < FC1Y && limit[2] + player.getBoard().getBoardMaxSize() > FC1Y))
+		{
+			return false;
+		}
+		else
+			
+		if(!(limit[1] - player.getBoard().getBoardMaxSize() < FC2X && limit[0] + player.getBoard().getBoardMaxSize() > FC2X && limit[3] - player.getBoard().getBoardMaxSize() < FC2Y && limit[2] + player.getBoard().getBoardMaxSize() > FC2Y))
+		{
+			return false;
+		}
+		return true;
+	 }
+	public static int[]  getPlayerBoardLimit(Board board)
+	{
+		int xMin,xMax,yMin,yMax;
+		xMin = xMax = yMin = yMax = (int)(board.getCoords().length/2);
+		for(int x = 0;x < board.getCoords().length;x++)
+		{
+			for(int y = 0;y < board.getCoords()[0].length;y++)
+			{
+				if(board.getEntity(x, y) instanceof Face)
+				{
+					xMin = x < xMin?x:xMin;
+					xMax = x > xMax?x:xMax;
+					yMin = y < yMin?y:yMin;
+					yMax = y > yMax?y:yMax;
+				}
+			}
+		}
+		return new int[]{xMin,xMax,yMin,yMax};
 	}
 }
