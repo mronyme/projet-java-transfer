@@ -29,22 +29,18 @@ public class IHM extends JFrame implements ActionListener {
 
         this.setSize(width / 2, height / 2);
         //Nous demandons maintenant à notre objet de se positionner au centre
-
         this.setLocationRelativeTo(null);
-
         //Termine le processus lorsqu'on clique sur la croix rouge
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         //Et enfin, la rendre visible
         this.setVisible(true);
 
         // Composantes de la JFrame
         //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
-        //D?finition de sa couleur de fond
+        //Définition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
-        //On pr?vient notre JFrame que notre JPanel sera son content pane
+        //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
 
         // Menu Bar
@@ -73,6 +69,7 @@ public class IHM extends JFrame implements ActionListener {
         buttonOne.addActionListener(this);
 
         // Label
+
         Box1.setOpaque(true);
         Box1.setBackground(new Color(254, 255, 243, 121));
         Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
@@ -86,14 +83,14 @@ public class IHM extends JFrame implements ActionListener {
         bg.add(player3);
         bg.add(player4);
 
-        this.add(player2);
-        this.add(player3);
-        this.add(player4);
-
 
         //Ajout des objets pr?c?dements cr?? dans la fen?tre.
         this.setJMenuBar(MenuBar);
-        this.getContentPane().add(Box1, BorderLayout.CENTER);
+        this.getContentPane().add(Box1, BorderLayout.NORTH);
+        this.getContentPane().add(player2, BorderLayout.SOUTH);
+        this.getContentPane().add(player3, BorderLayout.SOUTH);
+        this.getContentPane().add(player4, BorderLayout.SOUTH);
+
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
 
         //Display the window.
