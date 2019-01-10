@@ -1,14 +1,11 @@
 package views;
 
-import javax.swing.*;
-
-import core.CardManagement;
 import core.CoreGame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 
 public class IHM extends JFrame implements ActionListener {
 	 JFrame fenetre;
@@ -109,21 +106,31 @@ this.game=game;
 	public void actionPerformed(ActionEvent e) {
 		if (player2.isSelected()) {	
         System.out.println("nbres des joueurs est 2");
+            //nouvelle fenetre pour commencer le jeu
+            final JFrame frame = new JFrame("Domi'Nations pour 2 joueurs");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 300);
+            frame.setVisible(true);
     	game.initGame(2,false,false,false,false);    	
-    	//nouvelle fenetre pour commencer le jeu
-    	final JFrame frame = new JFrame("Test");
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(300, 300);
-    	frame.setVisible(true);
+
     	
     } else if (player3.isSelected()) {
         System.out.println("nbres des joueurs est 3");
-        game.initGame(3,false,false,false,false);
-       
-        
+            final JFrame frame = new JFrame("Domi'Nations pour 3 joueurs");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 300);
+            frame.setVisible(true);
+
+            game.initGame(3, false, false, false, false);
+
     } else if (player4.isSelected()) {
         System .out.println("nbres des joueurs est 4");
-        game.initGame(4,false,false,false,false);
+            final JFrame frame = new JFrame("Domi'Nations pour 4 joueurs");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 300);
+            frame.setVisible(true);
+
+            game.initGame(4, false, false, false, false);
     }
 	}
 
