@@ -10,7 +10,8 @@ import java.awt.event.ActionListener;
 public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
-    JLabel Box1 = new JLabel();
+    String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
+    JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
 
     private CoreGame game;
@@ -68,12 +69,12 @@ public class IHM extends JFrame implements ActionListener {
         // Bouton Play
         buttonOne.addActionListener(this);
 
-        // Label
-
+        // JLabel
+        Box1.setHorizontalAlignment(SwingConstants.CENTER);
+        Box1.setVerticalAlignment(SwingConstants.CENTER);
         Box1.setOpaque(true);
         Box1.setBackground(new Color(254, 255, 243, 121));
-        Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
-        Box1.setText("Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :");
+        Box1.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 4));
 
         player2 = new JRadioButton("2 joueurs");
         player3 = new JRadioButton("3 joueurs");
