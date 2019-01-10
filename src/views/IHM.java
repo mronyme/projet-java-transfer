@@ -128,7 +128,7 @@ public class IHM extends JFrame implements ActionListener {
 
                 for (int i = 1; i < 25; i++) {
 
-                    this.getContentPane().add(new JButton("" + i + ""));
+                    this.getContentPane().add(new JButton("zone " + i + ""));
 
                 }
 
@@ -155,7 +155,7 @@ public class IHM extends JFrame implements ActionListener {
 
                 for (int i = 1; i < 25; i++) {
 
-                    this.getContentPane().add(new JButton("" + i + ""));
+                    this.getContentPane().add(new JButton("zone " + i + ""));
 
                 }
                 this.setVisible(true);
@@ -180,7 +180,7 @@ public class IHM extends JFrame implements ActionListener {
 
                 for (int i = 1; i < 25; i++) {
 
-                    this.getContentPane().add(new JButton("" + i + ""));
+                    this.getContentPane().add(new JButton("zone " + i + ""));
 
                 }
                 this.setVisible(true);
