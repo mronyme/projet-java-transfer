@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
 	  JRadioButton player3 ,player2 , player4;
+    JLabel Box1 = new JLabel();
+    JButton buttonOne = new JButton(" Play !");
+
 	private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
         JFrame fenetre;
@@ -64,12 +67,12 @@ public class IHM extends JFrame implements ActionListener {
 
 
         // Bouton Play
-        JButton buttonOne = new JButton(" Play !");
+
         buttonOne.addActionListener(this);
 
 
         // Label
-        JLabel Box1 = new JLabel();
+
         Box1.setOpaque(true);
         Box1.setBackground(new Color(254, 255, 243, 121));
         Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
@@ -110,6 +113,13 @@ public class IHM extends JFrame implements ActionListener {
             this.setTitle("Domi'Nations pour 2 joueurs");
             this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
             this.setLocationRelativeTo(null);
+            this.remove(Box1);
+            this.remove(buttonOne);
+            this.remove(player2);
+            this.remove(player3);
+            this.remove(player4);
+
+
 
             //On définit le layout à utiliser sur le content pane
 
@@ -119,25 +129,22 @@ public class IHM extends JFrame implements ActionListener {
 
             //Au centre
 
-            this.getContentPane().add(new JButton("CENTER"), BorderLayout.CENTER);
 
             //Au nord
 
-            this.getContentPane().add(new JButton("NORTH"), BorderLayout.NORTH);
+            this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
 
-            //Au sud
-
-            this.getContentPane().add(new JButton("SOUTH"), BorderLayout.SOUTH);
-
-            //À l'ouest
-
-            this.getContentPane().add(new JButton("WEST"), BorderLayout.WEST);
-
-            //À l'est
-
-            this.getContentPane().add(new JButton("EAST"), BorderLayout.EAST);
-
-
+            this.setLayout(new GridLayout(9, 9));
+            //On ajoute le bouton au content pane de la JFrame
+            this.getContentPane().add(new JButton("1"));
+            this.getContentPane().add(new JButton("2"));
+            this.getContentPane().add(new JButton("3"));
+            this.getContentPane().add(new JButton("4"));
+            this.getContentPane().add(new JButton("5"));
+            this.getContentPane().add(new JButton("6"));
+            this.getContentPane().add(new JButton("7"));
+            this.getContentPane().add(new JButton("8"));
+            this.getContentPane().add(new JButton("9"));
             this.setVisible(true);
     	game.initGame(2,false,false,false,false);    	
 
