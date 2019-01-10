@@ -9,14 +9,14 @@ import java.awt.event.ActionListener;
 
 public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
-	  JRadioButton player3 ,player2 , player4;
+    JRadioButton player3, player2, player4;
     JLabel Box1 = new JLabel();
     JButton buttonOne = new JButton(" Play !");
 
-	private CoreGame game;
+    private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
         JFrame fenetre;
-         fenetre = new JFrame();
+        fenetre = new JFrame();
         //D?finit un titre pour notre fen?tre
         this.game = game;
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
@@ -61,14 +61,17 @@ public class IHM extends JFrame implements ActionListener {
         MenuBar.add(Accueil);
         MenuBar.add(Parametres);
         MenuBar.add(Aide);
-        // Option du menu param?tres :
-        JMenuItem restart = new JMenuItem("Recommencer la partie");
-        restart.addActionListener(new StartAnimationListener());
+        // Option du menu paramètres :
+        JMenuItem restart = new JMenuItem("Nouvelle partie");
+        restart.addActionListener(new RestartListener());
+        Parametres.add(restart);
+        JMenuItem fullscreen = new JMenuItem("Plein écran");
+        fullscreen.addActionListener(new fullscreen());
+        Parametres.add(fullscreen);
         // Bouton Play
 
         buttonOne.addActionListener(this);
 
-        Parametres.add(restart);
 
         // Label
 
@@ -86,7 +89,7 @@ public class IHM extends JFrame implements ActionListener {
         bg.add(player4);
 
         this.add(player2);
-        
+
         this.add(player3);
         this.add(player4);
 
@@ -105,12 +108,12 @@ public class IHM extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-	@Override
+    @Override
 
     public void actionPerformed(ActionEvent e) {
 
         if (player2.isSelected()) {
-        System.out.println("nbres des joueurs est 2");
+            System.out.println("nbres des joueurs est 2");
             //nouvelle fenetre pour commencer le jeu
             this.setTitle("Domi'Nations pour 2 joueurs");
             this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
@@ -151,8 +154,8 @@ public class IHM extends JFrame implements ActionListener {
             game.initGame(2, false, false, false, false);
 
 
-    } else if (player3.isSelected()) {
-        System.out.println("nbres des joueurs est 3");
+        } else if (player3.isSelected()) {
+            System.out.println("nbres des joueurs est 3");
             final JFrame frame = new JFrame("Domi'Nations pour 3 joueurs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
@@ -161,8 +164,8 @@ public class IHM extends JFrame implements ActionListener {
 
             game.initGame(3, false, false, false, false);
 
-    } else if (player4.isSelected()) {
-        System .out.println("nbres des joueurs est 4");
+        } else if (player4.isSelected()) {
+            System.out.println("nbres des joueurs est 4");
             final JFrame frame = new JFrame("Domi'Nations pour 4 joueurs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
@@ -170,17 +173,26 @@ public class IHM extends JFrame implements ActionListener {
             frame.setVisible(true);
 
             game.initGame(4, false, false, false, false);
+        }
     }
-	}
 
-    public class StartAnimationListener implements ActionListener {
+    public class RestartListener implements ActionListener {
 
         public void actionPerformed(ActionEvent arg0) {
-
             IHM fenetre = new IHM(game);
+            System.out.println("Restart");
 
         }
 
     }
 
+    public class fullscreen extends JFrame implements ActionListener {
+
+        public void actionPerformed(ActionEvent arg0) {
+            this.setExtendedState(Frame.MAXIMIZED_BOTH);
+            this.setUndecorated(true);
+            System.out.println("full screen");
+        }
+
+    }
 }
