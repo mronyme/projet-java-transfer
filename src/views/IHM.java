@@ -95,9 +95,11 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
 
         //Display the window.
+
         this.setVisible(true);
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
     public void Plateau(int nb_joueurs) {
         switch (nb_joueurs) {
 
@@ -188,6 +190,8 @@ public class IHM extends JFrame implements ActionListener {
         }
 
     }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     @Override
 
     public void actionPerformed(ActionEvent e) {
