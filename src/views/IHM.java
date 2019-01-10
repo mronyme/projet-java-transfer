@@ -63,13 +63,12 @@ public class IHM extends JFrame implements ActionListener {
         MenuBar.add(Aide);
         // Option du menu param?tres :
         JMenuItem restart = new JMenuItem("Recommencer la partie");
-        Parametres.add(restart);
-
-
+        restart.addActionListener(new StartAnimationListener());
         // Bouton Play
 
         buttonOne.addActionListener(this);
 
+        Parametres.add(restart);
 
         // Label
 
@@ -98,6 +97,7 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
 
 
+
         //Display the window.
 
 
@@ -106,8 +106,10 @@ public class IHM extends JFrame implements ActionListener {
     }
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (player2.isSelected()) {	
+
+    public void actionPerformed(ActionEvent e) {
+
+        if (player2.isSelected()) {
         System.out.println("nbres des joueurs est 2");
             //nouvelle fenetre pour commencer le jeu
             this.setTitle("Domi'Nations pour 2 joueurs");
@@ -146,9 +148,9 @@ public class IHM extends JFrame implements ActionListener {
             this.getContentPane().add(new JButton("8"));
             this.getContentPane().add(new JButton("9"));
             this.setVisible(true);
-    	game.initGame(2,false,false,false,false);    	
+            game.initGame(2, false, false, false, false);
 
-    	
+
     } else if (player3.isSelected()) {
         System.out.println("nbres des joueurs est 3");
             final JFrame frame = new JFrame("Domi'Nations pour 3 joueurs");
@@ -170,5 +172,15 @@ public class IHM extends JFrame implements ActionListener {
             game.initGame(4, false, false, false, false);
     }
 	}
+
+    public class StartAnimationListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent arg0) {
+
+            IHM fenetre = new IHM(game);
+
+        }
+
+    }
 
 }
