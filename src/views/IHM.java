@@ -109,43 +109,63 @@ public class IHM extends JFrame implements ActionListener {
     }
 
     public void Plateau(int nb_joueurs) {
-        System.out.println("nbres des joueurs est 2");
-        //nouvelle fenetre pour commencer le jeu
-        this.setTitle("Domi'Nations pour 2 joueurs");
-        this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-        this.setLocationRelativeTo(null);
-        this.remove(Box1);
-        this.remove(buttonOne);
-        this.remove(player2);
-        this.remove(player3);
-        this.remove(player4);
+        switch (nb_joueurs) {
 
+            case 2:
 
-        //On définit le layout à utiliser sur le content pane
+                System.out.println("nbres des joueurs est 2");
+                //nouvelle fenetre pour commencer le jeu
+                this.setTitle("Domi'Nations pour 2 joueurs");
+                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+                this.setLocationRelativeTo(null);
+                this.remove(Box1);
+                this.remove(buttonOne);
+                this.remove(player2);
+                this.remove(player3);
+                this.remove(player4);
+                //On définit le layout à utiliser sur le content pane
 
-        this.setLayout(new BorderLayout());
+                this.setLayout(new BorderLayout());
 
-        //On ajoute le bouton au content pane de la JFrame
+                //On ajoute le bouton au content pane de la JFrame
 
-        //Au centre
+                //Au nord
 
+                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+// Ajout de la grille
+                this.setLayout(new GridLayout(9, 9));
+                //On ajoute le bouton au content pane de la JFrame
+                this.getContentPane().add(new JButton("1"));
+                this.getContentPane().add(new JButton("2"));
+                this.getContentPane().add(new JButton("3"));
+                this.getContentPane().add(new JButton("4"));
+                this.getContentPane().add(new JButton("5"));
+                this.getContentPane().add(new JButton("6"));
+                this.getContentPane().add(new JButton("7"));
+                this.getContentPane().add(new JButton("8"));
+                this.getContentPane().add(new JButton("9"));
+                this.setVisible(true);
 
-        //Au nord
+                break;
 
-        this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+            case 3:
 
-        this.setLayout(new GridLayout(9, 9));
-        //On ajoute le bouton au content pane de la JFrame
-        this.getContentPane().add(new JButton("1"));
-        this.getContentPane().add(new JButton("2"));
-        this.getContentPane().add(new JButton("3"));
-        this.getContentPane().add(new JButton("4"));
-        this.getContentPane().add(new JButton("5"));
-        this.getContentPane().add(new JButton("6"));
-        this.getContentPane().add(new JButton("7"));
-        this.getContentPane().add(new JButton("8"));
-        this.getContentPane().add(new JButton("9"));
-        this.setVisible(true);
+                System.out.println("nbres des joueurs est 3");
+
+                break;
+
+            case 4:
+
+                System.out.println("nbres des joueurs est 4");
+
+                break;
+
+            default:
+
+                System.out.println("Erreur dans la sélection du nombre de jouers");
+
+        }
+
     }
     @Override
 
@@ -157,22 +177,12 @@ public class IHM extends JFrame implements ActionListener {
 
 
         } else if (player3.isSelected()) {
-            System.out.println("nbres des joueurs est 3");
-            final JFrame frame = new JFrame("Domi'Nations pour 3 joueurs");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            Plateau(3);
 
             game.initGame(3, false, false, false, false);
 
         } else if (player4.isSelected()) {
-            System.out.println("nbres des joueurs est 4");
-            final JFrame frame = new JFrame("Domi'Nations pour 4 joueurs");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            Plateau(4);
 
             game.initGame(4, false, false, false, false);
         }
