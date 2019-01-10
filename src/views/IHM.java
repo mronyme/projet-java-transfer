@@ -99,11 +99,7 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(Box1, BorderLayout.CENTER);
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
 
-
-
         //Display the window.
-
-
 
         this.setVisible(true);
     }
@@ -112,10 +108,9 @@ public class IHM extends JFrame implements ActionListener {
         switch (nb_joueurs) {
 
             case 2:
-
                 System.out.println("nbres des joueurs est 2");
-                //nouvelle fenetre pour commencer le jeu
-                this.setTitle("Domi'Nations pour 2 joueurs");
+                //nouveau plateau pour commencer le jeu
+                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
                 this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
                 this.setLocationRelativeTo(null);
                 this.remove(Box1);
@@ -132,7 +127,7 @@ public class IHM extends JFrame implements ActionListener {
                 //Au nord
 
                 this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
-// Ajout de la grille
+                // Ajout de la grille
                 this.setLayout(new GridLayout(9, 9));
                 //On ajoute le bouton au content pane de la JFrame
                 this.getContentPane().add(new JButton("1"));
@@ -150,13 +145,71 @@ public class IHM extends JFrame implements ActionListener {
 
             case 3:
 
-                System.out.println("nbres des joueurs est 3");
+                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
+                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+                this.setLocationRelativeTo(null);
+                this.remove(Box1);
+                this.remove(buttonOne);
+                this.remove(player2);
+                this.remove(player3);
+                this.remove(player4);
+                //On définit le layout à utiliser sur le content pane
+
+                this.setLayout(new BorderLayout());
+
+                //On ajoute le bouton au content pane de la JFrame
+
+                //Au nord
+
+                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+                // Ajout de la grille
+                this.setLayout(new GridLayout(9, 9));
+                //On ajoute le bouton au content pane de la JFrame
+                this.getContentPane().add(new JButton("1"));
+                this.getContentPane().add(new JButton("2"));
+                this.getContentPane().add(new JButton("3"));
+                this.getContentPane().add(new JButton("4"));
+                this.getContentPane().add(new JButton("5"));
+                this.getContentPane().add(new JButton("6"));
+                this.getContentPane().add(new JButton("7"));
+                this.getContentPane().add(new JButton("8"));
+                this.getContentPane().add(new JButton("9"));
+                this.setVisible(true);
 
                 break;
 
             case 4:
 
-                System.out.println("nbres des joueurs est 4");
+                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
+                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+                this.setLocationRelativeTo(null);
+                this.remove(Box1);
+                this.remove(buttonOne);
+                this.remove(player2);
+                this.remove(player3);
+                this.remove(player4);
+                //On définit le layout à utiliser sur le content pane
+
+                this.setLayout(new BorderLayout());
+
+                //On ajoute le bouton au content pane de la JFrame
+
+                //Au nord
+
+                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+                // Ajout de la grille
+                this.setLayout(new GridLayout(9, 9));
+                //On ajoute le bouton au content pane de la JFrame
+                this.getContentPane().add(new JButton("1"));
+                this.getContentPane().add(new JButton("2"));
+                this.getContentPane().add(new JButton("3"));
+                this.getContentPane().add(new JButton("4"));
+                this.getContentPane().add(new JButton("5"));
+                this.getContentPane().add(new JButton("6"));
+                this.getContentPane().add(new JButton("7"));
+                this.getContentPane().add(new JButton("8"));
+                this.getContentPane().add(new JButton("9"));
+                this.setVisible(true);
 
                 break;
 
