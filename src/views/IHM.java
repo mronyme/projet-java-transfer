@@ -68,13 +68,11 @@ public class IHM extends JFrame implements ActionListener {
         JMenuItem fullscreen = new JMenuItem("Plein écran");
         fullscreen.addActionListener(new fullscreen());
         Parametres.add(fullscreen);
-        // Bouton Play
 
+        // Bouton Play
         buttonOne.addActionListener(this);
 
-
         // Label
-
         Box1.setOpaque(true);
         Box1.setBackground(new Color(254, 255, 243, 121));
         Box1.setPreferredSize(new Dimension(this.getWidth(), 180));
@@ -89,7 +87,6 @@ public class IHM extends JFrame implements ActionListener {
         bg.add(player4);
 
         this.add(player2);
-
         this.add(player3);
         this.add(player4);
 
@@ -119,26 +116,23 @@ public class IHM extends JFrame implements ActionListener {
                 this.remove(player3);
                 this.remove(player4);
                 //On définit le layout à utiliser sur le content pane
-
                 this.setLayout(new BorderLayout());
 
                 //On ajoute le bouton au content pane de la JFrame
 
                 //Au nord
-
                 this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
                 // Ajout de la grille
-                this.setLayout(new GridLayout(9, 9));
+                this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-                this.getContentPane().add(new JButton("1"));
-                this.getContentPane().add(new JButton("2"));
-                this.getContentPane().add(new JButton("3"));
-                this.getContentPane().add(new JButton("4"));
-                this.getContentPane().add(new JButton("5"));
-                this.getContentPane().add(new JButton("6"));
-                this.getContentPane().add(new JButton("7"));
-                this.getContentPane().add(new JButton("8"));
-                this.getContentPane().add(new JButton("9"));
+
+                for (int i = 1; i < 25; i++) {
+
+                    this.getContentPane().add(new JButton("" + i + ""));
+
+                }
+
+
                 this.setVisible(true);
 
                 break;
@@ -153,27 +147,17 @@ public class IHM extends JFrame implements ActionListener {
                 this.remove(player2);
                 this.remove(player3);
                 this.remove(player4);
-                //On définit le layout à utiliser sur le content pane
-
                 this.setLayout(new BorderLayout());
-
-                //On ajoute le bouton au content pane de la JFrame
-
-                //Au nord
-
                 this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
                 // Ajout de la grille
-                this.setLayout(new GridLayout(9, 9));
+                this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-                this.getContentPane().add(new JButton("1"));
-                this.getContentPane().add(new JButton("2"));
-                this.getContentPane().add(new JButton("3"));
-                this.getContentPane().add(new JButton("4"));
-                this.getContentPane().add(new JButton("5"));
-                this.getContentPane().add(new JButton("6"));
-                this.getContentPane().add(new JButton("7"));
-                this.getContentPane().add(new JButton("8"));
-                this.getContentPane().add(new JButton("9"));
+
+                for (int i = 1; i < 25; i++) {
+
+                    this.getContentPane().add(new JButton("" + i + ""));
+
+                }
                 this.setVisible(true);
 
                 break;
@@ -188,27 +172,17 @@ public class IHM extends JFrame implements ActionListener {
                 this.remove(player2);
                 this.remove(player3);
                 this.remove(player4);
-                //On définit le layout à utiliser sur le content pane
-
                 this.setLayout(new BorderLayout());
-
-                //On ajoute le bouton au content pane de la JFrame
-
-                //Au nord
-
                 this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
                 // Ajout de la grille
-                this.setLayout(new GridLayout(9, 9));
+                this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-                this.getContentPane().add(new JButton("1"));
-                this.getContentPane().add(new JButton("2"));
-                this.getContentPane().add(new JButton("3"));
-                this.getContentPane().add(new JButton("4"));
-                this.getContentPane().add(new JButton("5"));
-                this.getContentPane().add(new JButton("6"));
-                this.getContentPane().add(new JButton("7"));
-                this.getContentPane().add(new JButton("8"));
-                this.getContentPane().add(new JButton("9"));
+
+                for (int i = 1; i < 25; i++) {
+
+                    this.getContentPane().add(new JButton("" + i + ""));
+
+                }
                 this.setVisible(true);
 
                 break;
