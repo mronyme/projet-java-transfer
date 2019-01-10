@@ -26,7 +26,7 @@ public class IHM extends JFrame implements ActionListener {
         int height = ScreenSize.getheight(); // R?cup?ration de la hauteur
 
         // Puis on redimensionne la JFrame en fonction
-        setPreferredSize(new Dimension(width, height));
+
         this.setSize(width / 2, height / 2);
         //Nous demandons maintenant à notre objet de se positionner au centre
 
@@ -97,7 +97,6 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
 
         //Display the window.
-
         this.setVisible(true);
     }
 
@@ -125,7 +124,6 @@ public class IHM extends JFrame implements ActionListener {
                 // Ajout de la grille
                 this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-
                 for (int i = 1; i < 25; i++) {
 
                     this.getContentPane().add(new JButton("zone " + i + ""));
@@ -152,7 +150,6 @@ public class IHM extends JFrame implements ActionListener {
                 // Ajout de la grille
                 this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-
                 for (int i = 1; i < 25; i++) {
 
                     this.getContentPane().add(new JButton("zone " + i + ""));
@@ -177,7 +174,6 @@ public class IHM extends JFrame implements ActionListener {
                 // Ajout de la grille
                 this.setLayout(new GridLayout(5, 5));
                 //On ajoute le bouton au content pane de la JFrame
-
                 for (int i = 1; i < 25; i++) {
 
                     this.getContentPane().add(new JButton("zone " + i + ""));

@@ -1,23 +1,12 @@
 package core;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
-
-import entities.*;
-import enums.*;
-import views.*;
-
+import entities.Board;
+import entities.Card;
+import entities.Ia;
+import entities.Player;
 import enums.ColorEnum;
-import views.Window;
+
+import java.util.*;
 
 public class CoreGame {
     static final int twoPlayerCardCount = 24; // Nb carte de départ pour deux joueurs
