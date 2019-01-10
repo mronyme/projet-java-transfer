@@ -108,49 +108,51 @@ public class IHM extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    public void Plateau(int nb_joueurs) {
+        System.out.println("nbres des joueurs est 2");
+        //nouvelle fenetre pour commencer le jeu
+        this.setTitle("Domi'Nations pour 2 joueurs");
+        this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+        this.setLocationRelativeTo(null);
+        this.remove(Box1);
+        this.remove(buttonOne);
+        this.remove(player2);
+        this.remove(player3);
+        this.remove(player4);
+
+
+        //On définit le layout à utiliser sur le content pane
+
+        this.setLayout(new BorderLayout());
+
+        //On ajoute le bouton au content pane de la JFrame
+
+        //Au centre
+
+
+        //Au nord
+
+        this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+
+        this.setLayout(new GridLayout(9, 9));
+        //On ajoute le bouton au content pane de la JFrame
+        this.getContentPane().add(new JButton("1"));
+        this.getContentPane().add(new JButton("2"));
+        this.getContentPane().add(new JButton("3"));
+        this.getContentPane().add(new JButton("4"));
+        this.getContentPane().add(new JButton("5"));
+        this.getContentPane().add(new JButton("6"));
+        this.getContentPane().add(new JButton("7"));
+        this.getContentPane().add(new JButton("8"));
+        this.getContentPane().add(new JButton("9"));
+        this.setVisible(true);
+    }
     @Override
 
     public void actionPerformed(ActionEvent e) {
 
         if (player2.isSelected()) {
-            System.out.println("nbres des joueurs est 2");
-            //nouvelle fenetre pour commencer le jeu
-            this.setTitle("Domi'Nations pour 2 joueurs");
-            this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-            this.setLocationRelativeTo(null);
-            this.remove(Box1);
-            this.remove(buttonOne);
-            this.remove(player2);
-            this.remove(player3);
-            this.remove(player4);
-
-
-
-            //On définit le layout à utiliser sur le content pane
-
-            this.setLayout(new BorderLayout());
-
-            //On ajoute le bouton au content pane de la JFrame
-
-            //Au centre
-
-
-            //Au nord
-
-            this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
-
-            this.setLayout(new GridLayout(9, 9));
-            //On ajoute le bouton au content pane de la JFrame
-            this.getContentPane().add(new JButton("1"));
-            this.getContentPane().add(new JButton("2"));
-            this.getContentPane().add(new JButton("3"));
-            this.getContentPane().add(new JButton("4"));
-            this.getContentPane().add(new JButton("5"));
-            this.getContentPane().add(new JButton("6"));
-            this.getContentPane().add(new JButton("7"));
-            this.getContentPane().add(new JButton("8"));
-            this.getContentPane().add(new JButton("9"));
-            this.setVisible(true);
+            Plateau(2);
             game.initGame(2, false, false, false, false);
 
 
@@ -186,11 +188,11 @@ public class IHM extends JFrame implements ActionListener {
 
     }
 
-    public class fullscreen extends JFrame implements ActionListener {
+    public class fullscreen extends JPanel implements ActionListener {
 
         public void actionPerformed(ActionEvent arg0) {
-            this.setExtendedState(Frame.MAXIMIZED_BOTH);
-            this.setUndecorated(true);
+
+            this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
             System.out.println("full screen");
         }
 
