@@ -8,24 +8,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IHM extends JFrame implements ActionListener {
-	 JFrame fenetre;
+
 	  JRadioButton player3 ,player2 , player4;
 	private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
-    	
+        JFrame fenetre;
          fenetre = new JFrame();
-        //D�finit un titre pour notre fen�tre
-this.game=game;
+        //D?finit un titre pour notre fen?tre
+        this.game = game;
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
-        // On r�cup�re la taille de l'�cran utile, pour cela on utilise l'objet ScreenSize
+        // On r?cup?re la taille de l'?cran utile, pour cela on utilise l'objet ScreenSize
         ScreenSize ScreenSize = new ScreenSize();
-        int width = ScreenSize.getwidth(); // R�cup�ration de la largeur
-        int height = ScreenSize.getheight(); // R�cup�ration de la hauteur
+        int width = ScreenSize.getwidth(); // R?cup?ration de la largeur
+        int height = ScreenSize.getheight(); // R?cup?ration de la hauteur
 
         // Puis on redimensionne la JFrame en fonction
         this.setSize(width / 2, height / 2);
 
-        //Nous demandons maintenant � notre objet de se positionner au centre
+        //Nous demandons maintenant ? notre objet de se positionner au centre
 
         this.setLocationRelativeTo(null);
 
@@ -39,9 +39,9 @@ this.game=game;
         // Composantes de la JFrame
         //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
         JPanel pan = new JPanel();
-        //D�finition de sa couleur de fond
+        //D?finition de sa couleur de fond
         pan.setBackground(Color.ORANGE);
-        //On pr�vient notre JFrame que notre JPanel sera son content pane
+        //On pr?vient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
 
         // Menu Bar
@@ -51,14 +51,14 @@ this.game=game;
         MenuBar.setPreferredSize(new Dimension(this.getWidth(), 20));
         // Onglets du menu :
         JMenu Accueil = new JMenu("Accueil");
-        String str1 = "Param�tres";
+        String str1 = "Param?tres";
         JMenu Parametres = new JMenu(str1);
         JMenu Aide = new JMenu("Aide");
 
         MenuBar.add(Accueil);
         MenuBar.add(Parametres);
         MenuBar.add(Aide);
-        // Option du menu param�tres :
+        // Option du menu param?tres :
         JMenuItem restart = new JMenuItem("Recommencer la partie");
         Parametres.add(restart);
 
@@ -86,10 +86,10 @@ this.game=game;
         this.add(player2);
         
         this.add(player3);
-        this.add(player4); 
+        this.add(player4);
 
 
-        //Ajout des objets pr�c�dements cr�� dans la fen�tre.
+        //Ajout des objets pr?c?dements cr?? dans la fen?tre.
         this.setJMenuBar(MenuBar);
         this.getContentPane().add(Box1, BorderLayout.CENTER);
         this.getContentPane().add(buttonOne, BorderLayout.CENTER);
