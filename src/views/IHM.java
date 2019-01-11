@@ -8,11 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IHM extends JFrame implements ActionListener {
+    JPanel maincontainer = new JPanel();
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
+    JPanel secondcontainer = new JPanel();
+    private JLayeredPane layeredPane;
 
     private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
@@ -28,22 +31,28 @@ public class IHM extends JFrame implements ActionListener {
 
         // Puis on redimensionne la JFrame en fonction
 
-        this.setSize(width / 2, height / 2);
+        this.setSize(ScreenSize.getwidth() - 100, ScreenSize.getheight() - 100);
         //Nous demandons maintenant à notre objet de se positionner au centre
         this.setLocationRelativeTo(null);
         //Termine le processus lorsqu'on clique sur la croix rouge
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Et enfin, la rendre visible
-        this.setVisible(true);
+
 
         // Composantes de la JFrame
         //Instanciation d'un objet JPanel qui peut contenir des composants ou d'autres conteneurs.
-        JPanel pan = new JPanel();
+
+        // JPanel container2 = new JPanel();
         //Définition de sa couleur de fond
-        pan.setBackground(Color.ORANGE);
+        maincontainer.setBackground(new Color(255, 255, 255, 150));
+        /*Border border = maincontainer.getBorder();
+        Border margin = new EmptyBorder(0,50,0,50);
+        maincontainer.setBorder(new CompoundBorder(border,margin));
+     */
+
+
         //On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(new Panneau());
-
         // Menu Bar
         JMenuBar MenuBar = new JMenuBar();
         MenuBar.setOpaque(true);
@@ -73,8 +82,8 @@ public class IHM extends JFrame implements ActionListener {
         Box1.setHorizontalAlignment(SwingConstants.CENTER);
         Box1.setVerticalAlignment(SwingConstants.CENTER);
         Box1.setOpaque(true);
-        Box1.setBackground(new Color(254, 255, 243, 121));
-        Box1.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 4));
+        Box1.setBackground(new Color(255, 255, 255, 5));
+        Box1.setSize(new Dimension(maincontainer.getWidth() / 2, this.getHeight()));
 
         player2 = new JRadioButton("2 joueurs");
         player3 = new JRadioButton("3 joueurs");
@@ -85,52 +94,62 @@ public class IHM extends JFrame implements ActionListener {
         bg.add(player4);
 
 
-        //Ajout des objets pr?c?dements cr?? dans la fen?tre.
+        //Ajout des objets précédements créé dans la fen?tre.
         this.setJMenuBar(MenuBar);
-        this.getContentPane().add(Box1, BorderLayout.NORTH);
-        this.getContentPane().add(player2, BorderLayout.SOUTH);
-        this.getContentPane().add(player3, BorderLayout.SOUTH);
-        this.getContentPane().add(player4, BorderLayout.SOUTH);
-
-        this.getContentPane().add(buttonOne, BorderLayout.CENTER);
+        maincontainer.add(Box1, BorderLayout.NORTH);
+        maincontainer.add(player2, BorderLayout.SOUTH);
+        maincontainer.add(player3, BorderLayout.SOUTH);
+        maincontainer.add(player4, BorderLayout.SOUTH);
+        maincontainer.add(buttonOne, BorderLayout.SOUTH);
+        this.getContentPane().add(maincontainer);
+        this.getContentPane().add(secondcontainer);
 
         //Display the window.
 
         this.setVisible(true);
     }
 
+    public void aside(int nb_joueurs) {
+
+        secondcontainer.setBackground(Color.ORANGE);
+        secondcontainer.setPreferredSize(new Dimension(500, 500));
+        System.out.println("height" + secondcontainer.getPreferredSize().height + " width" + secondcontainer.getPreferredSize().width);
+        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
+
+    }
     // ---------------------------------------------------------------------------------------------------------------------
     public void Plateau(int nb_joueurs) {
+
         switch (nb_joueurs) {
 
             case 2:
                 System.out.println("nbres des joueurs est 2");
                 //nouveau plateau pour commencer le jeu
                 this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
-                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
+
                 this.setLocationRelativeTo(null);
-                this.remove(Box1);
-                this.remove(buttonOne);
-                this.remove(player2);
-                this.remove(player3);
-                this.remove(player4);
+                maincontainer.remove(Box1);
+                maincontainer.remove(buttonOne);
+                maincontainer.remove(player2);
+                maincontainer.remove(player3);
+                maincontainer.remove(player4);
+                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
                 //On définit le layout à utiliser sur le content pane
                 this.setLayout(new BorderLayout());
-
                 //On ajoute le bouton au content pane de la JFrame
 
                 //Au nord
-                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
+                maincontainer.add(new JButton("0"), BorderLayout.WEST);
                 // Ajout de la grille
-                this.setLayout(new GridLayout(5, 5));
+                maincontainer.setLayout(new GridLayout(9, 9));
                 //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 25; i++) {
+                for (int i = 1; i < 81; i++) {
 
-                    this.getContentPane().add(new JButton("zone " + i + ""));
+                    maincontainer.add(new JButton("zone " + i + ""));
 
                 }
 
-
+                aside(4);
                 this.setVisible(true);
 
                 break;
@@ -138,47 +157,62 @@ public class IHM extends JFrame implements ActionListener {
             case 3:
 
                 this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
-                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-                this.setLocationRelativeTo(null);
-                this.remove(Box1);
-                this.remove(buttonOne);
-                this.remove(player2);
-                this.remove(player3);
-                this.remove(player4);
-                this.setLayout(new BorderLayout());
-                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
-                // Ajout de la grille
-                this.setLayout(new GridLayout(5, 5));
-                //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 25; i++) {
 
-                    this.getContentPane().add(new JButton("zone " + i + ""));
+                this.setLocationRelativeTo(null);
+                maincontainer.remove(Box1);
+                maincontainer.remove(buttonOne);
+                maincontainer.remove(player2);
+                maincontainer.remove(player3);
+                maincontainer.remove(player4);
+                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
+                //On définit le layout à utiliser sur le content pane
+                this.setLayout(new BorderLayout());
+                //On ajoute le bouton au content pane de la JFrame
+
+                //Au nord
+                maincontainer.add(new JButton("0"), BorderLayout.WEST);
+                // Ajout de la grille
+                maincontainer.setLayout(new GridLayout(9, 9));
+                //On ajoute le bouton au content pane de la JFrame
+                for (int i = 1; i < 81; i++) {
+
+                    maincontainer.add(new JButton("zone " + i + ""));
 
                 }
+
+
                 this.setVisible(true);
+
 
                 break;
 
             case 4:
 
                 this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
-                this.setSize(ScreenSize.getwidth(), ScreenSize.getheight());
-                this.setLocationRelativeTo(null);
-                this.remove(Box1);
-                this.remove(buttonOne);
-                this.remove(player2);
-                this.remove(player3);
-                this.remove(player4);
-                this.setLayout(new BorderLayout());
-                this.getContentPane().add(new JButton("0"), BorderLayout.NORTH);
-                // Ajout de la grille
-                this.setLayout(new GridLayout(5, 5));
-                //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 25; i++) {
 
-                    this.getContentPane().add(new JButton("zone " + i + ""));
+                this.setLocationRelativeTo(null);
+                maincontainer.remove(Box1);
+                maincontainer.remove(buttonOne);
+                maincontainer.remove(player2);
+                maincontainer.remove(player3);
+                maincontainer.remove(player4);
+                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
+                //On définit le layout à utiliser sur le content pane
+                this.setLayout(new BorderLayout());
+                //On ajoute le bouton au content pane de la JFrame
+
+                //Au nord
+                maincontainer.add(new JButton("0"), BorderLayout.WEST);
+                // Ajout de la grille
+                maincontainer.setLayout(new GridLayout(9, 9));
+                //On ajoute le bouton au content pane de la JFrame
+                for (int i = 1; i < 81; i++) {
+
+                    maincontainer.add(new JButton("zone " + i + ""));
 
                 }
+
+
                 this.setVisible(true);
 
                 break;
@@ -190,6 +224,7 @@ public class IHM extends JFrame implements ActionListener {
         }
 
     }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     @Override
