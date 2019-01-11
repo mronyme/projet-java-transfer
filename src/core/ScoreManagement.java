@@ -38,17 +38,23 @@ public class ScoreManagement {
 				}
 			}
 		}
-		if(gameOptions.get("middleKingdomOption") && board.getEntity((int)(board.getCoords().length/2),(int)(board.getCoords()[0].length/2)) instanceof Castle)
+		if(gameOptions.get("middleKingdomOption"))
 		{
-			System.out.println("option activated");
-			localScore+=10;
+			int[] limit = Board.getPlayerBoardLimit(board);
+			int xMiddle = (int)((limit[1]+limit[0])/2);
+			int yMiddle = (int)((limit[3]+limit[2])/2);
+			if(board.getEntity(xMiddle, yMiddle) instanceof Castle)
+			{
+				localScore+=10;
+			}
 		}
 		if(gameOptions.get("harmonyOption"))
 		{
+			int[] limit = Board.getPlayerBoardLimit(board);
 			int empty = 0;
-			for(int x = 0; x < board.getCoords().length;x++)
+			for(int x = limit[0]; x < limit[1];x++)
 			{
-				for(int y = 0;y < board.getCoords()[0].length;y++)
+				for(int y = limit[2];y < limit[3];y++)
 				{
 					if(board.getEntity(x, y) instanceof Empty)
 					{
