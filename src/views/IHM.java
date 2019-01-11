@@ -83,7 +83,7 @@ public class IHM extends JFrame implements ActionListener {
         Box1.setVerticalAlignment(SwingConstants.CENTER);
         Box1.setOpaque(true);
         Box1.setBackground(new Color(255, 255, 255, 5));
-        Box1.setSize(new Dimension(maincontainer.getWidth() / 2, this.getHeight()));
+        Box1.setPreferredSize(new Dimension(this.getWidth() / 4, this.getHeight() / 4));
 
         player2 = new JRadioButton("2 joueurs");
         player3 = new JRadioButton("3 joueurs");
@@ -101,8 +101,7 @@ public class IHM extends JFrame implements ActionListener {
         maincontainer.add(player3, BorderLayout.SOUTH);
         maincontainer.add(player4, BorderLayout.SOUTH);
         maincontainer.add(buttonOne, BorderLayout.SOUTH);
-        this.getContentPane().add(maincontainer);
-        this.getContentPane().add(secondcontainer);
+        this.getContentPane().add(maincontainer, BorderLayout.WEST);
 
         //Display the window.
 
@@ -133,9 +132,9 @@ public class IHM extends JFrame implements ActionListener {
                 maincontainer.remove(player2);
                 maincontainer.remove(player3);
                 maincontainer.remove(player4);
-                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
+                maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 100));
                 //On définit le layout à utiliser sur le content pane
-                this.setLayout(new BorderLayout());
+
                 //On ajoute le bouton au content pane de la JFrame
 
                 //Au nord
