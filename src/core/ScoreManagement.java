@@ -28,7 +28,7 @@ public class ScoreManagement {
 			{
 				if(board.getEntity(x, y) instanceof Face)
 				{
-					regionScoreInfo = checkAdjacent(board,(FaceEnum)((Face)board.getEntity(x, y)).getFaceType(),x,y,0);
+					regionScoreInfo = checkAdjacent(board,(FaceEnum)((Face)board.getEntity(x, y)).getFaceType(),x,y);
 					if((int)regionScoreInfo.get("domainSize") > localLargestDomain)
 					{
 						localLargestDomain = (int)regionScoreInfo.get("domainSize");
@@ -72,7 +72,7 @@ public class ScoreManagement {
 		localScoreInfo.put("nbCrown",localNbCrown);
 		return localScoreInfo;
 	}
-	public static HashMap<String,Object> checkAdjacent(Board board,FaceEnum faceRef,int x,int y,int call)
+	public static HashMap<String,Object> checkAdjacent(Board board,FaceEnum faceRef,int x,int y)
 	{
 		HashMap<String,Object> temp;
 		Entity entity = board.getEntity(x, y);
@@ -82,36 +82,31 @@ public class ScoreManagement {
 		if(entity instanceof Face && !faceAlreadyCounted.contains(entity))
 		{
 			faceAlreadyCounted.add(entity);
-			// UP = gauche
 			Entity entityUp = board.getEntity(x, y-1);
-			// Down = droite
 			Entity entityDown = board.getEntity(x, y+1);
-			// LEft = haut
 			Entity entityLeft = board.getEntity(x-1, y);
-			// Right = bas
 			Entity entityRight = board.getEntity(x+1, y);
-			//System.out.println(entityUp+" "+entityDown+" "+entityLeft+" "+entityRight);
 			if(entityUp != null && entityUp instanceof Face && ((Face) entityUp).getFaceType() == faceRef)
 			{
-				temp = checkAdjacent(board,faceRef,x,y-1,call+1);
+				temp = checkAdjacent(board,faceRef,x,y-1);
 				regionScoreInfo.put("domainSize",(int)regionScoreInfo.get("domainSize")+(int)temp.get("domainSize"));
 				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown") + (int)regionScoreInfo.get("nbCrown"));
 			}
 			if(entityDown != null && entityDown instanceof Face && ((Face) entityDown).getFaceType() == faceRef)
 			{
-				temp = checkAdjacent(board,faceRef,x,y+1,call+1);
+				temp = checkAdjacent(board,faceRef,x,y+1);
 				regionScoreInfo.put("domainSize",(int)regionScoreInfo.get("domainSize")+(int)temp.get("domainSize"));
 				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown") + (int)regionScoreInfo.get("nbCrown"));
 			}
 			if(entityLeft != null && entityLeft instanceof Face && ((Face) entityLeft).getFaceType() == faceRef)
 			{
-				temp = checkAdjacent(board,faceRef,x-1,y,call+1);
+				temp = checkAdjacent(board,faceRef,x-1,y);
 				regionScoreInfo.put("domainSize",(int)regionScoreInfo.get("domainSize")+(int)temp.get("domainSize"));
 				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown") + (int)regionScoreInfo.get("nbCrown"));
 			}
 			if(entityRight != null && entityRight instanceof Face && ((Face) entityRight).getFaceType() == faceRef)
 			{
-				temp = checkAdjacent(board,faceRef,x+1,y,call+1);
+				temp = checkAdjacent(board,faceRef,x+1,y);
 				regionScoreInfo.put("domainSize",(int)regionScoreInfo.get("domainSize")+(int)temp.get("domainSize"));
 				regionScoreInfo.put("nbCrown",(int)temp.get("nbCrown") + (int)regionScoreInfo.get("nbCrown"));
 			}
