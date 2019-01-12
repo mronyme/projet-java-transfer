@@ -16,6 +16,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
+    JPanel secondcontainer = new JPanel();
+
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
@@ -25,7 +27,7 @@ public class IHM extends JFrame implements ActionListener {
     int chateauColonne = 4;
     int chateauLigne = 4;
 
-    JPanel secondcontainer = new JPanel();
+
     int nbPlayer;
     BlockingQueue<Boolean> turnFinished;
     JButton finishTurn;
@@ -119,6 +121,7 @@ public class IHM extends JFrame implements ActionListener {
     public void Grille(ButtonHandler buttonHandler, Player player, int nb_joueurs) {
 
         maincontainer.setLayout(new GridLayout(9, 9));
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 squares[i][j] = new JButton();
@@ -126,12 +129,13 @@ public class IHM extends JFrame implements ActionListener {
             	if(entity instanceof Face)
             	{
             		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getType()+".png");
-            		squares[i][j].setIcon(icon);            		
+            		squares[i][j].setIcon(icon);
             	}
             	else if(entity instanceof Castle)
             	{
-            		ImageIcon icon = new ImageIcon("src/images/Castle.png");
+            		ImageIcon icon = new ImageIcon("chateau.png");
             		squares[i][j].setIcon(icon);
+
             	}
             	else
             	{
@@ -146,8 +150,8 @@ public class IHM extends JFrame implements ActionListener {
 	                        squares[i][j].setBackground(Color.pink);
 	                        break;
 	
-	                    case "yellow":
-	                        squares[i][j].setBackground(Color.yellow);
+	                    case "cyan":
+	                        squares[i][j].setBackground(Color.cyan);
 	                        break;
 	                    case "red":
 	                        squares[i][j].setBackground(Color.red);
@@ -208,6 +212,10 @@ public class IHM extends JFrame implements ActionListener {
                 System.out.println("Nombre de joueurs invalide");
 
         }*/
+        squares[chateauLigne][chateauColonne].setName("Chateau");
+        squares[chateauLigne][chateauColonne].setText("C");
+        squares[chateauLigne][chateauColonne].setSelected(true);
+        squares[chateauLigne][chateauColonne].setForeground(Color.black);
     }
     public void aside(Player player,int nbRound) {
         JLabel jlabel = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());

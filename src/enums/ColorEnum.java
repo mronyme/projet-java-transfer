@@ -2,7 +2,7 @@ package enums;
 
 public enum ColorEnum {
 	pink,
-	yellow,
+	cyan,
 	red,
 	blue,
 }
