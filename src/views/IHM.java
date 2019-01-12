@@ -10,12 +10,14 @@ import entities.Player;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
-import java.util.*;
+import java.util.ArrayList;
 
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
@@ -24,7 +26,6 @@ public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
-
     public JButton[][] squares = new JButton[9][9];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
@@ -36,7 +37,6 @@ public class IHM extends JFrame implements ActionListener {
     private CoreGame game;
 
     public IHM(CoreGame game) { // Constructeur de la classe IHM
-
         //D?finit un titre pour notre fen?tre
         this.game = game;
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
@@ -129,7 +129,7 @@ public class IHM extends JFrame implements ActionListener {
             	Entity entity = player.getBoard().getEntity(i,j);
             	if(entity instanceof Face)
             	{
-            		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getType()+".png");
+            		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getFaceType()+".png");
             		squares[i][j].setIcon(icon);
             	}
             	else if(entity instanceof Castle)
@@ -215,12 +215,33 @@ public class IHM extends JFrame implements ActionListener {
         }*/
     }
     public void aside(Player player,int nbRound) {
-        JLabel jlabel = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+        JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
         JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
+    	java.util.List<Card> cards= game.getCardsAvailable(1);
+    	if(game.getRound() == 1)
+    	{
+	    	for(Card card : cards)
+	    	{
+	    		BufferedImage face1 = null;
+	    		BufferedImage face2 = null;
+				try {
+					System.out.println(card.getFace1().getType());
+					face1 = ImageIO.read(new File("src/images/"+card.getFace1().getFaceType()+".png"));
+					face2 = ImageIO.read(new File("src/images/"+card.getFace2().getFaceType()+".png"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	    		JButton face1Label = new JButton(new ImageIcon(face1));
+	    		JButton face2Label = new JButton(new ImageIcon(face2));
+	    		cardPanel.add(face1Label);
+	    		cardPanel.add(face2Label);
+	    	}
+    	}
         secondcontainer.setBackground(new Color(93, 93, 93));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
-        secondcontainer.add(jlabel);
+        secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel,BorderLayout.SOUTH);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
