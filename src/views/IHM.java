@@ -218,6 +218,8 @@ public class IHM extends JFrame implements ActionListener {
         JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
         JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
+    	finishTurn.setBackground(Color.darkGray);
+    	finishTurn.setForeground(Color.white);
     	java.util.List<Card> cards= game.getCardsAvailable(1);
     	if(game.getRound() == 1)
     	{
@@ -247,7 +249,7 @@ public class IHM extends JFrame implements ActionListener {
 	    		cardPanel.add(face2Label);
 	    	}
     	}
-        secondcontainer.setBackground(new Color(93, 93, 93));
+        secondcontainer.setBackground(Color.white);
         secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
@@ -282,6 +284,7 @@ public class IHM extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         maincontainer.removeAll();
         secondcontainer.removeAll();
+
         maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 200));
         //On définit le layout à utiliser sur le content pane
         // Ajout de la grille
@@ -289,7 +292,9 @@ public class IHM extends JFrame implements ActionListener {
         ButtonHandler buttonHandler = new ButtonHandler();
         Grille(buttonHandler, player, 2);
         aside(player,nbRound);
+
         this.setVisible(true);
+
         return true;
     }
 
