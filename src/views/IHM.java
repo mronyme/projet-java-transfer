@@ -312,8 +312,8 @@ public class IHM extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
 
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 10; j++) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
                     if (source == squares[i][j]) {
                         System.out.println("Le bouton cliqué a pour coordonée L" + i + "C" + j);
                     }
