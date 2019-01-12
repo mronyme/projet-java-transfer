@@ -216,19 +216,42 @@ public class IHM extends JFrame implements ActionListener {
     }
     public void aside(Player player,int nbRound) {
         JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+        JLabel info2;
         JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
-    	java.util.List<Card> cards= game.getCardsAvailable(1);
+    	java.util.List<Card> cards;
     	if(game.getRound() == 1)
     	{
+    		info2 = new JLabel("Sélectionnez votre première carte");
+        	cards= game.getCardsAvailable(0);
 	    	for(Card card : cards)
 	    	{
 	    		BufferedImage face1 = null;
 	    		BufferedImage face2 = null;
 				try {
-					System.out.println(card.getFace1().getType());
+					face1 = ImageIO.read(new File("src/images/"+card.getFace1().getFaceType()+".png"));
+					face2 = ImageIO.read(new File("src/images/"+card.getFace2().getFaceType()+".png"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	    		JButton face1Label = new JButton(new ImageIcon(face1));
+	    		JButton face2Label = new JButton(new ImageIcon(face2));
+	    		cardPanel.add(face1Label);
+	    		cardPanel.add(face2Label);
+	    	}
+    	}
+    	else
+    	{
+    		info2 = new JLabel("Sélectionnez votre carte suivante");
+    		cards= game.getCardsAvailable(1);
+	    	for(Card card : cards)
+	    	{
+	    		BufferedImage face1 = null;
+	    		BufferedImage face2 = null;
+				try {
 					face1 = ImageIO.read(new File("src/images/"+card.getFace1().getFaceType()+".png"));
 					face2 = ImageIO.read(new File("src/images/"+card.getFace2().getFaceType()+".png"));
 				} catch (IOException e1) {
