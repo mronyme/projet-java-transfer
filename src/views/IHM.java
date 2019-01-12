@@ -250,7 +250,7 @@ public class IHM extends JFrame implements ActionListener {
 	    	}
     	}
         secondcontainer.setBackground(Color.white);
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel,BorderLayout.SOUTH);
