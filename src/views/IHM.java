@@ -29,11 +29,9 @@ public class IHM extends JFrame implements ActionListener {
     public JButton[][] squares = new JButton[9][9];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
-    int chateauColonne = 4;
-    int chateauLigne = 4;
-    int nbPlayer;
-    BlockingQueue<Boolean> turnFinished;
     JButton finishTurn;
+    int nbPlayer;
+    Boolean canFinishTurn;
     private CoreGame game;
 
     public IHM(CoreGame game) { // Constructeur de la classe IHM
@@ -239,11 +237,17 @@ public class IHM extends JFrame implements ActionListener {
 				}
 	    		JButton face1Label = new JButton(new ImageIcon(face1));
 	    		JButton face2Label = new JButton(new ImageIcon(face2));
+                face1Label.setBackground(Color.BLACK);
+                face2Label.setBackground(Color.BLACK);
+                face1Label.setForeground(Color.BLACK);
+                face2Label.setForeground(Color.BLACK);
+                face1Label.setPreferredSize(new Dimension(100,100));
+                face2Label.setPreferredSize(new Dimension(100,100));
 	    		cardPanel.add(face1Label);
 	    		cardPanel.add(face2Label);
 	    	}
     	}
-    	else
+    	else if(game.getCardsColumnSize() > 1 && game.getCardsAvailable(1).size() > 0)
     	{
     		info2 = new JLabel("Sélectionnez votre carte suivante");
     		cards= game.getCardsAvailable(1);
@@ -296,11 +300,37 @@ public class IHM extends JFrame implements ActionListener {
         		  }
         	  }
         });
+    } 
+    public void asideFirstRound(Player player,int nbRound) {
+    	JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+    	JPanel cardPanel = new JPanel();
+    	finishTurn = new JButton("Finir le tour");
+    	java.util.List<Card> cards;
+        secondcontainer.setBackground(new Color(93, 93, 93));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
+        secondcontainer.add(info1);
+        secondcontainer.add(finishTurn);
+        secondcontainer.add(cardPanel,BorderLayout.SOUTH);
+        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
+        finishTurn.addActionListener(new ActionListener() {
+      	  public void actionPerformed(ActionEvent e)
+      	  {
+      		  if(canFinishTurn == true)
+      		  {
+	      		  game.pickCard(player, 0, game.getCardsAvailable(0).get(0));
+	      		  game.pickCard(player, 1, game.getCardsAvailable(1).get(0));
+	      		  Player nextPlayer =  game.getNextPlayer();
+	      		  if(nextPlayer != null)
+	      		  {
+	      			nextPlayer.casualTurn();
+	      		  }
+      		  }
+      	  }
+      });
     }
-
     // ---------------------------------------------------------------------------------------------------------------------
-    public Boolean renderBoard (Player player,int nbRound)  {
-    	System.out.println("nbres des joueurs est 2");
+    public void renderBoard (Player player,int nbRound)  {
+    	this.canFinishTurn = false;
         //nouveau plateau pour commencer le jeu
         this.setTitle("Domi'Nations pour " + nbPlayer + " joueurs");
 
@@ -314,11 +344,15 @@ public class IHM extends JFrame implements ActionListener {
 
         ButtonHandler buttonHandler = new ButtonHandler();
         Grille(buttonHandler, player, 2);
+        if(nbRound == 1)
+        {
+        	asideFirstRound(player,nbRound);
+        }
+        else
+        {
         aside(player,nbRound);
-
+        }
         this.setVisible(true);
-
-        return true;
     }
 
 
