@@ -1,6 +1,7 @@
 package views;
 
 import core.CoreGame;
+import entities.Card;
 import entities.Castle;
 import entities.Entity;
 import entities.Face;
@@ -9,10 +10,12 @@ import entities.Player;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
+import java.util.*;
 
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
@@ -26,8 +29,6 @@ public class IHM extends JFrame implements ActionListener {
     JButton buttonOne = new JButton(" Play !");
     int chateauColonne = 4;
     int chateauLigne = 4;
-
-
     int nbPlayer;
     BlockingQueue<Boolean> turnFinished;
     JButton finishTurn;
@@ -119,7 +120,6 @@ public class IHM extends JFrame implements ActionListener {
     }
 
     public void Grille(ButtonHandler buttonHandler, Player player, int nb_joueurs) {
-
         maincontainer.setLayout(new GridLayout(9, 9));
 
         for (int i = 0; i < 9; i++) {
@@ -212,18 +212,16 @@ public class IHM extends JFrame implements ActionListener {
                 System.out.println("Nombre de joueurs invalide");
 
         }*/
-        squares[chateauLigne][chateauColonne].setName("Chateau");
-        squares[chateauLigne][chateauColonne].setText("C");
-        squares[chateauLigne][chateauColonne].setSelected(true);
-        squares[chateauLigne][chateauColonne].setForeground(Color.black);
     }
     public void aside(Player player,int nbRound) {
         JLabel jlabel = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+        JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
         secondcontainer.setBackground(new Color(93, 93, 93));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/3,this.getHeight() ));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
         secondcontainer.add(jlabel);
         secondcontainer.add(finishTurn);
+        secondcontainer.add(cardPanel,BorderLayout.SOUTH);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         finishTurn.addActionListener(new ActionListener() {
         	  public void actionPerformed(ActionEvent e)

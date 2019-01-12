@@ -88,7 +88,6 @@ public class CoreGame {
     	}
     	else if(playersOrder.size() == 0)
     	{
-    		System.out.println(cardManagement.getCardsColumnSize());
     		if(cardManagement.getCardsColumnSize() != 0)
     		{
     			this.round+=1;
