@@ -307,7 +307,6 @@ public class IHM extends JFrame implements ActionListener {
     } 
     public void asideFirstRound(Player player,int nbRound) {
     	JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
-    	JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
@@ -316,6 +315,8 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
+        cardPanel.setBackground(Color.BLACK);
+        cardPanel.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight()));
         secondcontainer.add(cardPanel,BorderLayout.SOUTH);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         cards= game.getCardsAvailable(0);
