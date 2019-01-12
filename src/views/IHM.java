@@ -134,7 +134,7 @@ public class IHM extends JFrame implements ActionListener {
             	}
             	else if(entity instanceof Castle)
             	{
-            		ImageIcon icon = new ImageIcon("chateau.png");
+            		ImageIcon icon = new ImageIcon("src/images/chateau.png");
             		squares[i][j].setIcon(icon);
 
             	}
