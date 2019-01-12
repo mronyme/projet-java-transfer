@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
     JPanel secondcontainer = new JPanel();
-    JPanel cardPanel = new JPanel();
+    JPanel cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
