@@ -1,16 +1,9 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import core.CoreGame;
-
-import java.util.Arrays;
-
 import enums.FaceEnum;
+
+import java.util.*;
 
 
 public class Board {
@@ -89,12 +82,12 @@ public class Board {
 		Castle castle = new Castle();
 		this.coords[coordsX][coordsY] = castle;
 	}
-	// Place le châteaux sur ces coordonnées
+	// Place le chï¿½teaux sur ces coordonnï¿½es
 	public void setCastle(int coordsX,int coordsY,Castle castle)
 	{
 		this.coords[coordsX][coordsY] = castle;
 	}
-	// Récupère tout le plateaux du joueur
+	// Rï¿½cupï¿½re tout le plateaux du joueur
 	public Entity[][] getCoords()
 	{
 		return this.coords;
@@ -144,12 +137,8 @@ public class Board {
 		{
 			return true;
 		}
-		if(checkAdjacentType(player,coordsXFC2,coordsYFC2,card.face2))
-		{
-			//System.out.println(coordsXFC2+" "+coordsYFC2+" "+card.face2.getFaceType()+" "+card.face1.getFaceType());
-			return true;
-		}
-		return false;
+        //System.out.println(coordsXFC2+" "+coordsYFC2+" "+card.face2.getFaceType()+" "+card.face1.getFaceType());
+        return checkAdjacentType(player, coordsXFC2, coordsYFC2, card.face2);
 	}
 	public static Boolean checkAdjacentType(Player player,int x,int y,Face face) {
 		int adjacentEmpty = 0;
@@ -247,17 +236,13 @@ public class Board {
 			return false;
 		}
 		else
-			
-		if(!(limit[1] - player.getBoard().getBoardMaxSize() < FC2X && limit[0] + player.getBoard().getBoardMaxSize() > FC2X && limit[3] - player.getBoard().getBoardMaxSize() < FC2Y && limit[2] + player.getBoard().getBoardMaxSize() > FC2Y))
-		{
-			return false;
-		}
-		return true;
-	 }
+
+            return limit[1] - player.getBoard().getBoardMaxSize() < FC2X && limit[0] + player.getBoard().getBoardMaxSize() > FC2X && limit[3] - player.getBoard().getBoardMaxSize() < FC2Y && limit[2] + player.getBoard().getBoardMaxSize() > FC2Y;
+    }
 	public static int[]  getPlayerBoardLimit(Board board)
 	{
 		int xMin,xMax,yMin,yMax;
-		xMin = xMax = yMin = yMax = (int)(board.getCoords().length/2);
+        xMin = xMax = yMin = yMax = board.getCoords().length / 2;
 		for(int x = 0;x < board.getCoords().length;x++)
 		{
 			for(int y = 0;y < board.getCoords()[0].length;y++)

@@ -3,7 +3,6 @@ package core;
 import entities.Board;
 import entities.Card;
 import entities.Human;
-import entities.Ia;
 import entities.Player;
 import enums.ColorEnum;
 import views.IHM;
@@ -235,8 +234,8 @@ public class CoreGame {
 		List<ColorEnum> kingsPicked = new ArrayList<ColorEnum>();
     	for(int i = 0;i < numberTotalKings;i++)
     	{
-    		
-    		ColorEnum[] kingsRemaining = (ColorEnum[])(kingsList.keySet().toArray(new ColorEnum[kingsList.size()]));
+
+			ColorEnum[] kingsRemaining = (kingsList.keySet().toArray(new ColorEnum[kingsList.size()]));
     		ColorEnum kingColor = kingsRemaining[rand.nextInt(kingsRemaining.length)];
     		kingsList.put(kingColor,kingsList.get(kingColor) -1);
     		if(kingsList.get(kingColor) == 0)

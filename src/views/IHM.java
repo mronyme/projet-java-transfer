@@ -25,8 +25,7 @@ public class IHM extends JFrame implements ActionListener {
     private CoreGame game;
 
     public IHM(CoreGame game) { // Constructeur de la classe IHM
-        JFrame fenetre;
-        fenetre = new JFrame();
+
         //D?finit un titre pour notre fen?tre
         this.game = game;
         this.setTitle("Domi'Nations par Arnaud, Baptiste, Chaimaa");
@@ -146,7 +145,7 @@ public class IHM extends JFrame implements ActionListener {
                 squares[i][j].setName(i + "" + j);
                 squares[i][j].setText("L" + i + "C" + j);
 
-                System.out.println(couleur);
+
                 maincontainer.add(squares[i][j]);
             }
 
@@ -192,7 +191,7 @@ public class IHM extends JFrame implements ActionListener {
     public void aside(Player player,int nbRound) {
         JLabel jlabel = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	finishTurn = new JButton("Finir le tour");
-        secondcontainer.setBackground(new Color(93, 93, 93, 200));
+        secondcontainer.setBackground(new Color(93, 93, 93));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/3,this.getHeight() ));
         secondcontainer.add(jlabel);
         secondcontainer.add(finishTurn);
@@ -226,7 +225,7 @@ public class IHM extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         maincontainer.removeAll();
         secondcontainer.removeAll();
-        maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 100));
+        maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 200));
         //On définit le layout à utiliser sur le content pane
         // Ajout de la grille
 
@@ -234,7 +233,7 @@ public class IHM extends JFrame implements ActionListener {
         Grille(buttonHandler, player, 2);
         aside(player,nbRound);
         this.setVisible(true);
-        return false;
+        return true;
     }
 
 

@@ -1,25 +1,18 @@
 package core;
 
+import entities.Card;
+import entities.Player;
+import enums.FaceEnum;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-
-import entities.Card;
-import entities.Ia;
-import entities.Player;
-import enums.ColorEnum;
-import enums.FaceEnum;
+import java.util.*;
 
 public class CardManagement {
 	private CoreGame game;
 	private List<Card> cardsList;
 	private List<List<HashMap<String,Object>>> cardsColumn;
-    int numberTotalKings; // Nombre de rois totaux présent dans la partie
+    int numberTotalKings; // Nombre de rois totaux prï¿½sent dans la partie
 	public CardManagement(CoreGame game) {
 		this.game = game;
 		this.cardsList = new ArrayList<>();
@@ -66,15 +59,15 @@ public class CardManagement {
 	    	cardsColumn.remove(columnId);
 	    }
 	    // -------> Utile Pour vous <-------
-	    // Cette fonction est appellée avant pickKings et correspond au début du premier tour de jeux
-	    // Valeur Retournée : Liste de 2 élements -> 1 : Première colone de n cartes ( Liste de cartes rangée par numéro croissant) , 2 : Deuxième colones de n cartes ( Liste de cartes rangée par numéro croissant)
+	    // Cette fonction est appellï¿½e avant pickKings et correspond au dï¿½but du premier tour de jeux
+	    // Valeur Retournï¿½e : Liste de 2 ï¿½lements -> 1 : Premiï¿½re colone de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant) , 2 : Deuxiï¿½me colones de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant)
 	    // n -> Nombres de rois totaux dans la partie
 	    public void drawFirstRound() {
-	    	cardsColumn.add(createCardColumn());     	// Ajoute la premiere rangée de cartes
-	    	cardsColumn.add(createCardColumn());   // Ajoue la deuxième rangée de cartes
+	    	cardsColumn.add(createCardColumn());     	// Ajoute la premiere rangï¿½e de cartes
+	    	cardsColumn.add(createCardColumn());   // Ajoue la deuxiï¿½me rangï¿½e de cartes
 	    }
 	    // -------> Inutile Pour vous <-------
-	    // Cette fonction créer une rangée de cartes
+	    // Cette fonction crï¿½er une rangï¿½e de cartes
 	    public List<HashMap<String,Object>> createCardColumn() {
 	       	List<Card> cards = drawCards();
 	       	List<HashMap<String,Object>> column = new ArrayList<HashMap<String,Object>>();
@@ -91,15 +84,15 @@ public class CardManagement {
 	    // -------> Utile Pour vous <-------
 	    // Cette fonction gï¿½re le dï¿½but de tout les tours de jeux ï¿½ l'exception du premier (firstRound)
 	    // Valeur Retournï¿½e : Liste de 1 ï¿½lement -> une colone de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant)
-	    // Cette fonction gère le début de tout les tours de jeux à l'exception du premier (firstRound)
-	    // Valeur Retournée : Liste de 1 élement -> une colone de n cartes ( Liste de cartes rangée par numéro croissant)
+	    // Cette fonction gï¿½re le dï¿½but de tout les tours de jeux ï¿½ l'exception du premier (firstRound)
+	    // Valeur Retournï¿½e : Liste de 1 ï¿½lement -> une colone de n cartes ( Liste de cartes rangï¿½e par numï¿½ro croissant)
 	    // n -> Nombres de rois totaux dans la partie
 	    public void drawCasualRound() {
 	    	cardsColumn.add(createCardColumn()); // Ajoute 
 	    }
 	    //-------> Inutile pour vous <-------
 	    // Cette fonction rï¿½cupï¿½re toutes les cartes du csv et les mets dans une liste
-	    // Cette fonction récupère toutes les cartes du csv et les mets dans une liste
+	    // Cette fonction rï¿½cupï¿½re toutes les cartes du csv et les mets dans une liste
 		public void initCard()
 		{
 			try {
@@ -114,12 +107,13 @@ public class CardManagement {
 				cardsList.add(card);
 			}
 			reader.close();
-			}
-			catch(Exception e) {System.out.println(e);};	
+			} catch (Exception e) {
+                System.out.println(e);
+            }
 		}
 	    // -------> Inutile pour vous <-------
 		// Cette fonction retirer au dï¿½but de la partie un nombre de carte dï¿½pendant du nombre de joueur
-		// Cette fonction retirer au début de la partie un nombre de carte dépendant du nombre de joueur
+		// Cette fonction retirer au dï¿½but de la partie un nombre de carte dï¿½pendant du nombre de joueur
 		public void discardCards(int numberPlayer)
 		{
 			Random rand = new Random();
@@ -131,7 +125,7 @@ public class CardManagement {
 		}
 	    // -------> Inutile pour vous <-------
 		// Cette fonction pioche n cartes et les regroupent dans une liste de faï¿½on ordonnï¿½e
-		// Cette fonction pioche n cartes et les regroupent dans une liste de façon ordonnée
+		// Cette fonction pioche n cartes et les regroupent dans une liste de faï¿½on ordonnï¿½e
 	    // n -> Nombres de rois totaux dans la partie
 		public List<Card> drawCards()
 		{

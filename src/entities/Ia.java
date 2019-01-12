@@ -1,16 +1,11 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import core.CoreGame;
 import core.ScoreManagement;
 import enums.ColorEnum;
-import enums.FaceEnum;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class Ia extends Player{
 	List<Entity> faceAlreadyCounted;
@@ -19,7 +14,7 @@ public class Ia extends Player{
 	}
 	public void initTurn()
 	{
-		this.getBoard().setCastle((int)(this.getBoard().getCoords().length/2),(int)(this.getBoard().getCoords()[0].length/2));
+        this.getBoard().setCastle((this.getBoard().getCoords().length / 2), (this.getBoard().getCoords()[0].length / 2));
 	}
 	public Card firstTurn()
 	{

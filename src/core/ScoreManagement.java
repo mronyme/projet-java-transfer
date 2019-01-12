@@ -1,17 +1,11 @@
 package core;
 
+import entities.*;
+import enums.FaceEnum;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import entities.Board;
-import entities.Castle;
-import entities.Empty;
-import entities.Entity;
-import entities.Face;
-import entities.Player;
-import enums.FaceEnum;
 
 public class ScoreManagement {
     static List<Entity> faceAlreadyCounted;
@@ -28,7 +22,7 @@ public class ScoreManagement {
 			{
 				if(board.getEntity(x, y) instanceof Face)
 				{
-					regionScoreInfo = checkAdjacent(board,(FaceEnum)((Face)board.getEntity(x, y)).getFaceType(),x,y);
+                    regionScoreInfo = checkAdjacent(board, ((Face) board.getEntity(x, y)).getFaceType(), x, y);
 					if((int)regionScoreInfo.get("domainSize") > localLargestDomain)
 					{
 						localLargestDomain = (int)regionScoreInfo.get("domainSize");
@@ -41,8 +35,8 @@ public class ScoreManagement {
 		if(gameOptions.get("middleKingdomOption"))
 		{
 			int[] limit = Board.getPlayerBoardLimit(board);
-			int xMiddle = (int)((limit[1]+limit[0])/2);
-			int yMiddle = (int)((limit[3]+limit[2])/2);
+            int xMiddle = ((limit[1] + limit[0]) / 2);
+            int yMiddle = ((limit[3] + limit[2]) / 2);
 			if(board.getEntity(xMiddle, yMiddle) instanceof Castle)
 			{
 				localScore+=10;
@@ -128,15 +122,12 @@ public class ScoreManagement {
 			}
 			else if(hypotheticalScore.get("largestDomain") == bestHypotheticalScore.get("largestDomain"))
 			{
-				if(hypotheticalScore.get("nbCrown") > bestHypotheticalScore.get("nbCrown"))
-				{
-					return true;
-				}				
+                return hypotheticalScore.get("nbCrown") > bestHypotheticalScore.get("nbCrown");
 			}				
 		}	
 		return false;
 	}
-	// Cette fonction retourne la liste des joueurs classé par leurs scores finaux
+	// Cette fonction retourne la liste des joueurs classï¿½ par leurs scores finaux
     public static void calculateScore(List<Player> players,HashMap<String,Boolean> gameOptions)
     {
     	for(Player player : players) {
@@ -155,7 +146,7 @@ public class ScoreManagement {
 			else
 			{
 				for(int i = 0;i < playersRanked.size();i++) {
-					// Si true : le score de player est > à celui du joueur à la position i
+					// Si true : le score de player est > ï¿½ celui du joueur ï¿½ la position i
 					if(betterScore(player.getFinalScore(),playersRanked.get(i).getFinalScore()) && !playersRanked.contains(player))
 					{
 						playersRanked.add(i,player);
