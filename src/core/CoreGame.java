@@ -66,7 +66,6 @@ public class CoreGame {
             cardManagement.setNumberTotalKings(this.numberTotalKings);
             initPlayers(numberPlayers, 1);
         }
-    	System.out.println(cardManagement.getCardsListSize());
     	playersOrder = new ArrayList<Player>();
 		playersOrder.addAll(firstRoundOrder());
 		round = 1;

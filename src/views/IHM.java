@@ -1,12 +1,17 @@
 package views;
 
 import core.CoreGame;
+import entities.Castle;
+import entities.Entity;
+import entities.Face;
 import entities.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.concurrent.BlockingQueue;
 
 public class IHM extends JFrame implements ActionListener {
@@ -117,29 +122,43 @@ public class IHM extends JFrame implements ActionListener {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 squares[i][j] = new JButton();
-                String couleur = String.valueOf(player.getColor());
-                switch (couleur) {
-
-                    case "blue":
-                        squares[i][j].setBackground(Color.blue);
-                        break;
-
-                    case "pink":
-                        squares[i][j].setBackground(Color.pink);
-                        break;
-
-                    case "yellow":
-                        squares[i][j].setBackground(Color.yellow);
-                        break;
-                    case "red":
-                        squares[i][j].setBackground(Color.red);
-                        break;
-
-                    default:
-                        System.out.println("Erreur sélection couleur");
-
-
-                }
+            	Entity entity = player.getBoard().getEntity(i,j);
+            	if(entity instanceof Face)
+            	{
+            		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getType()+".png");
+            		squares[i][j].setIcon(icon);            		
+            	}
+            	else if(entity instanceof Castle)
+            	{
+            		ImageIcon icon = new ImageIcon("src/images/Castle.png");
+            		squares[i][j].setIcon(icon);
+            	}
+            	else
+            	{
+	                String couleur = String.valueOf(player.getColor());
+	                switch (couleur) {
+	
+	                    case "blue":
+	                        squares[i][j].setBackground(Color.blue);
+	                        break;
+	
+	                    case "pink":
+	                        squares[i][j].setBackground(Color.pink);
+	                        break;
+	
+	                    case "yellow":
+	                        squares[i][j].setBackground(Color.yellow);
+	                        break;
+	                    case "red":
+	                        squares[i][j].setBackground(Color.red);
+	                        break;
+	
+	                    default:
+	                        System.out.println("Erreur sélection couleur");
+	
+	
+	                }
+            	}
                 squares[i][j].setHorizontalTextPosition(JButton.CENTER);
                 squares[i][j].setForeground(Color.WHITE);
 
@@ -152,13 +171,6 @@ public class IHM extends JFrame implements ActionListener {
             }
 
         }
-        squares[chateauLigne][chateauColonne].setName("Chateau");
-        squares[chateauLigne][chateauColonne].setText("C");
-        squares[chateauLigne][chateauColonne].setSelected(true);
-        squares[chateauLigne][chateauColonne].setForeground(Color.black);
-
-
-
         /*switch (nb_joueurs) {
 
             case 2:

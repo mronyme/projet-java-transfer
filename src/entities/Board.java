@@ -27,6 +27,7 @@ public class Board {
 		Empty emptyCase = new Empty();
 		for (Entity[] row : this.coords)
 		    Arrays.fill(row, emptyCase);
+		setCastle((this.getCoords().length / 2), (this.getCoords()[0].length / 2));
 	}
 	public Board(Board board) {
 		this.coords = Arrays.stream(board.getCoords()).map(Entity[]::clone).toArray(Entity[][]::new);
