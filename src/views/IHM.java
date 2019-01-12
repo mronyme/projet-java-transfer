@@ -73,9 +73,9 @@ public class IHM extends JFrame implements ActionListener {
         JMenuItem restart = new JMenuItem("Nouvelle partie");
         restart.addActionListener(new RestartListener());
         Parametres.add(restart);
-        JMenuItem fullscreen = new JMenuItem("Plein écran");
-        fullscreen.addActionListener(new fullscreen());
-        Parametres.add(fullscreen);
+        // JMenuItem fullscreen = new JMenuItem("Plein écran");
+        //fullscreen.addActionListener(new fullscreen());
+        //Parametres.add(fullscreen);
 
         // Bouton Play
         buttonOne.addActionListener(this);
@@ -96,7 +96,7 @@ public class IHM extends JFrame implements ActionListener {
         bg.add(player4);
 
 
-        //Ajout des objets précédements créé dans la fen?tre.
+        //Ajout des objets précédements créé dans la fenêtre.
         this.setJMenuBar(MenuBar);
         maincontainer.add(Box1, BorderLayout.NORTH);
         maincontainer.add(player2, BorderLayout.SOUTH);
@@ -116,14 +116,36 @@ public class IHM extends JFrame implements ActionListener {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 squares[i][j] = new JButton();
+                String couleur = String.valueOf(player.getColor());
+                switch (couleur) {
+
+                    case "blue":
+                        squares[i][j].setBackground(Color.blue);
+                        break;
+
+                    case "pink":
+                        squares[i][j].setBackground(Color.pink);
+                        break;
+
+                    case "yellow":
+                        squares[i][j].setBackground(Color.yellow);
+                        break;
+                    case "green":
+                        squares[i][j].setBackground(Color.green);
+                        break;
+
+                    default:
+                        System.out.println("Erreur sélection couleur");
+
+
+                }
                 squares[i][j].setHorizontalTextPosition(JButton.CENTER);
                 squares[i][j].setForeground(Color.WHITE);
 
                 squares[i][j].addActionListener(buttonHandler);
                 squares[i][j].setName(i + "" + j);
                 squares[i][j].setText("L" + i + "C" + j);
-                String couleur = String.valueOf(player.getColor());
-                squares[i][j].setBackground(Color.getColor(couleur));
+
                 System.out.println(couleur);
                 maincontainer.add(squares[i][j]);
             }
