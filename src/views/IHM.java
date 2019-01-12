@@ -23,7 +23,8 @@ public class IHM extends JFrame implements ActionListener {
 
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
-    String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
+    String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
+    ArrayList<String> SuperListe = new ArrayList<String>();
     public JButton[][] squares = new JButton[9][9];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
