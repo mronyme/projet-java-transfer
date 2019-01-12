@@ -51,6 +51,17 @@ public class CardManagement {
 	    		}
 	    	}    	
 	    }
+	    public Card getCardToPlay(Player player) {
+	    	for(HashMap<String,Object> map : cardsColumn.get(0))
+	    	{
+	    		if(map.get("color") == player.getColor() && (Boolean)map.get("used") == false)
+	    		{
+	    			map.put("used",true);
+	    			return (Card)map.get("card");
+	    		}
+	    	}  
+	    	return null;
+	    }
 	    public void clearCardColumn(int columnId) {
 	    	for(HashMap<String,Object> map : cardsColumn.get(columnId))
 	    	{
@@ -77,6 +88,7 @@ public class CardManagement {
 	    		map = new HashMap<String, Object>();
 	        	map.put("color",null);
 	        	map.put("card",card);
+	        	map.put("used",false);
 	        	column.add(map);
 	    	}
 	    	return column;

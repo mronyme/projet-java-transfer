@@ -120,6 +120,10 @@ public class Board {
 		return sameTypeList;		
 	}
 	public static Boolean moveIsValid(Player player,int coordsXFC1,int coordsYFC1,int coordsXFC2,int coordsYFC2,Card card) {
+		if(!(Math.sqrt(Math.pow(coordsXFC1 - coordsXFC2,2) + Math.pow(coordsYFC1 - coordsYFC2,2)) == 1))
+		{
+			return false;
+		}
 		if(!(coordsXFC1 >= 0 && coordsXFC1 < player.getBoard().getCoords().length && coordsYFC1 >= 0 && coordsYFC1 < player.getBoard().getCoords()[0].length && coordsXFC2 >= 0 && coordsXFC2 < player.getBoard().getCoords().length && coordsYFC2 >= 0 && coordsYFC2 < player.getBoard().getCoords()[0].length))
 		{
 			return false;

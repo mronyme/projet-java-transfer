@@ -215,6 +215,9 @@ public class CoreGame {
     public List<Card> getCardsAvailable(int columnId) {
     	return cardManagement.getCardsAvailable(columnId);
     }
+    public Card getCardToPlay(Player player) {
+    	return cardManagement.getCardToPlay(player);
+    }
     public int getCardsColumnSize() {
     	return cardManagement.getCardsColumnSize();
     }
