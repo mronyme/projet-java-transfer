@@ -316,7 +316,7 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
         cardPanel.setBackground(Color.BLACK);
-        cardPanel.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight()));
+        cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
         secondcontainer.add(cardPanel,BorderLayout.SOUTH);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         cards= game.getCardsAvailable(0);
@@ -339,7 +339,9 @@ public class IHM extends JFrame implements ActionListener {
             face2Label.setForeground(Color.BLACK);
             face1Label.setPreferredSize(new Dimension(100,100));
             face2Label.setPreferredSize(new Dimension(100,100));
-    		cardPanel.add(face1Label);
+            face1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
+            face2Label.setAlignmentX(Component.RIGHT_ALIGNMENT);
+            cardPanel.add(face1Label);
     		cardPanel.add(face2Label);
     	}
         finishTurn.addActionListener(new ActionListener() {
