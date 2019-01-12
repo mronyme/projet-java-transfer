@@ -1,7 +1,6 @@
 package views;
 
 import core.CoreGame;
-import entities.Card;
 import entities.Player;
 
 import javax.swing.*;
@@ -15,13 +14,12 @@ public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
-    public JButton[][] squares = new JButton[18][18];
+    public JButton[][] squares = new JButton[9][9];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
 
     JPanel secondcontainer = new JPanel();
     int nbPlayer;
-    private JLayeredPane layeredPane;
     BlockingQueue<Boolean> turnFinished;
     JButton finishTurn;
     private CoreGame game;
@@ -112,56 +110,32 @@ public class IHM extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public void aside(Player player,int nbRound) {
-    	JLabel jlabel = new JLabel("Round: "+nbRound+" | Tour du joueur :"+player.getColor());
-    	finishTurn = new JButton("Finir le tour");
-        secondcontainer.setBackground(Color.ORANGE);
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/3,this.getHeight() ));
-        secondcontainer.add(jlabel);
-        secondcontainer.add(finishTurn);
-        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
-        finishTurn.addActionListener(new ActionListener() {
-        	  public void actionPerformed(ActionEvent e)
-        	  {
-        		  if(game.getCardsColumnSize() > 1 && game.getCardsAvailable(1).size() > 0)
-        		  {
-        			  game.pickCard(player, 1, game.getCardsAvailable(1).get(0));
-        		  }
-        		  if(game.getRound() == 1)
-        		  {
-        			  game.pickCard(player, 0, game.getCardsAvailable(0).get(0));
-        		  }
-        		  Player nextPlayer =  game.getNextPlayer();
-        		  if(nextPlayer != null)
-        		  {
-        			  nextPlayer.casualTurn();
-        		  }
-        	  }
-        });
-    }
-    public void Grille(ButtonHandler buttonHandler, int nb_joueurs) {
-        maincontainer.setLayout(new GridLayout(18, 18));
-        for (int i = 0; i < 18; i++) {
-            for (int j = 0; j < 18; j++) {
+    public void Grille(ButtonHandler buttonHandler, Player player, int nb_joueurs) {
+
+        maincontainer.setLayout(new GridLayout(9, 9));
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 squares[i][j] = new JButton();
                 squares[i][j].setHorizontalTextPosition(JButton.CENTER);
                 squares[i][j].setForeground(Color.WHITE);
-                maincontainer.add(squares[i][j]);
+
                 squares[i][j].addActionListener(buttonHandler);
                 squares[i][j].setName(i + "" + j);
                 squares[i][j].setText("L" + i + "C" + j);
-                squares[i][j].setBackground(Color.darkGray);
-
+                String couleur = String.valueOf(player.getColor());
+                squares[i][j].setBackground(Color.getColor(couleur));
+                System.out.println(couleur);
+                maincontainer.add(squares[i][j]);
             }
 
         }
-        switch (nb_joueurs) {
+        /*switch (nb_joueurs) {
 
             case 2:
 
                 System.out.println("Nombre de joueurs : 2");
-                for (int i = 9; i < 18; i++) {
-                    for (int j = 9; j < 18; j++) {
+                for (int i = 9; i < 9; i++) {
+                    for (int j = 9; j < 9; j++) {
                         squares[i][j].setBackground(Color.pink);
                     }
 
@@ -191,8 +165,36 @@ public class IHM extends JFrame implements ActionListener {
 
                 System.out.println("Nombre de joueurs invalide");
 
-        }
+        }*/
     }
+    public void aside(Player player,int nbRound) {
+        JLabel jlabel = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+    	finishTurn = new JButton("Finir le tour");
+        secondcontainer.setBackground(new Color(93, 93, 93, 200));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/3,this.getHeight() ));
+        secondcontainer.add(jlabel);
+        secondcontainer.add(finishTurn);
+        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
+        finishTurn.addActionListener(new ActionListener() {
+        	  public void actionPerformed(ActionEvent e)
+        	  {
+        		  if(game.getCardsColumnSize() > 1 && game.getCardsAvailable(1).size() > 0)
+        		  {
+        			  game.pickCard(player, 1, game.getCardsAvailable(1).get(0));
+        		  }
+        		  if(game.getRound() == 1)
+        		  {
+        			  game.pickCard(player, 0, game.getCardsAvailable(0).get(0));
+        		  }
+        		  Player nextPlayer =  game.getNextPlayer();
+        		  if(nextPlayer != null)
+        		  {
+        			  nextPlayer.casualTurn();
+        		  }
+        	  }
+        });
+    }
+
     // ---------------------------------------------------------------------------------------------------------------------
     public Boolean renderBoard (Player player,int nbRound)  {
     	System.out.println("nbres des joueurs est 2");
@@ -207,7 +209,7 @@ public class IHM extends JFrame implements ActionListener {
         // Ajout de la grille
 
         ButtonHandler buttonHandler = new ButtonHandler();
-        Grille(buttonHandler, 2);
+        Grille(buttonHandler, player, 2);
         aside(player,nbRound);
         this.setVisible(true);
         return false;
