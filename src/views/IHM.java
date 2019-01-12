@@ -32,6 +32,10 @@ public class IHM extends JFrame implements ActionListener {
     JButton finishTurn;
     int nbPlayer;
     Boolean canFinishTurn;
+    Face face1Picked;
+    Face face2Picked;
+    int face1X,face1Y;
+    int face2X,face2Y;
     private CoreGame game;
 
     public IHM(CoreGame game) { // Constructeur de la classe IHM
@@ -305,13 +309,38 @@ public class IHM extends JFrame implements ActionListener {
     	JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	JPanel cardPanel = new JPanel();
     	finishTurn = new JButton("Finir le tour");
+    	finishTurn.setBackground(Color.darkGray);
+    	finishTurn.setForeground(Color.white);
     	java.util.List<Card> cards;
-        secondcontainer.setBackground(new Color(93, 93, 93));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth(),this.getHeight() ));
+        secondcontainer.setBackground(Color.white);
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel,BorderLayout.SOUTH);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
+        cards= game.getCardsAvailable(0);
+        for(Card card : cards)
+    	{
+    		BufferedImage face1 = null;
+    		BufferedImage face2 = null;
+			try {
+				face1 = ImageIO.read(new File("src/images/"+card.getFace1().getFaceType()+".png"));
+				face2 = ImageIO.read(new File("src/images/"+card.getFace2().getFaceType()+".png"));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+    		JButton face1Label = new JButton(new ImageIcon(face1));
+    		JButton face2Label = new JButton(new ImageIcon(face2));
+            face1Label.setBackground(Color.BLACK);
+            face2Label.setBackground(Color.BLACK);
+            face1Label.setForeground(Color.BLACK);
+            face2Label.setForeground(Color.BLACK);
+            face1Label.setPreferredSize(new Dimension(100,100));
+            face2Label.setPreferredSize(new Dimension(100,100));
+    		cardPanel.add(face1Label);
+    		cardPanel.add(face2Label);
+    	}
         finishTurn.addActionListener(new ActionListener() {
       	  public void actionPerformed(ActionEvent e)
       	  {
