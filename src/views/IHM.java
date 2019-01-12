@@ -32,10 +32,10 @@ public class IHM extends JFrame implements ActionListener {
     JButton finishTurn;
     int nbPlayer;
     Boolean canFinishTurn;
-    Face face1Picked;
-    Face face2Picked;
-    int face1X,face1Y;
-    int face2X,face2Y;
+    Face face1Picked; // Face de gauche sélectionnée
+    Face face2Picked; // Face de droite sélectionnée
+    int face1X,face1Y; // Coordonées sur plateau de la face gauche
+    int face2X,face2Y; // Coordonées sur plateau de la face droite
     private CoreGame game;
 
     public IHM(CoreGame game) { // Constructeur de la classe IHM
@@ -312,7 +312,7 @@ public class IHM extends JFrame implements ActionListener {
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
     	java.util.List<Card> cards;
-        secondcontainer.setBackground(Color.white);
+        secondcontainer.setBackground(new Color (255,255,255,200));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(finishTurn);
