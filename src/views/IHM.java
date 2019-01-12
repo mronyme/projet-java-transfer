@@ -15,14 +15,17 @@ public class IHM extends JFrame implements ActionListener {
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs ci-dessous :";
+    public JButton[][] squares = new JButton[18][18];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
+
     JPanel secondcontainer = new JPanel();
     int nbPlayer;
     private JLayeredPane layeredPane;
     BlockingQueue<Boolean> turnFinished;
     JButton finishTurn;
     private CoreGame game;
+
     public IHM(CoreGame game) { // Constructeur de la classe IHM
         JFrame fenetre;
         fenetre = new JFrame();
@@ -50,10 +53,6 @@ public class IHM extends JFrame implements ActionListener {
         // JPanel container2 = new JPanel();
         //Définition de sa couleur de fond
         maincontainer.setBackground(new Color(255, 255, 255, 150));
-        /*Border border = maincontainer.getBorder();
-        Border margin = new EmptyBorder(0,50,0,50);
-        maincontainer.setBorder(new CompoundBorder(border,margin));
-     */
 
 
         //On prévient notre JFrame que notre JPanel sera son content pane
@@ -93,7 +92,7 @@ public class IHM extends JFrame implements ActionListener {
         player2 = new JRadioButton("2 joueurs");
         player3 = new JRadioButton("3 joueurs");
         player4 = new JRadioButton("4 joueurs");
-        ButtonGroup  bg = new ButtonGroup();
+        ButtonGroup bg = new ButtonGroup();
         bg.add(player2);
         bg.add(player3);
         bg.add(player4);
@@ -140,8 +139,63 @@ public class IHM extends JFrame implements ActionListener {
         	  }
         });
     }
+    public void Grille(ButtonHandler buttonHandler, int nb_joueurs) {
+        maincontainer.setLayout(new GridLayout(18, 18));
+        for (int i = 0; i < 18; i++) {
+            for (int j = 0; j < 18; j++) {
+                squares[i][j] = new JButton();
+                squares[i][j].setHorizontalTextPosition(JButton.CENTER);
+                squares[i][j].setForeground(Color.WHITE);
+                maincontainer.add(squares[i][j]);
+                squares[i][j].addActionListener(buttonHandler);
+                squares[i][j].setName(i + "" + j);
+                squares[i][j].setText("L" + i + "C" + j);
+                squares[i][j].setBackground(Color.darkGray);
+
+            }
+
+        }
+        switch (nb_joueurs) {
+
+            case 2:
+
+                System.out.println("Nombre de joueurs : 2");
+                for (int i = 9; i < 18; i++) {
+                    for (int j = 9; j < 18; j++) {
+                        squares[i][j].setBackground(Color.pink);
+                    }
+
+                }
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        squares[i][j].setBackground(Color.BLUE);
+                    }
+
+                }
+
+                break;
+
+            case 3:
+
+                System.out.println("Nombre de joueurs : 3");
+
+                break;
+
+            case 4:
+
+                System.out.println("Nombre de joueurs : 4");
+
+                break;
+
+            default:
+
+                System.out.println("Nombre de joueurs invalide");
+
+        }
+    }
     // ---------------------------------------------------------------------------------------------------------------------
     public Boolean renderBoard (Player player,int nbRound)  {
+    	System.out.println("nbres des joueurs est 2");
         //nouveau plateau pour commencer le jeu
         this.setTitle("Domi'Nations pour " + nbPlayer + " joueurs");
 
@@ -150,20 +204,10 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.removeAll();
         maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 100));
         //On définit le layout à utiliser sur le content pane
-
-        //On ajoute le bouton au content pane de la JFrame
-
-        //Au nord
-        maincontainer.add(new JButton("0"), BorderLayout.WEST);
         // Ajout de la grille
-        maincontainer.setLayout(new GridLayout(9, 9));
-        //On ajoute le bouton au content pane de la JFrame
-        for (int i = 1; i < 81; i++) {
 
-            maincontainer.add(new JButton("zone " + i + ""));
-
-        }
-
+        ButtonHandler buttonHandler = new ButtonHandler();
+        Grille(buttonHandler, 2);
         aside(player,nbRound);
         this.setVisible(true);
         return false;
@@ -210,7 +254,24 @@ public class IHM extends JFrame implements ActionListener {
         }
 
     }
-    public JButton getFinishTurn() {
-    	return this.finishTurn;
+    class ButtonHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object source = e.getSource();
+
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    if (source == squares[i][j]) {
+                        System.out.println("Le bouton cliqué a pour coordonée L" + i + "C" + j);
+                    }
+                }
+            }
+
+
+        }
     }
 }
+
+
+
