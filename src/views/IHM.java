@@ -1,11 +1,14 @@
 package views;
 
 import core.CoreGame;
+import entities.Card;
+import entities.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.BlockingQueue;
 
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
@@ -15,8 +18,10 @@ public class IHM extends JFrame implements ActionListener {
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
     JPanel secondcontainer = new JPanel();
+    int nbPlayer;
     private JLayeredPane layeredPane;
-
+    BlockingQueue<Boolean> turnFinished;
+    JButton finishTurn;
     private CoreGame game;
     public IHM(CoreGame game) { // Constructeur de la classe IHM
         JFrame fenetre;
@@ -108,120 +113,60 @@ public class IHM extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public void aside(int nb_joueurs) {
-
+    public void aside(Player player,int nbRound) {
+    	JLabel jlabel = new JLabel("Round: "+nbRound+" | Tour du joueur :"+player.getColor());
+    	finishTurn = new JButton("Finir le tour");
         secondcontainer.setBackground(Color.ORANGE);
-        secondcontainer.setPreferredSize(new Dimension(500, 500));
-        System.out.println("height" + secondcontainer.getPreferredSize().height + " width" + secondcontainer.getPreferredSize().width);
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/3,this.getHeight() ));
+        secondcontainer.add(jlabel);
+        secondcontainer.add(finishTurn);
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
-
+        finishTurn.addActionListener(new ActionListener() {
+        	  public void actionPerformed(ActionEvent e)
+        	  {
+        		  if(game.getCardsColumnSize() > 1 && game.getCardsAvailable(1).size() > 0)
+        		  {
+        			  game.pickCard(player, 1, game.getCardsAvailable(1).get(0));
+        		  }
+        		  if(game.getRound() == 1)
+        		  {
+        			  game.pickCard(player, 0, game.getCardsAvailable(0).get(0));
+        		  }
+        		  Player nextPlayer =  game.getNextPlayer();
+        		  if(nextPlayer != null)
+        		  {
+        			  nextPlayer.casualTurn();
+        		  }
+        	  }
+        });
     }
     // ---------------------------------------------------------------------------------------------------------------------
-    public void Plateau(int nb_joueurs) {
+    public Boolean renderBoard (Player player,int nbRound)  {
+        //nouveau plateau pour commencer le jeu
+        this.setTitle("Domi'Nations pour " + nbPlayer + " joueurs");
 
-        switch (nb_joueurs) {
+        this.setLocationRelativeTo(null);
+        maincontainer.removeAll();
+        secondcontainer.removeAll();
+        maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 100));
+        //On définit le layout à utiliser sur le content pane
 
-            case 2:
-                System.out.println("nbres des joueurs est 2");
-                //nouveau plateau pour commencer le jeu
-                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
+        //On ajoute le bouton au content pane de la JFrame
 
-                this.setLocationRelativeTo(null);
-                maincontainer.remove(Box1);
-                maincontainer.remove(buttonOne);
-                maincontainer.remove(player2);
-                maincontainer.remove(player3);
-                maincontainer.remove(player4);
-                maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 100));
-                //On définit le layout à utiliser sur le content pane
+        //Au nord
+        maincontainer.add(new JButton("0"), BorderLayout.WEST);
+        // Ajout de la grille
+        maincontainer.setLayout(new GridLayout(9, 9));
+        //On ajoute le bouton au content pane de la JFrame
+        for (int i = 1; i < 81; i++) {
 
-                //On ajoute le bouton au content pane de la JFrame
-
-                //Au nord
-                maincontainer.add(new JButton("0"), BorderLayout.WEST);
-                // Ajout de la grille
-                maincontainer.setLayout(new GridLayout(9, 9));
-                //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 81; i++) {
-
-                    maincontainer.add(new JButton("zone " + i + ""));
-
-                }
-
-                aside(4);
-                this.setVisible(true);
-
-                break;
-
-            case 3:
-
-                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
-
-                this.setLocationRelativeTo(null);
-                maincontainer.remove(Box1);
-                maincontainer.remove(buttonOne);
-                maincontainer.remove(player2);
-                maincontainer.remove(player3);
-                maincontainer.remove(player4);
-                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
-                //On définit le layout à utiliser sur le content pane
-                this.setLayout(new BorderLayout());
-                //On ajoute le bouton au content pane de la JFrame
-
-                //Au nord
-                maincontainer.add(new JButton("0"), BorderLayout.WEST);
-                // Ajout de la grille
-                maincontainer.setLayout(new GridLayout(9, 9));
-                //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 81; i++) {
-
-                    maincontainer.add(new JButton("zone " + i + ""));
-
-                }
-
-
-                this.setVisible(true);
-
-
-                break;
-
-            case 4:
-
-                this.setTitle("Domi'Nations pour " + nb_joueurs + " joueurs");
-
-                this.setLocationRelativeTo(null);
-                maincontainer.remove(Box1);
-                maincontainer.remove(buttonOne);
-                maincontainer.remove(player2);
-                maincontainer.remove(player3);
-                maincontainer.remove(player4);
-                maincontainer.setSize(this.getWidth() / 2, this.getHeight() - 100);
-                //On définit le layout à utiliser sur le content pane
-                this.setLayout(new BorderLayout());
-                //On ajoute le bouton au content pane de la JFrame
-
-                //Au nord
-                maincontainer.add(new JButton("0"), BorderLayout.WEST);
-                // Ajout de la grille
-                maincontainer.setLayout(new GridLayout(9, 9));
-                //On ajoute le bouton au content pane de la JFrame
-                for (int i = 1; i < 81; i++) {
-
-                    maincontainer.add(new JButton("zone " + i + ""));
-
-                }
-
-
-                this.setVisible(true);
-
-                break;
-
-            default:
-
-                System.out.println("Erreur dans la sélection du nombre de jouers");
+            maincontainer.add(new JButton("zone " + i + ""));
 
         }
 
+        aside(player,nbRound);
+        this.setVisible(true);
+        return false;
     }
 
 
@@ -231,19 +176,18 @@ public class IHM extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (player2.isSelected()) {
-            Plateau(2);
-            game.initGame(2, false, false, false, false);
+        	nbPlayer = 2;
+			game.initGame(2, false, false, false, false);
+			renderBoard(game.getFirstPlayer(),1);
 
 
         } else if (player3.isSelected()) {
-            Plateau(3);
-
-            game.initGame(3, false, false, false, false);
+        	nbPlayer = 3;
+			game.initGame(3, false, false, false, false);
 
         } else if (player4.isSelected()) {
-            Plateau(4);
-
-            game.initGame(4, false, false, false, false);
+        	nbPlayer = 4;
+			game.initGame(4, false, false, false, false);
         }
     }
 
@@ -265,5 +209,8 @@ public class IHM extends JFrame implements ActionListener {
             System.out.println("full screen");
         }
 
+    }
+    public JButton getFinishTurn() {
+    	return this.finishTurn;
     }
 }

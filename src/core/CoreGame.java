@@ -2,9 +2,11 @@ package core;
 
 import entities.Board;
 import entities.Card;
+import entities.Human;
 import entities.Ia;
 import entities.Player;
 import enums.ColorEnum;
+import views.IHM;
 
 import java.util.*;
 
@@ -14,10 +16,13 @@ public class CoreGame {
     static final int fourPlayerCardCount = 48; // Nb carte de d�part pour quatre joueurs
     HashMap<String,Boolean> gameOptions;
     List<Player> players;       //Liste des joueurs
+    List<Player> playersOrder;
+    int round;
     List<ColorEnum> colorsAvailable;     // Liste des couleurs disponibles lors de la répartition des couleurs pour chaque joueur
     Map<ColorEnum, Integer> kingsList;     // Liste des rois restant pour chaque couleur à piocher lors du premier tour
     int numberTotalKings; // Nombre de rois totaux présent dans la partie
     CardManagement cardManagement;
+    IHM window;
     public CoreGame() {
     	this.gameOptions = new HashMap<String,Boolean>();
     	gameOptions.put("dynastyOption", false);
@@ -62,7 +67,43 @@ public class CoreGame {
             cardManagement.setNumberTotalKings(this.numberTotalKings);
             initPlayers(numberPlayers, 1);
         }
-        manageRound(0);
+    	System.out.println(cardManagement.getCardsListSize());
+    	playersOrder = new ArrayList<Player>();
+		playersOrder.addAll(firstRoundOrder());
+		round = 1;
+        //manageRound(0);
+    }
+    public Player getFirstPlayer() {
+    	return playersOrder.get(0);
+    }
+    public Player getNextPlayer()
+    {
+    	if(playersOrder.size() > 0)
+    	{
+    		playersOrder.remove(0);
+    	}
+    	if(playersOrder.size() == 0 && cardManagement.getCardsListSize() != 0)
+    	{
+    		this.round+=1;
+    		playersOrder.addAll(casualRoundOrder());
+    		cardManagement.clearCardColumn(0);	
+    	}
+    	else if(playersOrder.size() == 0)
+    	{
+    		System.out.println(cardManagement.getCardsColumnSize());
+    		if(cardManagement.getCardsColumnSize() != 0)
+    		{
+    			this.round+=1;
+        		playersOrder.addAll(lastRoundOrder());
+        		cardManagement.clearCardColumn(0);
+    		}
+    		else
+    		{
+    			System.out.println("Jeux fini");
+    			return null;
+    		}
+    	}
+    	return playersOrder.get(0);
     }
     // Fonction gérant les tours de jeux jusqu'à la fin
     public void manageRound(int nbRound) {
@@ -105,6 +146,37 @@ public class CoreGame {
     		player.initTurn();
     	}
     }
+    public List<Player> firstRoundOrder() {
+    	List<Player> playersOrder = new ArrayList<Player>();
+    	List<ColorEnum> order = drawKings();
+    	cardManagement.drawFirstRound();
+    	for(ColorEnum color : order)
+    	{
+    		Player player = Player.findPlayerByColor(players, color);
+    		playersOrder.add(player);
+    	}
+    	return playersOrder;
+    }
+    public List<Player> lastRoundOrder() {
+    	List<Player> playersOrder = new ArrayList<Player>();
+    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(0))
+    	{
+    		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
+    		playersOrder.add(player);
+    	}
+    	return playersOrder;
+    }
+    public List<Player> casualRoundOrder() {
+    	List<Player> playersOrder = new ArrayList<Player>();
+    	System.out.println(cardManagement.getCardsColumn());
+    	cardManagement.drawCasualRound();
+    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(0))
+    	{
+    		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
+    		playersOrder.add(player);
+    	}
+    	return playersOrder;
+    }
     public void firstRound() {
     	List<ColorEnum> order = drawKings();
     	cardManagement.drawFirstRound();
@@ -146,6 +218,9 @@ public class CoreGame {
     public List<Card> getCardsAvailable(int columnId) {
     	return cardManagement.getCardsAvailable(columnId);
     }
+    public int getCardsColumnSize() {
+    	return cardManagement.getCardsColumnSize();
+    }
     public void pickCard(Player player,int columnId,Card card) {
     	cardManagement.pickCard(player, columnId, card);
     }
@@ -181,7 +256,7 @@ public class CoreGame {
 			Random rand = new Random();
 			ColorEnum color = colorsAvailable.get(rand.nextInt(colorsAvailable.size()));
 			Player player;
-			player = new Ia(this,color,numberKings);	
+			player = new Human(this,color,numberKings);	
 			this.kingsList.put(color, numberKings);
 			colorsAvailable.remove(color);
 			players.add(player);
@@ -189,6 +264,15 @@ public class CoreGame {
     }
     public HashMap<String,Boolean> getGameOptions(){
     	return this.gameOptions;
+    }
+    public IHM getIHM() {
+    	return this.window;
+    }
+    public void setIHM(IHM window) {
+    	this.window = window;
+    }
+    public int getRound() {
+    	return this.round;
     }
 }
 

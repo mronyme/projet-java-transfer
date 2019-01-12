@@ -1,5 +1,7 @@
 package entities;
 
+import javax.swing.JButton;
+
 import core.CoreGame;
 import enums.ColorEnum;
 
@@ -45,5 +47,9 @@ public class Human extends Player{
 		// List<Card> cards  = game.getCardsAvailable(1); permet de r�cuperer la liste des cartes du prochain tour de jeux ( deuxi�me colone)
 		// la fonction renvoie la carte qu'il jouera au prochain tour ( la carte de la deuxi�me colone o� il posera son roi)
 		return null;
+	}
+	public void casualTurn()
+	{
+		game.getIHM().renderBoard(this, game.getRound());
 	}
 }

@@ -27,9 +27,7 @@ public abstract class Player {
 		// la fonction ne renvoit rien
 	}
 	public Card firstTurn() {
-		// le joueur doit placer son châteaux
 		
-		// la fonction renvoie la carte qu'il ch
 		return null;
 	}
 	public void lastTurn(int nbRound,Card card) {}
@@ -53,5 +51,9 @@ public abstract class Player {
 	    Optional<Player> playerOptional = players.stream().filter(c -> c.getColor().equals(color)).findAny();
 	    return playerOptional.isPresent() ? playerOptional.get() : null;
 	    
+	}
+	public void casualTurn() {
+		// TODO Auto-generated method stub
+		
 	}
 }

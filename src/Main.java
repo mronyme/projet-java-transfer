@@ -7,6 +7,7 @@ public class Main {
 
 		CoreGame game = new CoreGame();
         IHM window2 = new IHM(game);
+        game.setIHM(window2);
 		// Syntaxe : nom_classe nom_objet = new nom_constructeur(paramètres) ;
 	}
 
