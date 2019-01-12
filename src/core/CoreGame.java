@@ -29,7 +29,7 @@ public class CoreGame {
     	gameOptions.put("harmonyOption", false);
     	gameOptions.put("bigDuelOption", false);
         this.players = new ArrayList<Player>();
-        this.colorsAvailable = new ArrayList<>(Arrays.asList(ColorEnum.pink,ColorEnum.yellow,ColorEnum.green,ColorEnum.blue));
+        this.colorsAvailable = new ArrayList<>(Arrays.asList(ColorEnum.pink, ColorEnum.yellow, ColorEnum.red, ColorEnum.blue));
         this.cardManagement = new CardManagement(this);
         this.kingsList = new HashMap<ColorEnum, Integer>();
         cardManagement.initCard();

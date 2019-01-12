@@ -17,6 +17,8 @@ public class IHM extends JFrame implements ActionListener {
     public JButton[][] squares = new JButton[9][9];
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
+    int chateauColonne = 4;
+    int chateauLigne = 4;
 
     JPanel secondcontainer = new JPanel();
     int nbPlayer;
@@ -129,8 +131,8 @@ public class IHM extends JFrame implements ActionListener {
                     case "yellow":
                         squares[i][j].setBackground(Color.yellow);
                         break;
-                    case "green":
-                        squares[i][j].setBackground(Color.green);
+                    case "red":
+                        squares[i][j].setBackground(Color.red);
                         break;
 
                     default:
@@ -150,6 +152,13 @@ public class IHM extends JFrame implements ActionListener {
             }
 
         }
+        squares[chateauLigne][chateauColonne].setName("Chateau");
+        squares[chateauLigne][chateauColonne].setText("C");
+        squares[chateauLigne][chateauColonne].setSelected(true);
+        squares[chateauLigne][chateauColonne].setForeground(Color.black);
+
+
+
         /*switch (nb_joueurs) {
 
             case 2:
