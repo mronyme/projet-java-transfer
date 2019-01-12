@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
     JPanel secondcontainer = new JPanel();
-
+    JPanel cardPanel = new JPanel();
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
@@ -219,7 +219,7 @@ public class IHM extends JFrame implements ActionListener {
     public void aside(Player player,int nbRound) {
         JLabel info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
         JLabel info2;
-        JPanel cardPanel = new JPanel();
+
     	finishTurn = new JButton("Finir le tour");
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
@@ -327,7 +327,7 @@ public class IHM extends JFrame implements ActionListener {
 				face1 = ImageIO.read(new File("src/images/"+card.getFace1().getFaceType()+".png"));
 				face2 = ImageIO.read(new File("src/images/"+card.getFace2().getFaceType()+".png"));
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
     		JButton face1Label = new JButton(new ImageIcon(face1));
