@@ -235,7 +235,15 @@ public class IHM extends JFrame implements ActionListener {
 				}
 	    		JButton face1Label = new JButton(new ImageIcon(face1));
 	    		JButton face2Label = new JButton(new ImageIcon(face2));
-	    		cardPanel.add(face1Label);
+                face1Label.setBackground(Color.BLACK);
+                face2Label.setBackground(Color.BLACK);
+                face1Label.setForeground(Color.BLACK);
+                face2Label.setForeground(Color.BLACK);
+                face1Label.setPreferredSize(new Dimension(100,100));
+                face2Label.setPreferredSize(new Dimension(100,100));
+
+
+                cardPanel.add(face1Label);
 	    		cardPanel.add(face2Label);
 	    	}
     	}
