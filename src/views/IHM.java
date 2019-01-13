@@ -267,8 +267,6 @@ public class IHM extends JFrame implements ActionListener {
             face2Label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             face1Label.addActionListener(drawdHandler);
             face2Label.addActionListener(drawdHandler);
-            cardGroup.add(face1Label);
-            cardGroup.add(face2Label);
             switch (idcarte)
 
             {
@@ -410,11 +408,10 @@ public class IHM extends JFrame implements ActionListener {
       	  {
       		  if(checkFinishTurn[0] == 1 && checkFinishTurn[1] == 1)
       		  {
-      			  if(checkFinishTurn[2] == 0)
-      			  {
-      				  game.pickCard(player, 1, cardPicked);
-      			  }
+      			 game.pickCard(player, 1, cardPicked);
+      			 System.out.println(game.getCardsColumn());
 	      		  Player nextPlayer =  game.getNextPlayer();
+	      		  System.out.println(nextPlayer);
 	      		  if(nextPlayer != null)
 	      		  {
 	      			nextPlayer.casualTurn();
@@ -605,7 +602,6 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
             }
             else if(game.getRound() == 1) {
             	info2.setText("Placer votre première carte");
-            	System.out.println("test");
     			discardCard.setVisible(true);
             }
             getContentPane().repaint();

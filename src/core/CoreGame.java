@@ -85,6 +85,7 @@ public class CoreGame {
     		this.round+=1;
     		playersOrder.addAll(casualRoundOrder());
     		cardManagement.clearCardColumn(0);	
+    		System.out.println(playersOrder);
     	}
     	else if(playersOrder.size() == 0)
     	{
@@ -167,7 +168,7 @@ public class CoreGame {
     	List<Player> playersOrder = new ArrayList<Player>();
     	System.out.println(cardManagement.getCardsColumn());
     	cardManagement.drawCasualRound();
-    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(0))
+    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(1))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
     		playersOrder.add(player);
@@ -221,6 +222,9 @@ public class CoreGame {
     public int getCardsColumnSize() {
     	return cardManagement.getCardsColumnSize();
     }
+	public List<List<HashMap<String,Object>>> getCardsColumn(){
+		return cardManagement.getCardsColumn();
+	}
     public void pickCard(Player player,int columnId,Card card) {
     	cardManagement.pickCard(player, columnId, card);
     }
