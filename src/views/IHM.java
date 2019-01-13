@@ -337,7 +337,7 @@ public class IHM extends JFrame implements ActionListener {
         BorderThree.setBackground(new Color (255,255,255,0));
         BorderFour.setBackground(new Color (255,255,255,0));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight() ));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(info2,BorderLayout.SOUTH);
         secondcontainer.add(finishTurn);
