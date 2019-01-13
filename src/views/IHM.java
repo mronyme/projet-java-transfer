@@ -1,6 +1,7 @@
 package views;
 
 import core.CoreGame;
+import core.ScoreManagement;
 import entities.Board;
 import entities.Card;
 import entities.Castle;
@@ -475,6 +476,7 @@ public class IHM extends JFrame implements ActionListener {
     // ---------------------------------------------------------------------------------------------------------------------
     public void renderLeaderBoard() {
     	getContentPane().removeAll();
+    	ScoreManagement.calculateScore(game.getPlayers(), game.getGameOptions());
         this.setContentPane(new Panneau());
 
         JPanel leaderBoard= new JPanel(new FlowLayout(FlowLayout.CENTER));

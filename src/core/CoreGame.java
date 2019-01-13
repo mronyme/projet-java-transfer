@@ -278,5 +278,8 @@ public class CoreGame {
     public int getRound() {
     	return this.round;
     }
+    public List<Player> getPlayers(){
+    	return players;
+    }
 }
 
