@@ -321,7 +321,14 @@ public class IHM extends JFrame implements ActionListener {
     	}
     	else
     	{
-    		info2 = new JLabel("Placer votre carte");
+    		if(game.getCardsColumnSize() != 1)
+    		{
+    			info2 = new JLabel("Placer votre carte");
+    		}
+    		else
+    		{
+        		info2 = new JLabel("Placer votre dernière carte");  			
+    		}
     		cards = new ArrayList<Card>();
             cardPicked = game.getCardToPlay(player);
             cards.add(cardPicked);
@@ -440,31 +447,62 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         this.getContentPane().repaint();
         this.setVisible(true);
-        renderLeaderBoard();
+        //renderLeaderBoard();
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
     public void renderLeaderBoard() {
     	getContentPane().removeAll();
 		List<Player> playersRanked = ScoreManagement.getLeaderBoard(game.getPlayers(), game.getGameOptions());
+		int position = 1;
+		JPanel leaderBoard= new JPanel();
+        GridBagLayout gridLayout = new GridBagLayout();
+        leaderBoard.setLayout(gridLayout);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		JLabel leaderTitle = new JLabel("LeaderBoard");
+		leaderTitle.setForeground(Color.WHITE);
+		leaderTitle.setFont(new Font("Serif", Font.BOLD, 30));
+		leaderBoard.add(leaderTitle,c);
+		c.gridy+=1;
     	for(Player player : playersRanked)
     	{
+    		c.weightx = 3;
+    		
+    		JLabel playerLabel = new JLabel(position+". Player "+player.getColor());
+    		JLabel totalScore = new JLabel(" Score global: "+player.getFinalScore().get("totalScore"));
+    		JLabel domainSize = new JLabel("Plus grand domaine: "+player.getFinalScore().get("largestDomain"));
+    		JLabel nbCrown = new JLabel("Nombres total de couronnes: "+player.getFinalScore().get("nbCrown"));	
+    		
+    		
+    		playerLabel.setForeground(Color.WHITE);
+    		totalScore.setForeground(Color.WHITE);
+    		domainSize.setForeground(Color.WHITE);
+    		nbCrown.setForeground(Color.WHITE);
+    		c.gridy+=1;
+    		c.anchor = GridBagConstraints.LINE_START;
+    		leaderBoard.add(playerLabel,c);
+    		c.gridy+=1;
+    		c.anchor = GridBagConstraints.CENTER;
+    		leaderBoard.add(totalScore,c);
+    		c.gridy+=1;
+    		leaderBoard.add(domainSize,c);
+    		c.gridy+=1;
+    		leaderBoard.add(nbCrown,c);
     		System.out.println(player+" "+player.getFinalScore());
-    		Board.printMatrix(player.getBoard().getFaceEnum());    		
+    		Board.printMatrix(player.getBoard().getFaceEnum()); 
+    		position+=1;
+    		c.gridy+=1;
     	}
-		System.out.println(playersRanked.get(0)+" a gagnÃ© !");
+		System.out.println(playersRanked.get(0)+" a gagné !");
         this.setContentPane(new Panneau());
 
-        JPanel leaderBoard= new JPanel(new FlowLayout(FlowLayout.CENTER));
 leaderBoard.setBackground(new Color( 3,3,3,200));
-        GridBagLayout gridLayout;
-        gridLayout = new GridBagLayout();
-leaderBoard.setPreferredSize(new Dimension(200,200));
-        //Setting the layout manager for our container (in this case the JPanel)
-        leaderBoard.setLayout(gridLayout);
+leaderBoard.setPreferredSize(new Dimension(this.getWidth() / 3, this.getHeight()/3));
+
         getContentPane().add(leaderBoard);
-
-
+        this.setVisible(true);
     }
     // ---------------------------------------------------------------------------------------------------------------------
     @Override
@@ -578,7 +616,8 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
 	                    					checkFinishTurn[1] = 1;
                     						finishTurn.setVisible(true);
                     						discardCard.setVisible(false);
-                    						addToDraw(null);
+                    						List<Card> cards = new ArrayList<>();
+                    						addToDraw(cards);
 	                    				}
 	                    				checkFinishTurn[0] = 1;
                     				}
