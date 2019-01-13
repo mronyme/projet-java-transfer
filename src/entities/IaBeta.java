@@ -3,14 +3,11 @@ package entities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import core.CoreGame;
 import core.ScoreManagement;
 import enums.ColorEnum;
-import enums.FaceEnum;
 
 public class IaBeta extends Player{
 	HashMap<String,Integer> bestMove;

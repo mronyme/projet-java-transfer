@@ -1,6 +1,5 @@
 package entities;
 
-import enums.EntityEnum;
 import enums.FaceEnum;
 
 public class Card{

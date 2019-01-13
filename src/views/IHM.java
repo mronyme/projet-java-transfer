@@ -6,12 +6,10 @@ import entities.Card;
 import entities.Castle;
 import entities.Entity;
 import entities.Face;
-import entities.Human;
 import entities.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.util.List;
@@ -20,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
 import java.util.ArrayList;
 
 public class IHM extends JFrame implements ActionListener {
@@ -446,6 +443,7 @@ public class IHM extends JFrame implements ActionListener {
         this.infoOne.removeAll();
         this.infoTwo.removeAll();
         this.secondcontainer.removeAll();
+        info.removeAll();
         this.getContentPane().removeAll();
 
         maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 200));

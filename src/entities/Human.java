@@ -1,7 +1,5 @@
 package entities;
 
-import javax.swing.JButton;
-
 import core.CoreGame;
 import enums.ColorEnum;
 
