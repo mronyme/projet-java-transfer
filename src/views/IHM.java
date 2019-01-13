@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class IHM extends JFrame implements ActionListener {
-    ButtonGroup cardGroup = new ButtonGroup();
     JPanel maincontainer = new JPanel();
     JPanel secondcontainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -32,20 +31,24 @@ public class IHM extends JFrame implements ActionListener {
     JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel infoOne= new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel infoTwo= new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-    ScreenSize ScreenSize = new ScreenSize();
-    JRadioButton player3, player2, player4;
-    String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
-    public JButton[][] squares = new JButton[9][9];
-    JLabel Box1 = new JLabel(" " + text + " ");
+    JPanel bContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    // --
     JButton buttonOne = new JButton(" Play !");
     JButton finishTurn;
     JButton discardCard;
+    public JButton[][] zone = new JButton[9][9];
+    JRadioButton player3, player2, player4;
+   // --
+    String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
+    JLabel Box1 = new JLabel(" " + text + " ");
+    JLabel info1;
+    JLabel info2;
+    // --
+    ScreenSize ScreenSize = new ScreenSize();
     int nbPlayer;
     int[] checkFinishTurn;
     Card cardPicked;
-    JLabel info1;
-    JLabel info2;
+    
     Boolean face1Picked; // Face de gauche sélectionnée
     int face1X,face1Y; // Coordonées sur plateau de la face gauche
     int face2X,face2Y; // Coordonées sur plateau de la face droite
@@ -141,17 +144,17 @@ public class IHM extends JFrame implements ActionListener {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                squares[i][j] = new JButton();
+                zone[i][j] = new JButton();
             	Entity entity = player.getBoard().getEntity(i,j);
             	if(entity instanceof Face)
             	{
             		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getFaceType()+".png");
-            		squares[i][j].setIcon(icon);
+            		zone[i][j].setIcon(icon);
             	}
             	else if(entity instanceof Castle)
             	{
             		ImageIcon icon = new ImageIcon("src/images/chateau.png");
-            		squares[i][j].setIcon(icon);
+            		zone[i][j].setIcon(icon);
 
             	}
             	else
@@ -160,18 +163,18 @@ public class IHM extends JFrame implements ActionListener {
 	                switch (couleur) {
 	
 	                    case "blue":
-                            squares[i][j].setBackground(new Color (34,57,196));
+                            zone[i][j].setBackground(new Color (34,57,196));
 	                        break;
 	
 	                    case "pink":
-	                        squares[i][j].setBackground(Color.pink);
+	                        zone[i][j].setBackground(Color.pink);
 	                        break;
 	
 	                    case "cyan":
-                            squares[i][j].setBackground(new Color (13, 162, 196));
+                            zone[i][j].setBackground(new Color (13, 162, 196));
 	                        break;
 	                    case "red":
-                            squares[i][j].setBackground(new Color (196,57,34));
+                            zone[i][j].setBackground(new Color (196,57,34));
 	                        break;
 	
 	                    default:
@@ -181,15 +184,15 @@ public class IHM extends JFrame implements ActionListener {
 	
 	                }
             	}
-                squares[i][j].setHorizontalTextPosition(JButton.CENTER);
-                squares[i][j].setForeground(Color.WHITE);
+                zone[i][j].setHorizontalTextPosition(JButton.CENTER);
+                zone[i][j].setForeground(Color.WHITE);
 
-                squares[i][j].addActionListener(boardHandler);
-                squares[i][j].setName(i + "" + j);
-                squares[i][j].setText("L" + i + "C" + j);
+                zone[i][j].addActionListener(boardHandler);
+                zone[i][j].setName(i + "" + j);
+                zone[i][j].setText("L" + i + "C" + j);
 
 
-                maincontainer.add(squares[i][j]);
+                maincontainer.add(zone[i][j]);
             }
 
         }
@@ -330,6 +333,12 @@ public class IHM extends JFrame implements ActionListener {
     	
     	finishTurn = new JButton("Finir le tour");
     	discardCard = new JButton("Défausser la carte");
+        bContainer.add(finishTurn);
+        bContainer.add(discardCard);
+        bContainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/14 ));
+        bContainer.setBackground(new Color(255,255,255,0));
+    	discardCard.setBackground(Color.darkGray);
+    	discardCard.setForeground(Color.white);
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
     	
@@ -357,11 +366,11 @@ public class IHM extends JFrame implements ActionListener {
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight() ));
 
-        secondcontainer.add(discardCard);
-        info.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/7 ));
+        secondcontainer.add(bContainer);
+        info.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/8 ));
         info.setBackground(new Color (255,255,255,0));
-        infoOne.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
-        infoTwo.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
+        infoOne.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/14 ));
+        infoTwo.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/14 ));
         infoOne.setBackground(new Color (255,255,255,0));
         infoTwo.setBackground(new Color (255,255,255,0));
        infoOne.add(info1);
@@ -369,7 +378,7 @@ public class IHM extends JFrame implements ActionListener {
         info.add(infoOne,BorderLayout.NORTH);
         info.add(infoTwo,BorderLayout.SOUTH);
         secondcontainer.add(info);
-        secondcontainer.add(finishTurn);
+        secondcontainer.add(bContainer);
         secondcontainer.add(cardPanel);
 
         addToDraw(cards);
@@ -526,7 +535,7 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
             Object source = e.getSource();
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    if (source == squares[i][j]) {
+                    if (source == zone[i][j]) {
                     	if(cardPicked != null)
                     	{
                     		if(face1Picked == false)
@@ -547,8 +556,8 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
                     		            BorderTwo.setBackground(new Color(0,0,0,0));
                     		            BorderThree.setBackground(new Color(0,0,0,0));
                     		            BorderFour.setBackground(new Color(0,0,0,0));
-                    					squares[face1X][face1Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace1()).getFaceType()+".png"));
-                        				squares[face2X][face2Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace2()).getFaceType()+".png"));
+                    					zone[face1X][face1Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace1()).getFaceType()+".png"));
+                        				zone[face2X][face2Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace2()).getFaceType()+".png"));
                     					player.getBoard().setCard(face1X, face1Y, face2X, face2Y, cardPicked);
 	                    				if(game.getRound() == 1)
 	                    				{	
