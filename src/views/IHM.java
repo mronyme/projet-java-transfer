@@ -24,8 +24,9 @@ import java.util.ArrayList;
 public class IHM extends JFrame implements ActionListener {
     ButtonGroup cardGroup = new ButtonGroup();
     JPanel maincontainer = new JPanel();
-    JPanel secondcontainer = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+    JPanel secondcontainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel Border = new JPanel (new FlowLayout(FlowLayout.CENTER));
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
@@ -302,7 +303,7 @@ public class IHM extends JFrame implements ActionListener {
         cardPanel.setBackground(new Color (255,255,255,10));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
         secondcontainer.setBackground(new Color (255,255,255,200));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(info2,BorderLayout.SOUTH);
         secondcontainer.add(finishTurn);
