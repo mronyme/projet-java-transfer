@@ -152,7 +152,7 @@ public class IHM extends JFrame implements ActionListener {
 	                switch (couleur) {
 	
 	                    case "blue":
-	                        squares[i][j].setBackground(Color.blue);
+                            squares[i][j].setBackground(new Color (34,57,196));
 	                        break;
 	
 	                    case "pink":
@@ -163,11 +163,12 @@ public class IHM extends JFrame implements ActionListener {
 	                        squares[i][j].setBackground(Color.cyan);
 	                        break;
 	                    case "red":
-	                        squares[i][j].setBackground(Color.red);
+                            squares[i][j].setBackground(new Color (196,57,34));
 	                        break;
 	
 	                    default:
 	                        System.out.println("Erreur sélection couleur");
+
 	
 	
 	                }
