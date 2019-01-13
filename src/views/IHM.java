@@ -454,6 +454,7 @@ public class IHM extends JFrame implements ActionListener {
         this.secondcontainer.removeAll();
         info.removeAll();
         this.getContentPane().removeAll();
+        this.bContainer.removeAll();
 
         maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 200));
         //On définit le layout à utiliser sur le content pane
