@@ -97,7 +97,7 @@ public class CoreGame {
     		}
     		else
     		{
-    			System.out.println("Jeux fini");
+    			System.out.println("Jeux terminé");
     			return null;
     		}
     	}

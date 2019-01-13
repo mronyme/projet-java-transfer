@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Domi'Nations">
+    <output-path>$PROJECT_DIR$/out/artifacts/Domi_Nations</output-path>
+    <root id="archive" name="projet-java.jar">
+      <element id="module-output" name="projet-java" />
+    </root>
+  </artifact>
+</component>

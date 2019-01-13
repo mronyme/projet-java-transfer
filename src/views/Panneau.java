@@ -23,7 +23,7 @@ public class Panneau extends JPanel {
 */
         // Insertion du background
         try {
-            Image img = ImageIO.read(new File("fond.jpg"));
+            Image img = ImageIO.read(new File("src/images/fond.jpg"));
 
             //Image de fond
             g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
