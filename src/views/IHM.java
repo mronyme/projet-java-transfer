@@ -11,6 +11,8 @@ import entities.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -37,6 +39,7 @@ public class IHM extends JFrame implements ActionListener {
     JLabel Box1 = new JLabel(" " + text + " ");
     JButton buttonOne = new JButton(" Play !");
     JButton finishTurn;
+    JButton discardCard;
     int nbPlayer;
     int[] checkFinishTurn;
     Card cardPicked;
@@ -271,31 +274,42 @@ public class IHM extends JFrame implements ActionListener {
                 case 1:
                     BorderOne.add(face1Label);
                     BorderOne.add(face2Label);
+            		face1Label.putClientProperty("border", BorderOne);
+            		face2Label.putClientProperty("border", BorderOne);
                     cardPanel.add(BorderOne);
-                    System.out.println("Card 1 dans le game");
-
+                    if(cards.size() == 1)
+                    {
+                    	if(game.getRound() == 1)
+                    	{
+                    		info2.setText("Placer votre carte");
+                    	}
+                        BorderOne.setBackground(new Color (255,255,255));
+                        checkFinishTurn[1] = 1;
+                        cardPicked = card;
+                    }
                     break;
 
                 case 2:
                     BorderTwo.add(face1Label);
                     BorderTwo.add(face2Label);
+            		face1Label.putClientProperty("border", BorderTwo);
+            		face2Label.putClientProperty("border", BorderTwo);
                     cardPanel.add(BorderTwo);
-                    System.out.println("Card 2 dans le game");
-
                     break;
 
                 case 3:
                     BorderThree.add(face1Label);
                     BorderThree.add(face2Label);
+            		face1Label.putClientProperty("border", BorderThree);
+            		face2Label.putClientProperty("border", BorderThree);
                     cardPanel.add(BorderThree);
-                    System.out.println("Card 3 dans le game");
-
                     break;
                 case 4:
                     BorderFour.add(face1Label);
                     BorderFour.add(face2Label);
+            		face1Label.putClientProperty("border", BorderFour);
+            		face2Label.putClientProperty("border", BorderFour);
                     cardPanel.add(BorderFour);
-                    System.out.println("Card 4 dans le game");
                     break;
 
 
@@ -313,10 +327,17 @@ public class IHM extends JFrame implements ActionListener {
     public void aside(Player player,int nbRound) {
     	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	List<Card> cards = null;
+    	
+    	finishTurn = new JButton("Finir le tour");
+    	discardCard = new JButton("Défausser la carte");
+    	finishTurn.setBackground(Color.darkGray);
+    	finishTurn.setForeground(Color.white);
+    	
     	if(nbRound == 1)
     	{
     		info2 = new JLabel("Sélectionnez votre première carte");
     		cards= game.getCardsAvailable(0);
+			discardCard.setVisible(false);
     	}
     	else
     	{
@@ -324,32 +345,68 @@ public class IHM extends JFrame implements ActionListener {
     		cards = new ArrayList<Card>();
             cardPicked = game.getCardToPlay(player);
             cards.add(cardPicked);
+			discardCard.setVisible(true);
     	}
-    	finishTurn = new JButton("Finir le tour");
-    	finishTurn.setBackground(Color.darkGray);
-    	finishTurn.setForeground(Color.white);
-
 
         cardPanel.setBackground(new Color (255,255,255,0));
         secondcontainer.setBackground(new Color (255,255,255,100));
-        BorderOne.setBackground(new Color (255,255,255,0));
-        BorderTwo.setBackground(new Color (255,255,255,0));
-        BorderThree.setBackground(new Color (255,255,255,0));
-        BorderFour.setBackground(new Color (255,255,255,0));
+        BorderOne.setBackground(new Color(0,0,0,0));
+        BorderTwo.setBackground(new Color(0,0,0,0));
+        BorderThree.setBackground(new Color(0,0,0,0));
+        BorderFour.setBackground(new Color(0,0,0,0));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(info2,BorderLayout.SOUTH);
+        secondcontainer.add(discardCard);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel);
 
         addToDraw(cards);
+        finishTurn.setVisible(false);
+        discardCard.addActionListener(new ActionListener() {
+      	  public void actionPerformed(ActionEvent e)
+      	  {
+              BorderOne.setBackground(new Color(0,0,0,0));
+              BorderTwo.setBackground(new Color(0,0,0,0));
+              BorderThree.setBackground(new Color(0,0,0,0));
+              BorderFour.setBackground(new Color(0,0,0,0));
+        		checkFinishTurn[0] = 1;
+        		checkFinishTurn[2] = 1;
+        		if(game.getCardsColumnSize() > 1)
+				{
+					List<Card> cards = game.getCardsAvailable(1);
+					if(cards.size() != 1)
+					{
+    					info2.setText("Sélectionnez la carte suivante à jouer");	
+    					discardCard.setVisible(false);
+					}
+					else
+					{
+						info2.setText("Appuyer sur le bouton \"Finir le tour \"");
+						finishTurn.setVisible(true);
+						discardCard.setVisible(false);
+					}
+        			addToDraw(cards);	
+        		}
+				else
+				{
+					info2.setText("Appuyer sur le bouton \"Finir le tour \"");
+					checkFinishTurn[1] = 1;
+					finishTurn.setVisible(true);
+					discardCard.setVisible(false);
+				}
+      	  }
+      });
         finishTurn.addActionListener(new ActionListener() {
       	  public void actionPerformed(ActionEvent e)
       	  {
       		  if(checkFinishTurn[0] == 1 && checkFinishTurn[1] == 1)
       		  {
-      			  game.pickCard(player, 1, cardPicked);
+      			  if(checkFinishTurn[2] == 0)
+      			  {
+      				  game.pickCard(player, 1, cardPicked);
+      			  }
 	      		  Player nextPlayer =  game.getNextPlayer();
 	      		  if(nextPlayer != null)
 	      		  {
@@ -365,7 +422,8 @@ public class IHM extends JFrame implements ActionListener {
     }
     // ---------------------------------------------------------------------------------------------------------------------
     public void renderBoard (Player player,int nbRound)  {
-    	this.checkFinishTurn = new int[] {0,0};
+    	this.cardPicked = null;
+    	this.checkFinishTurn = new int[] {0,0,0};
     	this.face1Picked = false;
         //nouveau plateau pour commencer le jeu
         this.setTitle("Domi'Nations pour " + nbPlayer + " joueurs");
@@ -459,6 +517,10 @@ public class IHM extends JFrame implements ActionListener {
                     			{
                     				if(checkFinishTurn[0] != 1)
                     				{
+                    		            BorderOne.setBackground(new Color(0,0,0,0));
+                    		            BorderTwo.setBackground(new Color(0,0,0,0));
+                    		            BorderThree.setBackground(new Color(0,0,0,0));
+                    		            BorderFour.setBackground(new Color(0,0,0,0));
                     					squares[face1X][face1Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace1()).getFaceType()+".png"));
                         				squares[face2X][face2Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace2()).getFaceType()+".png"));
                     					player.getBoard().setCard(face1X, face1Y, face2X, face2Y, cardPicked);
@@ -466,16 +528,28 @@ public class IHM extends JFrame implements ActionListener {
 	                    				{	
 		                    				game.pickCard(player, 0, cardPicked);
 	                    				}
-	                    				if(game.getCardsColumnSize() != 1)
+	                    				if(game.getCardsColumnSize() > 1)
 	                    				{
-	                    					
-		                    				info2.setText("Sélectionnez la carte suivante à jouer");
-		                        			addToDraw(game.getCardsAvailable(1));		                    				
+	                    					List<Card> cards = game.getCardsAvailable(1);
+	                    					if(cards.size() != 1)
+	                    					{
+		                    					info2.setText("Sélectionnez la carte suivante à jouer");	
+		                    					discardCard.setVisible(false);
+	                    					}
+	                    					else
+	                    					{
+	                    						info2.setText("Appuyer sur le bouton \"Finir le tour \"");
+	                    						finishTurn.setVisible(true);
+	                    						discardCard.setVisible(false);
+	                    					}
+		                        			addToDraw(cards);	
 		                        		}
 	                    				else
 	                    				{
 	                    					info2.setText("Appuyer sur le bouton \"Finir le tour \"");
 	                    					checkFinishTurn[1] = 1;
+                    						finishTurn.setVisible(true);
+                    						discardCard.setVisible(false);
 	                    				}
 	                    				checkFinishTurn[0] = 1;
                     				}
@@ -494,20 +568,27 @@ public class IHM extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-            ((JButton)source).setBorder(BorderFactory.createLineBorder(Color.red));
-            BorderOne.setBackground(new Color (255,255,255,200));
-            secondcontainer.repaint();
-            getContentPane().repaint();
+            BorderOne.setBackground(new Color(0,0,0,0));
+            BorderTwo.setBackground(new Color(0,0,0,0));
+            BorderThree.setBackground(new Color(0,0,0,0));
+            BorderFour.setBackground(new Color(0,0,0,0));
+            JPanel border = (JPanel)((JButton)source).getClientProperty("border");
+            border.setBackground(new Color (255,255,255));
 
             cardPicked = (Card)((JButton)source).getClientProperty("card");
             if(checkFinishTurn[0] == 1)
             {
             	info2.setText("Appuyer sur le bouton \"Finir le tour \"");
+				finishTurn.setVisible(true);
+				discardCard.setVisible(false);
             	checkFinishTurn[1] = 1;
             }
             else if(game.getRound() == 1) {
             	info2.setText("Placer votre première carte");
+            	System.out.println("test");
+    			discardCard.setVisible(true);
             }
+            getContentPane().repaint();
         }
     }
 }

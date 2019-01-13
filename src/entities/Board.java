@@ -140,7 +140,6 @@ public class Board {
 		}
 		if(checkAdjacentType(player,coordsXFC1,coordsYFC1,card.face1))
 		{
-			System.out.println("face1 valid");
 			return true;
 		}
         //System.out.println(coordsXFC2+" "+coordsYFC2+" "+card.face2.getFaceType()+" "+card.face1.getFaceType());
