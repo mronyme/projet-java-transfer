@@ -26,7 +26,10 @@ public class IHM extends JFrame implements ActionListener {
     JPanel maincontainer = new JPanel();
     JPanel secondcontainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JPanel Border = new JPanel (new FlowLayout(FlowLayout.CENTER));
+    JPanel BorderOne = new JPanel (new FlowLayout(FlowLayout.CENTER));
+    JPanel BorderTwo = new JPanel (new FlowLayout(FlowLayout.CENTER));
+    JPanel BorderThree = new JPanel (new FlowLayout(FlowLayout.CENTER));
+    JPanel BorderFour = new JPanel (new FlowLayout(FlowLayout.CENTER));
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
@@ -160,7 +163,7 @@ public class IHM extends JFrame implements ActionListener {
 	                        break;
 	
 	                    case "cyan":
-	                        squares[i][j].setBackground(Color.cyan);
+                            squares[i][j].setBackground(new Color (13, 162, 196));
 	                        break;
 	                    case "red":
                             squares[i][j].setBackground(new Color (196,57,34));
@@ -261,8 +264,10 @@ public class IHM extends JFrame implements ActionListener {
     {
     	cardPanel.removeAll();
     	DrawHandler drawdHandler = new DrawHandler();
-        for(Card card : cards)
+        int idcarte = 0;
+    	for(Card card : cards)
     	{
+            idcarte++;
     		BufferedImage face1 = null;
     		BufferedImage face2 = null;
 			try {
@@ -288,8 +293,50 @@ public class IHM extends JFrame implements ActionListener {
             face2Label.addActionListener(drawdHandler);
             cardGroup.add(face1Label);
             cardGroup.add(face2Label);
-    		cardPanel.add(face1Label);
-    		cardPanel.add(face2Label);
+            switch (idcarte)
+
+            {
+
+                case 1:
+                    BorderOne.add(face1Label);
+                    BorderOne.add(face2Label);
+                    cardPanel.add(BorderOne);
+                    System.out.println("Card 1 dans le game");
+
+                    break;
+
+                case 2:
+                    BorderTwo.add(face1Label);
+                    BorderTwo.add(face2Label);
+                    cardPanel.add(BorderTwo);
+                    System.out.println("Card 2 dans le game");
+
+                    break;
+
+                case 3:
+                    BorderThree.add(face1Label);
+                    BorderThree.add(face2Label);
+                    cardPanel.add(BorderThree);
+                    System.out.println("Card 3 dans le game");
+
+                    break;
+                case 4:
+                    BorderFour.add(face1Label);
+                    BorderFour.add(face2Label);
+                    cardPanel.add(BorderFour);
+                    System.out.println("Card 4 dans le game");
+                    break;
+
+
+                default:
+
+                   System.out.println("No Card available");
+
+                    break;
+
+            }
+
+
     	}    	
     }
     public void asideFirstRound(Player player,int nbRound) {
