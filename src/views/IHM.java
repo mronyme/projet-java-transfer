@@ -254,7 +254,7 @@ public class IHM extends JFrame implements ActionListener {
                     {
                     	if(game.getRound() == 1)
                     	{
-                    		info2.setText("Placer votre carte");
+                    		info2.setText("Appuyer sur le bouton \"Finir le tour \"");
                     	}
                         BorderOne.setBackground(new Color (255,255,255));
                         checkFinishTurn[1] = 1;
@@ -440,7 +440,7 @@ public class IHM extends JFrame implements ActionListener {
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         this.getContentPane().repaint();
         this.setVisible(true);
-     // renderLeaderBoard();
+        renderLeaderBoard();
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
