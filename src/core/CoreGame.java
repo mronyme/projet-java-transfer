@@ -89,7 +89,7 @@ public class CoreGame {
     	}
     	else if(playersOrder.size() == 0)
     	{
-    		if(cardManagement.getCardsColumnSize() != 0)
+    		if(cardManagement.getCardsColumnSize() == 2)
     		{
     			this.round+=1;
         		playersOrder.addAll(lastRoundOrder());
@@ -157,7 +157,7 @@ public class CoreGame {
     }
     public List<Player> lastRoundOrder() {
     	List<Player> playersOrder = new ArrayList<Player>();
-    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(0))
+    	for(HashMap<String,Object> map : cardManagement.getCardsColumn().get(1))
     	{
     		Player player = Player.findPlayerByColor(players, (ColorEnum)map.get("color"));
     		playersOrder.add(player);

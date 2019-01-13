@@ -414,6 +414,7 @@ public class IHM extends JFrame implements ActionListener {
 					checkFinishTurn[1] = 1;
 					finishTurn.setVisible(true);
 					discardCard.setVisible(false);
+					addToDraw(null);
 				}
       	  }
       });
@@ -422,10 +423,11 @@ public class IHM extends JFrame implements ActionListener {
       	  {
       		  if(checkFinishTurn[0] == 1 && checkFinishTurn[1] == 1)
       		  {
-      			 game.pickCard(player, 1, cardPicked);
-      			 System.out.println(game.getCardsColumn());
+      			 if(game.getCardsColumn().size() != 1)
+      			 {
+      				 game.pickCard(player, 1, cardPicked);
+      			 }
 	      		  Player nextPlayer =  game.getNextPlayer();
-	      		  System.out.println(nextPlayer);
 	      		  if(nextPlayer != null)
 	      		  {
 	      			nextPlayer.casualTurn();
@@ -470,6 +472,7 @@ public class IHM extends JFrame implements ActionListener {
      // renderLeaderBoard();
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
     public void renderLeaderBoard() {
     	getContentPane().removeAll();
         this.setContentPane(new Panneau());
@@ -586,6 +589,7 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
 	                    					checkFinishTurn[1] = 1;
                     						finishTurn.setVisible(true);
                     						discardCard.setVisible(false);
+                    						addToDraw(null);
 	                    				}
 	                    				checkFinishTurn[0] = 1;
                     				}

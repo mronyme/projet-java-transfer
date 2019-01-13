@@ -129,7 +129,14 @@ public class CardManagement {
 		public void discardCards(int numberPlayer)
 		{
 			Random rand = new Random();
+			/*
 			for(int i = 0;i < 48-numberPlayer*12;i++)
+			{
+				int n = (int )(Math.random() * cardsList.size());
+				cardsList.remove(n);
+			}
+			*/
+			for(int i = 0;i < 48-8;i++)
 			{
 				int n = (int )(Math.random() * cardsList.size());
 				cardsList.remove(n);
