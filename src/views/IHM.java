@@ -224,7 +224,6 @@ public class IHM extends JFrame implements ActionListener {
     	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	info2 = new JLabel("Placer votre carte");
     	finishTurn = new JButton("Finir le tour");
-       	cardPanel = new JPanel();
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
     	List<Card> cards = new ArrayList<Card>();
@@ -292,10 +291,11 @@ public class IHM extends JFrame implements ActionListener {
     	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	info2 = new JLabel("Sélectionnez votre première carte");
     	finishTurn = new JButton("Finir le tour");
-       	cardPanel = new JPanel();
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
     	List<Card> cards;
+        cardPanel.setBackground(Color.BLACK);
+        cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
         secondcontainer.setBackground(new Color (255,255,255,200));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
