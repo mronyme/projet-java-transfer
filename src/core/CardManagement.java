@@ -134,7 +134,8 @@ public class CardManagement {
 				int n = (int )(Math.random() * cardsList.size());
 				cardsList.remove(n);
 			}
-			/*for(int i = 0;i < 48-8;i++)
+			/*
+			for(int i = 0;i < 48-8;i++)
 			{
 				int n = (int )(Math.random() * cardsList.size());
 				cardsList.remove(n);

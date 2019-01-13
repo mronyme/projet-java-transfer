@@ -329,8 +329,9 @@ public class IHM extends JFrame implements ActionListener {
     	}    	
     }
     public void aside(Player player,int nbRound) {
+    	System.out.println(player+" "+nbRound);
     	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
-    	List<Card> cards = null;
+    	List<Card> cards;
     	
     	finishTurn = new JButton("Finir le tour");
     	discardCard = new JButton("DÈfausser la carte");
@@ -381,7 +382,6 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.add(info);
         secondcontainer.add(bContainer);
         secondcontainer.add(cardPanel);
-
         addToDraw(cards);
         finishTurn.setVisible(false);
         discardCard.addActionListener(new ActionListener() {
@@ -415,7 +415,8 @@ public class IHM extends JFrame implements ActionListener {
 					checkFinishTurn[1] = 1;
 					finishTurn.setVisible(true);
 					discardCard.setVisible(false);
-					addToDraw(null);
+					List<Card> cards = new ArrayList<Card>();
+					addToDraw(cards);
 				}
       	  }
       });
@@ -476,7 +477,13 @@ public class IHM extends JFrame implements ActionListener {
     // ---------------------------------------------------------------------------------------------------------------------
     public void renderLeaderBoard() {
     	getContentPane().removeAll();
-    	ScoreManagement.calculateScore(game.getPlayers(), game.getGameOptions());
+		List<Player> playersRanked = ScoreManagement.getLeaderBoard(game.getPlayers(), game.getGameOptions());
+    	for(Player player : playersRanked)
+    	{
+    		System.out.println(player+" "+player.getFinalScore());
+    		Board.printMatrix(player.getBoard().getFaceEnum());    		
+    	}
+		System.out.println(playersRanked.get(0)+" a gagn√© !");
         this.setContentPane(new Panneau());
 
         JPanel leaderBoard= new JPanel(new FlowLayout(FlowLayout.CENTER));
