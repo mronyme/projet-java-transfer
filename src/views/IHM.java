@@ -151,6 +151,9 @@ public class IHM extends JFrame implements ActionListener {
             	{
             		ImageIcon icon = new ImageIcon("src/images/"+((Face)entity).getFaceType()+".png");
             		zone[i][j].setIcon(icon);
+            		zone[i][j].setHorizontalTextPosition(JButton.CENTER);
+            		zone[i][j].setForeground(Color.WHITE);
+            		zone[i][j].setText(String.valueOf(((Face)entity).getCrown()));
             	}
             	else if(entity instanceof Castle)
             	{
@@ -185,55 +188,14 @@ public class IHM extends JFrame implements ActionListener {
 	
 	                }
             	}
-                zone[i][j].setHorizontalTextPosition(JButton.CENTER);
-                zone[i][j].setForeground(Color.WHITE);
 
                 zone[i][j].addActionListener(boardHandler);
                 zone[i][j].setName(i + "" + j);
-                zone[i][j].setText("L" + i + "C" + j);
-
 
                 maincontainer.add(zone[i][j]);
             }
 
         }
-        /*switch (nb_joueurs) {
-
-            case 2:
-
-                System.out.println("Nombre de joueurs : 2");
-                for (int i = 9; i < 9; i++) {
-                    for (int j = 9; j < 9; j++) {
-                        squares[i][j].setBackground(Color.pink);
-                    }
-
-                }
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        squares[i][j].setBackground(Color.BLUE);
-                    }
-
-                }
-
-                break;
-
-            case 3:
-
-                System.out.println("Nombre de joueurs : 3");
-
-                break;
-
-            case 4:
-
-                System.out.println("Nombre de joueurs : 4");
-
-                break;
-
-            default:
-
-                System.out.println("Nombre de joueurs invalide");
-
-        }*/
     }
     public void addToDraw(List<Card> cards)
     {
@@ -257,14 +219,21 @@ public class IHM extends JFrame implements ActionListener {
 
 				e1.printStackTrace();
 			}
+			
     		JButton face1Label = new JButton(new ImageIcon(face1));
+    		face1Label.setHorizontalTextPosition(JButton.CENTER);
+    		face1Label.setForeground(Color.WHITE);
+    		face1Label.setText(String.valueOf(card.getFace1().getCrown()));
+    		
     		JButton face2Label = new JButton(new ImageIcon(face2));
+    		face2Label.setHorizontalTextPosition(JButton.CENTER);
+    		face2Label.setForeground(Color.WHITE);
+    		face2Label.setText(String.valueOf(card.getFace2().getCrown()));
+    		
     		face1Label.putClientProperty("card", card);
     		face2Label.putClientProperty("card", card);
             face1Label.setBackground(Color.BLACK);
             face2Label.setBackground(Color.BLACK);
-            face1Label.setForeground(Color.BLACK);
-            face2Label.setForeground(Color.BLACK);
             face1Label.setPreferredSize(new Dimension(this.getWidth()/10,this.getHeight()/10));
             face2Label.setPreferredSize(new Dimension(this.getWidth()/10,this.getHeight()/10));
             face1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -511,10 +480,12 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
         } else if (player3.isSelected()) {
         	nbPlayer = 3;
 			game.initGame(3, false, false, false, false);
+			renderBoard(game.getFirstPlayer(),1);		
 
         } else if (player4.isSelected()) {
         	nbPlayer = 4;
 			game.initGame(4, false, false, false, false);
+			renderBoard(game.getFirstPlayer(),1);
         }
     }
 
@@ -569,8 +540,17 @@ leaderBoard.setPreferredSize(new Dimension(200,200));
                     		            BorderTwo.setBackground(new Color(0,0,0,0));
                     		            BorderThree.setBackground(new Color(0,0,0,0));
                     		            BorderFour.setBackground(new Color(0,0,0,0));
+                    		            
                     					zone[face1X][face1Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace1()).getFaceType()+".png"));
+                    					zone[face1X][face1Y].setHorizontalTextPosition(JButton.CENTER);
+                    		    		zone[face1X][face1Y].setForeground(Color.WHITE);
+                    					zone[face1X][face1Y].setText((String.valueOf(((Face)cardPicked.getFace1()).getCrown())));
+                    					
                         				zone[face2X][face2Y].setIcon(new ImageIcon("src/images/"+((Face)cardPicked.getFace2()).getFaceType()+".png"));
+                        				zone[face2X][face2Y].setHorizontalTextPosition(JButton.CENTER);
+                        				zone[face2X][face2Y].setForeground(Color.WHITE);
+                        				zone[face2X][face2Y].setText((String.valueOf(((Face)cardPicked.getFace2()).getCrown())));
+                        				
                     					player.getBoard().setCard(face1X, face1Y, face2X, face2Y, cardPicked);
 	                    				if(game.getRound() == 1)
 	                    				{	
