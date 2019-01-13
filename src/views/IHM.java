@@ -33,6 +33,9 @@ public class IHM extends JFrame implements ActionListener {
     JPanel BorderThree = new JPanel (new FlowLayout(FlowLayout.CENTER));
     JPanel BorderFour = new JPanel (new FlowLayout(FlowLayout.CENTER));
     JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel infoOne= new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel infoTwo= new JPanel(new FlowLayout(FlowLayout.CENTER));
+
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
@@ -358,13 +361,18 @@ public class IHM extends JFrame implements ActionListener {
         BorderFour.setBackground(new Color(0,0,0,0));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight() ));
-        secondcontainer.add(info1);
-        secondcontainer.add(info2,BorderLayout.SOUTH);
+
         secondcontainer.add(discardCard);
-        info.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
+        info.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/7 ));
         info.setBackground(new Color (255,255,255,0));
-        info.add(info1,BorderLayout.NORTH);
-        info.add(info2,BorderLayout.SOUTH);
+        infoOne.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
+        infoTwo.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
+        infoOne.setBackground(new Color (255,255,255,0));
+        infoTwo.setBackground(new Color (255,255,255,0));
+       infoOne.add(info1);
+       infoTwo.add(info2);
+        info.add(infoOne,BorderLayout.NORTH);
+        info.add(infoTwo,BorderLayout.SOUTH);
         secondcontainer.add(info);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel);
