@@ -294,14 +294,19 @@ public class IHM extends JFrame implements ActionListener {
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
     	List<Card> cards;
-        cardPanel.setBackground(Color.BLACK);
+
+
+        cardPanel.setBackground(new Color (255,255,255,10));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
         secondcontainer.setBackground(new Color (255,255,255,200));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(info2);
         secondcontainer.add(finishTurn);
-        secondcontainer.add(cardPanel,BorderLayout.SOUTH);
+        secondcontainer.add(cardPanel);
+
+
+
         this.getContentPane().add(secondcontainer, BorderLayout.EAST);
         cards= game.getCardsAvailable(0);
         addToDraw(cards);
