@@ -229,6 +229,10 @@ public class IHM extends JFrame implements ActionListener {
     public void addToDraw(List<Card> cards)
     {
     	cardPanel.removeAll();
+    	BorderOne.removeAll();
+    	BorderTwo.removeAll();
+    	BorderThree.removeAll();
+    	BorderFour.removeAll();
     	this.getContentPane().repaint();
     	DrawHandler drawdHandler = new DrawHandler();
         int idcarte = 0;
@@ -436,7 +440,6 @@ public class IHM extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (source == squares[i][j]) {
@@ -487,12 +490,15 @@ public class IHM extends JFrame implements ActionListener {
 
         }
     }
-    class DrawHandler implements ActionListener {
+    class DrawHandler extends JPanel implements ActionListener  {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             ((JButton)source).setBorder(BorderFactory.createLineBorder(Color.red));
             BorderOne.setBackground(new Color (255,255,255,200));
+            secondcontainer.repaint();
+            getContentPane().repaint();
+
             cardPicked = (Card)((JButton)source).getClientProperty("card");
             if(checkFinishTurn[0] == 1)
             {
