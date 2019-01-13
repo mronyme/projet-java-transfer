@@ -22,8 +22,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.ArrayList;
 
 public class IHM extends JFrame implements ActionListener {
+    ButtonGroup cardGroup = new ButtonGroup();
     JPanel maincontainer = new JPanel();
-    JPanel secondcontainer = new JPanel();
+    JPanel secondcontainer = new JPanel(new FlowLayout(FlowLayout.TRAILING));
     JPanel cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
@@ -221,7 +222,7 @@ public class IHM extends JFrame implements ActionListener {
         }*/
     }
     public void aside(Player player,int nbRound) {
-    	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
+    	/*info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
     	info2 = new JLabel("Placer votre carte");
     	finishTurn = new JButton("Finir le tour");
     	finishTurn.setBackground(Color.darkGray);
@@ -252,7 +253,7 @@ public class IHM extends JFrame implements ActionListener {
 	      		  }
       		  }
       	  }
-      });
+      }); */
     } 
     public void addToDraw(List<Card> cards)
     {
@@ -283,6 +284,8 @@ public class IHM extends JFrame implements ActionListener {
             face2Label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             face1Label.addActionListener(drawdHandler);
             face2Label.addActionListener(drawdHandler);
+            cardGroup.add(face1Label);
+            cardGroup.add(face2Label);
     		cardPanel.add(face1Label);
     		cardPanel.add(face2Label);
     	}    	
@@ -301,7 +304,7 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.setBackground(new Color (255,255,255,200));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
         secondcontainer.add(info1);
-        secondcontainer.add(info2);
+        secondcontainer.add(info2,BorderLayout.SOUTH);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel);
 
