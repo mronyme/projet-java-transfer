@@ -279,8 +279,8 @@ public class IHM extends JFrame implements ActionListener {
             face2Label.setBackground(Color.BLACK);
             face1Label.setForeground(Color.BLACK);
             face2Label.setForeground(Color.BLACK);
-            face1Label.setPreferredSize(new Dimension(100,100));
-            face2Label.setPreferredSize(new Dimension(100,100));
+            face1Label.setPreferredSize(new Dimension(this.getWidth()/10,this.getHeight()/10));
+            face2Label.setPreferredSize(new Dimension(this.getWidth()/10,this.getHeight()/10));
             face1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
             face2Label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             face1Label.addActionListener(drawdHandler);
@@ -301,7 +301,7 @@ public class IHM extends JFrame implements ActionListener {
 
 
         cardPanel.setBackground(new Color (255,255,255,10));
-        cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
+        cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
         secondcontainer.setBackground(new Color (255,255,255,200));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight() ));
         secondcontainer.add(info1);
