@@ -507,6 +507,7 @@ public class IHM extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             ((JButton)source).setBorder(BorderFactory.createLineBorder(Color.red));
+            BorderOne.setBorder(BorderFactory.createLineBorder(Color.red));
             cardPicked = (Card)((JButton)source).getClientProperty("card");
             if(checkFinishTurn[0] == 1)
             {
