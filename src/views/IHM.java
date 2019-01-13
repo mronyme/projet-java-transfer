@@ -30,6 +30,7 @@ public class IHM extends JFrame implements ActionListener {
     JPanel BorderTwo = new JPanel (new FlowLayout(FlowLayout.CENTER));
     JPanel BorderThree = new JPanel (new FlowLayout(FlowLayout.CENTER));
     JPanel BorderFour = new JPanel (new FlowLayout(FlowLayout.CENTER));
+    JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER));
     ScreenSize ScreenSize = new ScreenSize();
     JRadioButton player3, player2, player4;
     String text = "Bienvenue dans Domi'Nations, choisissez le nombre de joueurs :";
@@ -129,6 +130,7 @@ public class IHM extends JFrame implements ActionListener {
         //Display the window.
 
         this.setVisible(true);
+       // renderLeaderBoard();
     }
 
     public void Grille(BoardHandler boardHandler, Player player, int nb_joueurs) {
@@ -338,8 +340,11 @@ public class IHM extends JFrame implements ActionListener {
         BorderFour.setBackground(new Color (255,255,255,0));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
         secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight() ));
-        secondcontainer.add(info1);
-        secondcontainer.add(info2,BorderLayout.SOUTH);
+info.setPreferredSize(new Dimension(this.getWidth()/4-60,this.getHeight()/10 ));
+info.setBackground(new Color (255,255,255,0));
+        info.add(info1,BorderLayout.NORTH);
+        info.add(info2,BorderLayout.SOUTH);
+        secondcontainer.add(info);
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel);
 
@@ -389,7 +394,19 @@ public class IHM extends JFrame implements ActionListener {
     }
 
     public void renderLeaderBoard() {
-    	
+    	getContentPane().removeAll();
+        this.setContentPane(new Panneau());
+
+        JPanel leaderBoard= new JPanel(new FlowLayout(FlowLayout.CENTER));
+leaderBoard.setBackground(new Color( 3,3,3,200));
+        GridBagLayout gridLayout;
+        gridLayout = new GridBagLayout();
+leaderBoard.setPreferredSize(new Dimension(200,200));
+        //Setting the layout manager for our container (in this case the JPanel)
+        leaderBoard.setLayout(gridLayout);
+        getContentPane().add(leaderBoard);
+
+
     }
     // ---------------------------------------------------------------------------------------------------------------------
     @Override
