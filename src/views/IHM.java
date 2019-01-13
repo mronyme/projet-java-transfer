@@ -222,43 +222,10 @@ public class IHM extends JFrame implements ActionListener {
 
         }*/
     }
-    public void aside(Player player,int nbRound) {
-    	/*info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
-    	info2 = new JLabel("Placer votre carte");
-    	finishTurn = new JButton("Finir le tour");
-    	finishTurn.setBackground(Color.darkGray);
-    	finishTurn.setForeground(Color.white);
-    	List<Card> cards = new ArrayList<Card>();
-        secondcontainer.setBackground(new Color (255,255,255,200));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/2-50,this.getHeight() ));
-        secondcontainer.add(info1);
-        secondcontainer.add(info2);
-        secondcontainer.add(finishTurn);
-        cardPanel.setBackground(Color.BLACK);
-        cardPanel.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight()));
-        secondcontainer.add(cardPanel,BorderLayout.SOUTH);
-        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
-        cardPicked = game.getCardToPlay(player);
-        cards.add(cardPicked);
-        addToDraw(cards);
-        finishTurn.addActionListener(new ActionListener() {
-      	  public void actionPerformed(ActionEvent e)
-      	  {
-      		  if(checkFinishTurn[0] == 1 && checkFinishTurn[1] == 1)
-      		  {
-      			  game.pickCard(player, 1, cardPicked);
-	      		  Player nextPlayer =  game.getNextPlayer();
-	      		  if(nextPlayer != null)
-	      		  {
-	      			nextPlayer.casualTurn();
-	      		  }
-      		  }
-      	  }
-      }); */
-    } 
     public void addToDraw(List<Card> cards)
     {
     	cardPanel.removeAll();
+    	this.getContentPane().repaint();
     	DrawHandler drawdHandler = new DrawHandler();
         for(Card card : cards)
     	{
@@ -291,13 +258,24 @@ public class IHM extends JFrame implements ActionListener {
     		cardPanel.add(face2Label);
     	}    	
     }
-    public void asideFirstRound(Player player,int nbRound) {
+    public void aside(Player player,int nbRound) {
     	info1 = new JLabel("Round: " + nbRound + " | Tour du joueur : " + player.getColor());
-    	info2 = new JLabel("Sélectionnez votre première carte");
+    	List<Card> cards = null;
+    	if(nbRound == 1)
+    	{
+    		info2 = new JLabel("Sélectionnez votre première carte");
+    		cards= game.getCardsAvailable(0);
+    	}
+    	else
+    	{
+    		info2 = new JLabel("Placer votre carte");
+    		cards = new ArrayList<Card>();
+            cardPicked = game.getCardToPlay(player);
+            cards.add(cardPicked);
+    	}
     	finishTurn = new JButton("Finir le tour");
     	finishTurn.setBackground(Color.darkGray);
     	finishTurn.setForeground(Color.white);
-    	List<Card> cards;
 
 
         cardPanel.setBackground(new Color (255,255,255,10));
@@ -309,10 +287,6 @@ public class IHM extends JFrame implements ActionListener {
         secondcontainer.add(finishTurn);
         secondcontainer.add(cardPanel);
 
-
-
-        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
-        cards= game.getCardsAvailable(0);
         addToDraw(cards);
         finishTurn.addActionListener(new ActionListener() {
       	  public void actionPerformed(ActionEvent e)
@@ -324,6 +298,10 @@ public class IHM extends JFrame implements ActionListener {
 	      		  if(nextPlayer != null)
 	      		  {
 	      			nextPlayer.casualTurn();
+	      		  }
+	      		  else
+	      		  {
+	      			  renderLeaderBoard();
 	      		  }
       		  }
       	  }
@@ -337,8 +315,9 @@ public class IHM extends JFrame implements ActionListener {
         this.setTitle("Domi'Nations pour " + nbPlayer + " joueurs");
 
         this.setLocationRelativeTo(null);
-        maincontainer.removeAll();
-        secondcontainer.removeAll();
+        this.maincontainer.removeAll();
+        this.secondcontainer.removeAll();
+        this.getContentPane().removeAll();
 
         maincontainer.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight() - 200));
         //On définit le layout à utiliser sur le content pane
@@ -346,18 +325,16 @@ public class IHM extends JFrame implements ActionListener {
 
         BoardHandler boardHandler = new BoardHandler(player);
         Grille(boardHandler, player, 2);
-        if(nbRound == 1)
-        {
-        	asideFirstRound(player,nbRound);
-        }
-        else
-        {
-        	aside(player,nbRound);
-        }
+        aside(player,nbRound);
+        this.getContentPane().add(maincontainer, BorderLayout.WEST);
+        this.getContentPane().add(secondcontainer, BorderLayout.EAST);
+        this.getContentPane().repaint();
         this.setVisible(true);
     }
 
-
+    public void renderLeaderBoard() {
+    	
+    }
     // ---------------------------------------------------------------------------------------------------------------------
     @Override
 
@@ -433,13 +410,17 @@ public class IHM extends JFrame implements ActionListener {
 	                    				if(game.getRound() == 1)
 	                    				{	
 		                    				game.pickCard(player, 0, cardPicked);
-	                        				info2.setText("Sélectionnez votre carte suivante");
-	                        				addToDraw(game.getCardsAvailable(1));
 	                    				}
+	                    				if(game.getCardsColumnSize() != 1)
+	                    				{
+	                    					
+		                    				info2.setText("Sélectionnez la carte suivante à jouer");
+		                        			addToDraw(game.getCardsAvailable(1));		                    				
+		                        		}
 	                    				else
 	                    				{
-	                    					info2.setText("Sélectionnez votre carte suivante");
-	                        				addToDraw(game.getCardsAvailable(1));	
+	                    					info2.setText("Appuyer sur le bouton \"Finir le tour \"");
+	                    					checkFinishTurn[1] = 1;
 	                    				}
 	                    				checkFinishTurn[0] = 1;
                     				}
@@ -462,7 +443,11 @@ public class IHM extends JFrame implements ActionListener {
             cardPicked = (Card)((JButton)source).getClientProperty("card");
             if(checkFinishTurn[0] == 1)
             {
+            	info2.setText("Appuyer sur le bouton \"Finir le tour \"");
             	checkFinishTurn[1] = 1;
+            }
+            else if(game.getRound() == 1) {
+            	info2.setText("Placer votre première carte");
             }
         }
     }

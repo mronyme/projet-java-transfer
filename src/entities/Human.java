@@ -35,19 +35,6 @@ public class Human extends Player{
 		// avec card la carte � pos�
 		// la fonction ne renvoit rien
 	}
-	public Card startTurn(int nbRound,Card card)
-	{
-		// List<Card> cards  = game.getCardsAvailable(0); permet de r�cuperer la liste des cartes encore disponible pour le premier tour de jeux
-		// tu poses la cartes sur le plateau avec la fonction this.getBoard().setCard(face1X,face1Y, face2X, face2Y, card);
-		// avec face1X la coordonn�es x de la face 1 de la carte
-		// avec face1Y la coordonn�es y de la face 1 de la carte
-		// avec face2X la coordonn�es x de la face 2 de la carte
-		// avec face2Y la coordonn�es y de la face 2 de la carte
-		// avec card la carte � pos�
-		// List<Card> cards  = game.getCardsAvailable(1); permet de r�cuperer la liste des cartes du prochain tour de jeux ( deuxi�me colone)
-		// la fonction renvoie la carte qu'il jouera au prochain tour ( la carte de la deuxi�me colone o� il posera son roi)
-		return null;
-	}
 	public void casualTurn()
 	{
 		game.getIHM().renderBoard(this, game.getRound());
