@@ -333,7 +333,7 @@ public class IHM extends JFrame implements ActionListener {
         BorderThree.setBackground(new Color (255,255,255,0));
         BorderFour.setBackground(new Color (255,255,255,0));
         cardPanel.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight()));
-        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/5,this.getHeight() ));
+        secondcontainer.setPreferredSize(new Dimension(this.getWidth()/4,this.getHeight() ));
         secondcontainer.add(info1);
         secondcontainer.add(info2,BorderLayout.SOUTH);
         secondcontainer.add(finishTurn);
@@ -492,7 +492,7 @@ public class IHM extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             ((JButton)source).setBorder(BorderFactory.createLineBorder(Color.red));
-            BorderOne.setBackground(new Color (0,0,0,100));
+            BorderOne.setBackground(new Color (255,255,255,200));
             cardPicked = (Card)((JButton)source).getClientProperty("card");
             if(checkFinishTurn[0] == 1)
             {
