@@ -13,8 +13,6 @@ public class Panneau extends JPanel {
     public void paintComponent(Graphics g) {
         setOpaque(false);
         //Phrase apparaissant chaque fois que la méthode sera invoquée
-        String str2 = "exécutée";
-        System.out.println("Je suis " + str2 + "!");
 /*
         int x1 = this.getWidth() / 4;
         int y1 = this.getHeight() / 4;
